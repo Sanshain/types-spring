@@ -54,4 +54,4 @@ const entries = Object.entries(obj)        // is ["a" | "b", number][]
 
 ## Utility types:
 
-Look up README.md inside corresponding declarations
+Look up `README.md` inside corresponding [declarations](https://github.com/Sanshain/types-spring/tree/master/sources/utils).
