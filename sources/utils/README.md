@@ -10,9 +10,11 @@ type ObjType = {
     c: string;
 };
 
-const bar: KeysArray<keyof ObjType> = ["d"];              // expected error => Type "d" is not assignable to type "a" | "b" | "c"
+const bar: KeysArray<keyof ObjType> = ["d"];      // expected error => Type "d" is not assignable to type "a" | "b" | "c"
 
-const foo: KeysArray<keyof ObjType> = ["a", "b", "c"];    // expected success
+const foo: KeysArray<keyof ObjType> = [           // expected success
+    "a", "b", "c"
+];    
 ```
 
 ### RequiredKeys\<Type\>
