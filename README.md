@@ -4,6 +4,21 @@ A package that aims to eliminate some of the shortcomings of the built-in types 
 
 ## Built-in types features:
 
+### Object.assign
+
+#### BEFORE: 
+
+```ts
+let t = Object.assign({ a: 7, b: 8 }, { b: '' })        // {a: number, b: never}
+```
+
+#### AFTER: 
+
+```ts
+let t = Object.assign({ a: 7, b: 8 }, { b: '' })        // {a: number, b: string}
+```
+
+
 ### Object.keys
 
 #### BEFORE:
