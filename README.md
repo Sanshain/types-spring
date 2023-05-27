@@ -26,8 +26,8 @@ let t = Object.assign({ a: 7, b: 8 }, { b: '' })        // {a: number, b: string
 ```ts
 const obj = { a: 1, b: 1 }
 
-const keys = Object.keys(obj)                           // string[]
-const entries = Object.entries(obj)                     // [string, number][]
+const keys = Object.keys(obj)                    // string[]
+const entries = Object.entries(obj)              // [string, number][]
 ```
 
 #### after:
@@ -35,8 +35,8 @@ const entries = Object.entries(obj)                     // [string, number][]
 ```ts
 const obj = { a: 1, b: 1 }
 
-const keys = Object.keys(obj)                           // ("a" | "b")[]
-const entries = Object.entries(obj)                     // ["a" | "b", number][]
+const keys = Object.keys(obj)                     // ("a" | "b")[]
+const entries = Object.entries(obj)               // ["a" | "b", number][]
 ```
 
 ## DOM features:
