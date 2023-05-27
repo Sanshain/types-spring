@@ -6,13 +6,13 @@ A package that aims to eliminate some of the shortcomings of the built-in types 
 
 ### Object.assign
 
-#### BEFORE: 
+#### before: 
 
 ```ts
 let t = Object.assign({ a: 7, b: 8 }, { b: '' })        // {a: number, b: never}
 ```
 
-#### AFTER: 
+#### after: 
 
 ```ts
 let t = Object.assign({ a: 7, b: 8 }, { b: '' })        // {a: number, b: string}
@@ -21,40 +21,42 @@ let t = Object.assign({ a: 7, b: 8 }, { b: '' })        // {a: number, b: string
 
 ### Object.keys
 
-#### BEFORE:
+#### before:
 
 ```ts
 const obj = { a: 1, b: 1 }
 
-const keys = Object.keys(obj)              // is string[]
-const entries = Object.entries(obj)        // is [string, number][]
+const keys = Object.keys(obj)                           // string[]
+const entries = Object.entries(obj)                     // [string, number][]
 ```
 
-#### AFTER:
+#### after:
 
 ```ts
 const obj = { a: 1, b: 1 }
 
-const keys = Object.keys(obj)              // is ("a" | "b")[]
-const entries = Object.entries(obj)        // is ["a" | "b", number][]
+const keys = Object.keys(obj)                           // ("a" | "b")[]
+const entries = Object.entries(obj)                     // ["a" | "b", number][]
 ```
 
 ## DOM features:
 
 ### querySelector
 
-#### BEFORE: 
+Improves detecting Element type from selector signature:
+
+#### before: 
 
 ```ts
-const div = document.querySelector('div');           // is HTMLDIVElement | null
-const unknown = document.querySelector('.cls');      // is Element | null
-const divCls = document.querySelector('div.cls');    // is Element | null
+const div = document.querySelector('div');              // is HTMLDIVElement | null
+const unknown = document.querySelector('.cls');         // is Element | null
+const divCls = document.querySelector('div.cls');       // is Element | null
 if (divCls) {
-    divCls.innerText = ''                            // error
+    divCls.innerText = ''                               // error
 }
 ```
 
-#### AFTER:
+#### after:
 
 ```ts
 const div = document.querySelector('div');              // is HTMLDIVElement | null
@@ -67,14 +69,16 @@ if (divCls) {
 
 ### cloneNode
 
-#### BEFORE: 
+Now HTMLElement.cloneNode allways returns HTMLElement:
+
+#### before: 
 
 ```ts
 const elem = document.getElementById('id')              // elem is HTMLElement
 const clonedElem = elem?.cloneNode()                    // clonedElem is Node
 ```
 
-#### AFTER:
+#### after:
 
 ```ts
 const elem = document.getElementById('id')              // elem is HTMLElement
