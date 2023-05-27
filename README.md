@@ -52,6 +52,48 @@ const keys = Object.keys(obj)              // is ("a" | "b")[]
 const entries = Object.entries(obj)        // is ["a" | "b", number][]
 ```
 
+## DOM features:
+
+### querySelector
+
+#### BEFORE: 
+
+```ts
+const div = document.querySelector('div');           // is HTMLDIVElement | null
+const unknown = document.querySelector('.cls');      // is Element | null
+const divCls = document.querySelector('div.cls');    // is Element | null
+if (divCls) {
+    divCls.innerText = ''                            // error
+}
+```
+
+#### AFTER:
+
+```ts
+const div = document.querySelector('div');              // is HTMLDIVElement | null
+const unknown = document.querySelector('.cls');         // is Element | null
+const divCls = document.querySelector('div.cls');       // is HTMLDIVElement | null
+if (divCls) {
+    divCls.innerText = ''                               // success
+}
+```
+
+### HTMLElement.cloneNode
+
+#### BEFORE: 
+
+```ts
+const elem = document.getElementById('id')              // elem is HTMLElement
+const clonedElem = elem?.cloneNode()                    // clonedElem is Node
+```
+
+#### AFTER:
+
+```ts
+const elem = document.getElementById('id')              // elem is HTMLElement
+const clonedElem = elem?.cloneNode()                    // clonedElem is HTMLElement also
+```
+
 ## Utility types:
 
 Look up `README.md` inside corresponding [declarations](https://github.com/Sanshain/types-spring/tree/master/sources/utils).
