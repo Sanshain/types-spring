@@ -2,27 +2,25 @@
 /**
  * @attention is not recommended for objects with more than 10 keys due to the severity of calculations
  */
-export type FieldsArray<FieldKeys extends string, Result extends string[] = []> = {
-    [Key in FieldKeys]: Exclude<FieldKeys, Key> extends never ? [...Result, Key] : FieldsArray<Exclude<FieldKeys, Key>, [...Result, Key]>;    
+export type KeysArray<FieldKeys extends string, Result extends string[] = []> = {
+    [Key in FieldKeys]: Exclude<FieldKeys, Key> extends never ? [...Result, Key] : KeysArray<Exclude<FieldKeys, Key>, [...Result, Key]>;    
 }[FieldKeys];
 
 
 // type ObjType = {
-//     countryCode: string;
-//     currency: string;
-//     otherFields: string;
+//     a: string;
+//     b: string;
+//     c: string;
 // };
 
-// type AllowedFields = FieldsArray<keyof ObjType>;
+// const bar: KeysArray<keyof ObjType> = ["d"];                  // expected error => Type "d" is not assignable to type "a" | "b" | "c".
 
+// const objKeys: KeysArray<keyof ObjType> = ["a", "b", "c"];    // expected success
 
-// const allowedFields: AllowedFields = ["currency", "countryCode", "otherFields"];
-
-
-// // How to create 'SomeType'?
+// bar
 // const foo: AllowedFields = ["countryCode"]; // Should throw error because there are missing fields
 
-// const bar: AllowedFields = ["extraField"];
+
 
 
 
@@ -41,9 +39,7 @@ export type RequiredKeys<T extends object> = {
 //     email1: string | null;
 // };
 
-// type NonNullableUserPropertyKeys = RequiredKeys<User>;
-
-// let a: NonNullableUserPropertyKeys = 'name'
+// let a: RequiredKeys<User> = 'name'
 
 
 
@@ -69,7 +65,7 @@ export type OmitNullable<T> = {
  * @requires ^4.7.4
  */
 export type ParseInt<T> = T extends `${infer N extends number}` ? N : never;
-
+// type N = ParseInt<'7'>
 
 
 
@@ -79,35 +75,33 @@ export type ParseInt<T> = T extends `${infer N extends number}` ? N : never;
 
 export type ConstraitArray<N extends number, T = unknown, A extends T[] = []> = A['length'] extends N ? A : ConstraitArray<N, T, [...A, T]>
 
-export let names: ConstraitArray<2, boolean> = [false, true]
+// let names: ConstraitArray<2, boolean> = [false, true]
 
 
 
 
 
-export const testArray = [
-    "test1",
-    "test2",
-    "test3",
-    "test4"
-] as const;
+
+
+
+export type Indexes<T extends readonly unknown[]> = Exclude<Partial<T>["length"], T["length"]>
+
+// export const testArray = [
+//     "test1",
+//     "test2",
+//     "test3",
+//     "test4"
+// ] as const;
 // // Создадим конструктор для типов
 
-
-export type TupleIndeces<T extends readonly unknown[]> = Exclude<Partial<T>["length"], T["length"]>
-
-
-// Создаем тип
-// type ArrayIndex = TupleIndeces<typeof testArray>;
+// // Создаем тип
+// type ArrayIndex = Indexes<typeof testArray>;
 
 
 
 
 
-// const a = {
-//     a: 1,
-//     b: 2
-// } as const
+
 
 // let e: TupleLength<keyof typeof a>
 // let r: FieldsArray<keyof typeof a>['length']; //  = ['b', 'a']
@@ -116,8 +110,12 @@ export type TupleIndeces<T extends readonly unknown[]> = Exclude<Partial<T>["len
 
 export type Sequence<L extends number, A extends number[] = []> = A['length'] extends L ? A : Sequence<L, [...A, A['length']]>
 
-// let re: Sequence<3>[number] = 1 // 0 | 1
-// let rev: Sequence<FieldsArray<keyof typeof a>['length']>[number] = 1
+// const a = {
+//     a: 1,
+//     b: 2
+// } as const
+// let re: Sequence<3>
+// let rev: Sequence<KeysArray<keyof typeof a>['length']>[number] = 1
 
 
 
@@ -132,6 +130,8 @@ export type Sequence<L extends number, A extends number[] = []> = A['length'] ex
  * @description like flow type spread
  */
 export type Merge<T extends {}, K extends {}> = Omit<T, keyof K> & K;
+
+
 export type MergeAll<T extends Array<object>, L extends never[] = [], Result extends {} = {}> = T['length'] extends infer N extends L['length'] 
     ? Result
     : MergeAll<T, [...L, never], Merge<Result, T[L['length']]>>
@@ -154,7 +154,11 @@ export type MergeAll<T extends Array<object>, L extends never[] = [], Result ext
 // }
 
 // // type C = Merge<A, B>
-// type C = MergeAll<[A, B, {d: 7}]>
+
+
+// type C = MergeAll<[A, B, { d: 7 }]>
+// let c: C;
+// c.
 
 // let a: A = {a: '', b: 7}
 // let b: B = {c: 1, b: '7'}
@@ -162,7 +166,7 @@ export type MergeAll<T extends Array<object>, L extends never[] = [], Result ext
 // let cc = Object.assign(a, b, {}, {})
 // // let cc = {...a, ...b, ...{}, ...{}, ...{f: 7}}
 
-// let c: C;
+
 
 
 
@@ -176,24 +180,33 @@ export type WideArray<A extends ReadonlyArray<unknown>> = {
     [K in keyof A]: A[K] extends string ? string : (A[K] extends number ? number : A[K]) 
 }  
 
+export type ConvertTupleType<A extends ReadonlyArray<unknown>, T> = {
+    [K in keyof A]: T
+}
+
+const arr = [1, 2, 3] as const
+// type R = WideArray<typeof arr>
+type R = ConvertTupleType<typeof arr, string>
+let r: R;
+
 
 // const arr = [1, 2, 3] as const
-// type R = WideArray<typeof arr>
-// let r: R;
 
-
-
-// function name(a:number) {
+// function func(a:number) {
 //     // const r = (arr as [number, number, number]).indexOf(44)
 
-//     if (~arr.indexOf<any>(a)) {
+//     if (~arr.indexOf(a)) {
         
 //     }
 // }
 
-// const validate = (input: unknown) => {
+// const validate = (input: string | string[] | number[]) => {
 //     if (Array.isArray(input)) {
-//         console.log(input); // unknown[]
+        
+
+//         console.log(input);
 //     }
 // };
+
+
 
