@@ -78,7 +78,7 @@ if (divCls) {
 }
 ```
 
-### HTMLElement.cloneNode
+### cloneNode
 
 #### BEFORE: 
 
