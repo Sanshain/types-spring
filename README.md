@@ -5,7 +5,7 @@ A package that aims to eliminate some of the shortcomings of the built-in types 
 ## How to use
 <ul>
     <li>install <b>types-spring</b> from npm: <code>npm i -D types-spring </code></li>
-    <li>add <b>types-spring</b> to <code>include</code> list inside <code>tsconfig</code></li>
+    <li>add <b>types-spring</b> to <code>include</code> list inside <code>tsconfig.json</code></li>
 </ul>
 
 ## Built-in types features:
