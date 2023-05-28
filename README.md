@@ -4,62 +4,121 @@ A package that aims to eliminate some of the shortcomings of the built-in types 
 
 ## Built-in types features:
 
-### Object.keys
+### Array.map
 
-#### BEFORE:
+#### before: 
 
 ```ts
-const obj = { a: 1, b: 1 }
-
-const keys = Object.keys(obj)              // is string[]
-const entries = Object.entries(obj)        // is [string, number][]
+const a = [1, 2, 3] as const;
+let arr = a.map(r => r + '')                              // string[]
 ```
 
-#### AFTER:
+#### after: 
+
+```ts
+const a = [1, 2, 3] as const;
+let arr = a.map(r => r + '')                             // [string, string, string]
+```
+
+### Object.assign
+
+#### before: 
+
+```ts
+let t = Object.assign({ a: 7, b: 8 }, { b: '' })        // {a: number, b: never}
+```
+
+#### after: 
+
+```ts
+let t = Object.assign({ a: 7, b: 8 }, { b: '' })        // {a: number, b: string}
+```
+
+
+### Object.keys
+
+#### before:
 
 ```ts
 const obj = { a: 1, b: 1 }
 
-const keys = Object.keys(obj)              // is ("a" | "b")[]
-const entries = Object.entries(obj)        // is ["a" | "b", number][]
+const keys = Object.keys(obj)                    // string[]
+const entries = Object.entries(obj)              // [string, number][]
+```
+
+#### after:
+
+```ts
+const obj = { a: 1, b: 1 }
+
+const keys = Object.keys(obj)                     // ("a" | "b")[]
+const entries = Object.entries(obj)               // ["a" | "b", number][]
 ```
 
 ## DOM features:
 
 ### querySelector
 
-#### BEFORE: 
+Improves detecting Element type from selector signature. 
+
+#### before: 
+
 
 ```ts
-const div = document.querySelector('div');           // is HTMLDIVElement | null
-const unknown = document.querySelector('.cls');      // is Element | null
-const divCls = document.querySelector('div.cls');    // is Element | null
+const input = document.querySelector('input');                                              // is HTMLInputElement | null
+const unknown = document.querySelector('.cls');                                             // is Element | null
+const inputWCls = document.querySelector('input.cls');                                      // is Element | null
+
 if (divCls) {
-    divCls.innerText = ''                            // error
+    inputWCls.value = ''                                                                    // error
 }
 ```
 
-#### AFTER:
+#### after:
 
 ```ts
-const div = document.querySelector('div');              // is HTMLDIVElement | null
+const input = document.querySelector('input');          // is HTMLInputElement | null
 const unknown = document.querySelector('.cls');         // is Element | null
-const divCls = document.querySelector('div.cls');       // is HTMLDIVElement | null
+const inputWCls = document.querySelector('input.cls');  // is HTMLInputElement | null
 if (divCls) {
-    divCls.innerText = ''                               // success
+    inputWCls.value = ''                                // success
+}
+```
+
+### querySelector\<Type\>
+
+Original `querySelector` required just to use generic to specify returned type that may differ from the runtime:
+
+#### before: 
+
+```ts
+const misspell = document.querySelector<HTMLInputElement>('a.cls');                         // is HTMLInputElement | null
+if (misspell){
+    const replaced = misspell.value.replace('.', ',')                                       // runtime error!
+}
+```
+
+#### after:
+
+```ts
+const misspell = document.querySelector('a.cls');                                           // is HTMLInputElement | null
+if (misspell){
+    const replaced = misspell.value.replace('.', ',')                                       // typescript error!
 }
 ```
 
 ### cloneNode
 
-#### BEFORE: 
+Now `HTMLElement.cloneNode` allways returns `HTMLElement`:
+
+#### before: 
 
 ```ts
 const elem = document.getElementById('id')              // elem is HTMLElement
 const clonedElem = elem?.cloneNode()                    // clonedElem is Node
 ```
 
-#### AFTER:
+#### after:
 
 ```ts
 const elem = document.getElementById('id')              // elem is HTMLElement
