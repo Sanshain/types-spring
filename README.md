@@ -4,6 +4,22 @@ A package that aims to eliminate some of the shortcomings of the built-in types 
 
 ## Built-in types features:
 
+### Array.map
+
+#### before: 
+
+```ts
+const a = [1, 2, 3] as const;
+let arr = a.map(r => r + '')                              // string[]
+```
+
+#### after: 
+
+```ts
+const a = [1, 2, 3] as const;
+let arr = a.map(r => r + '')                             // [string, string, string]
+```
+
 ### Object.assign
 
 #### before: 
@@ -48,22 +64,22 @@ Improves detecting Element type from selector signature:
 #### before: 
 
 ```ts
-const div = document.querySelector('div');              // is HTMLDIVElement | null
+const div = document.querySelector('input');            // is HTMLINPUTElement | null
 const unknown = document.querySelector('.cls');         // is Element | null
-const divCls = document.querySelector('div.cls');       // is Element | null
+const divCls = document.querySelector('input.cls');     // is HTMLINPUTElement | null
 if (divCls) {
-    divCls.innerText = ''                               // error
+    divCls.value = ''                                   // error
 }
 ```
 
 #### after:
 
 ```ts
-const div = document.querySelector('div');              // is HTMLDIVElement | null
+const div = document.querySelector('input');            // is HTMLINPUTElement | null
 const unknown = document.querySelector('.cls');         // is Element | null
-const divCls = document.querySelector('div.cls');       // is HTMLDIVElement | null
+const divCls = document.querySelector('input.cls');     // is HTMLINPUTElement | null
 if (divCls) {
-    divCls.innerText = ''                               // success
+    divCls.value = ''                                   // success
 }
 ```
 
