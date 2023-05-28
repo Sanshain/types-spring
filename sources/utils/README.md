@@ -141,6 +141,9 @@ let r: R;                                       // type is [number, number, numb
 
 <br>
 <hr>
+<br>
+
+## table of contents:
 
 
 - [`<keyof object>` => `keys[]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#keysarraykeys)
