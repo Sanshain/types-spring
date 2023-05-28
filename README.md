@@ -74,14 +74,6 @@ if (divCls) {
 }
 ```
 
-```ts
-/// Original `querySelector` required just to use generic to specify returned type that may differ from the runtime:
-const misspell = document.querySelector<HTMLInputElement>('a.cls');                         // is HTMLInputElement | null
-if (misspell){
-    const replaced = misspell.value.replace('.', ',')                                       // runtime error!
-}
-```
-
 #### after:
 
 ```ts
@@ -93,9 +85,31 @@ if (divCls) {
 }
 ```
 
+### querySelector\<Type\>
+
+Original `querySelector` required just to use generic to specify returned type that may differ from the runtime:
+
+#### before: 
+
+```ts
+const misspell = document.querySelector<HTMLInputElement>('a.cls');                         // is HTMLInputElement | null
+if (misspell){
+    const replaced = misspell.value.replace('.', ',')                                       // runtime error!
+}
+```
+
+#### after:
+
+```ts
+const misspell = document.querySelector('a.cls');                                           // is HTMLInputElement | null
+if (misspell){
+    const replaced = misspell.value.replace('.', ',')                                       // typescript error!
+}
+```
+
 ### cloneNode
 
-Now HTMLElement.cloneNode allways returns HTMLElement:
+Now `HTMLElement.cloneNode` allways returns `HTMLElement`:
 
 #### before: 
 
