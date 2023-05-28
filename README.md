@@ -59,27 +59,34 @@ const entries = Object.entries(obj)               // ["a" | "b", number][]
 
 ### querySelector
 
-Improves detecting Element type from selector signature:
+Improves detecting Element type from selector signature. 
 
 #### before: 
 
+
+*Original `querySelector` required just to use generic to specify returned type that may differ from the runtime:*
+
+
 ```ts
-const div = document.querySelector('input');            // is HTMLINPUTElement | null
-const unknown = document.querySelector('.cls');         // is Element | null
-const divCls = document.querySelector('input.cls');     // is HTMLINPUTElement | null
+const input = document.querySelector('input');                                              // is HTMLInputElement | null
+const unknown = document.querySelector('.cls');                                             // is Element | null
+const inputWCls = document.querySelector('input.cls');                                      // is Element | null
+/// pass the wrong generic type due to a typo and get a type discrepancy with the runtime:
+const misspell = document.querySelector<HTMLInputElement>('a.cls');                         // is HTMLInputElement | null
 if (divCls) {
-    divCls.value = ''                                   // error
+    inputWCls.value = ''                                                                    // error
+    const replaced = misspell.value.replace('.', ',')                                       // runtime error!
 }
 ```
 
 #### after:
 
 ```ts
-const div = document.querySelector('input');            // is HTMLINPUTElement | null
+const input = document.querySelector('input');          // is HTMLInputElement | null
 const unknown = document.querySelector('.cls');         // is Element | null
-const divCls = document.querySelector('input.cls');     // is HTMLINPUTElement | null
+const inputWCls = document.querySelector('input.cls');  // is HTMLInputElement | null
 if (divCls) {
-    divCls.value = ''                                   // success
+    inputWCls.value = ''                                // success
 }
 ```
 
