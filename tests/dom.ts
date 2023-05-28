@@ -83,5 +83,5 @@ function event__window(event: MouseEvent<Window>|KeyboardEvent<Window>) {
     if (event.currentTarget) var s: string | null = event.currentTarget.origin
 }
 
-в
+
 
