@@ -1,118 +1,90 @@
 // https://stackoverflow.com/questions/69676439/create-constant-array-type-from-an-object-type
 /**
+ * @param { a | b | c | ... } FieldKeys
  * @attention is not recommended for objects with more than 10 keys due to the severity of calculations
- * @example KeysArray<a|b|c> = ['a', 'b', 'c']
+ * @returns {[a, b, ...]}
+ * @example KeysArray< a|b|c > = ['a', 'b', 'c']
  */
 export type KeysArray<FieldKeys extends string, Result extends string[] = []> = {
     [Key in FieldKeys]: Exclude<FieldKeys, Key> extends never ? [...Result, Key] : KeysArray<Exclude<FieldKeys, Key>, [...Result, Key]>;    
 }[FieldKeys];
 
 
-// type ObjType = {
-//     a: string;
-//     b: string;
-//     c: string;
-// };
-
-// const bar: KeysArray<keyof ObjType> = ["d"];                  // expected error => Type "d" is not assignable to type "a" | "b" | "c".
-
-// const objKeys: KeysArray<keyof ObjType> = ["a", "b", "c"];    // expected success
-
-// bar
-// const foo: AllowedFields = ["countryCode"]; // Should throw error because there are missing fields
-
-
-
-
-
-
-
-
+/**
+ * @description Extracts required keys from object
+ * @param {a, b, c?, ...} T
+ * @returns {a | b | ...}
+ * @example {a?: any, b: any, c: any} => b | c
+ */
 export type RequiredKeys<T extends object> = {
     [P in keyof T]: null extends T[P] ? never : P;
 }[keyof T];
 
 
-// type User = {
-//     name: string;
-//     name1: string;
-//     email: string | null;
-//     email1: string | null;
-// };
 
-// let a: RequiredKeys<User> = 'name'
-
-
-
-
+/**
+ * @description Omit nullable types from object
+ * @param {a, b, c?, ...} T
+ * @returns {{a, b, ...}
+ * @example {a?: any, b: any, c: any} => {b: any, c: any}
+ */
 export type OmitNullable<T> = {
     [K in keyof T as null extends T[K] ? never : K]: T[K];
 }
 
 
-// type User = {
-//     name: string;
-//     email: string | null;
-// };
-
-// type NonNullableUserPropertyKeys = OmitNullable<User>;
-
-// let a: NonNullableUserPropertyKeys = {
-//     name: 'name',
-// }
 
 
 /**
  * @requires ^4.7.4
+ * @description converts number string to number (usefull inside another types)
+ * @param {`${number}`}
+ * @returns {number}
+ * @example type N = ParseInt<'7'>
  */
 export type ParseInt<T> = T extends `${infer N extends number}` ? N : never;
-// type N = ParseInt<'7'>
 
 
 
 
 
 
-
-export type ConstraitArray<N extends number, T = unknown, A extends T[] = []> = A['length'] extends N ? A : ConstraitArray<N, T, [...A, T]>
-
-// let names: ConstraitArray<2, boolean> = [false, true]
-
-
-
-
-
-
-
-
-export type Indexes<T extends readonly unknown[]> = Exclude<Partial<T>["length"], T["length"]>
-
-// export const testArray = [
-//     "test1",
-//     "test2",
-//     "test3",
-//     "test4"
-// ] as const;
-// // Создадим конструктор для типов
-
-// // Создаем тип
-// type ArrayIndex = Indexes<typeof testArray>;
-
-
-
-
-
-
-
-// let e: TupleLength<keyof typeof a>
-// let r: FieldsArray<keyof typeof a>['length']; //  = ['b', 'a']
-// let r1: FieldsArray<keyof typeof a> = ['b', 'a']
 
 /**
- * @param {number} L - n
- * @description Generates a tuple of the specified length as a sequence of numbers from 0:
- * @example Sequence<3> 
- * @returns [0, 1, 2, ...n]
+ * @param {number}
+ * @description Generates fixed length array with specified type
+ * @returns {[type, type, ...]}
+ * @example {ConstraitArray<2, boolean> => [false, true]}
+ */
+export type ConstraitArray<N extends number, T = unknown, A extends T[] = []> = A['length'] extends N ? A : ConstraitArray<N, T, [...A, T]>
+
+
+
+
+
+
+
+
+
+/**
+ * @param {any[]}
+ * @description Extract indexes from tuple like keyof object
+ * @returns {0 | 1 | 2 | ...}
+ * @example Indexes<['a', 'b', 'a']> => 0 | 1 | 2
+ */
+export type Indexes<T extends readonly unknown[]> = Exclude<Partial<T>["length"], T["length"]>
+
+
+
+
+
+
+
+/**
+ * @param {number} L 
+ * @description Generates a tuple with the specified length as a sequence of numbers 
+ * @returns [0, 1, 2, ...]
+ * @example Sequence<3> => [0, 1, 2]
  */
 export type Sequence<L extends number, A extends number[] = []> = A['length'] extends L ? A : Sequence<L, [...A, A['length']]>
 
@@ -131,67 +103,90 @@ export type Sequence<L extends number, A extends number[] = []> = A['length'] ex
 
 /**
  * @description like flow type spread
+ * @param {object} T
+ * @param {object} K
+ * @returns {{...T, ...K}} - like flow type spread
+ * @example Merge<{a: number, b: number}, {b: string, c: string}> => {a: number, b: string, c: string}
  */
 export type Merge<T extends {}, K extends {}> = Omit<T, keyof K> & K;
 
 
+
+/**
+ * @description Merges fields from unlimited amount of types like js spread or flow types spread
+ * @param {[...Types]}
+ * @returns {{...Types}} - like flow type spread
+ * @example MergeAll<[{a: any}, {b: any}, { b: 7 }]> => {a: any, b: 7}
+ */
 export type MergeAll<T extends Array<object>, L extends never[] = [], Result extends {} = {}> = T['length'] extends infer N extends L['length'] 
     ? Result
-    : MergeAll<T, [...L, never], Merge<Result, T[L['length']]>>
+    : MergeAll<T, [...L, never], Merge<Result, T[L['length']]>>  // : MergeAll<T, [...L, never], Merge<Result, keyof T[L['length']]> & T[L['length']]>
     
-    /// reminder for alternative way of the last line:
-    // : MergeAll<T, [...L, never], Merge<Result, keyof T[L['length']]> & T[L['length']]>
 
 
 
 
 
-// type WidenLiteral<T> = T extends string ? string : (T extends number ? number : T);
+type WidenType<T> = T extends string
+    ? string
+    : T extends number
+        ? number
+        : T extends boolean
+            ? boolean
+            : T extends null
+                ? object
+                : T extends undefined
+                    ? any
+                    : T
+                    
 // export type WideArray<A extends ReadonlyArray<unknown>, R extends unknown[] = []> = A['length'] extends R['length']
 //     ? R
 //     : WideArray<A, [...R, WidenLiteral<A[R['length']]>]>;
 
 
+/**
+ * @description Converts types of the tuple to corresponding common type
+ * @param {[Tuple<type>]}
+ * @returns {[Tuple<widentype>]}
+ * @example [1, 2, 3] => [number, number, number]
+ */
 export type WideArray<A extends ReadonlyArray<unknown>> = {
-    [K in keyof A]: A[K] extends string ? string : (A[K] extends number ? number : A[K]) 
+    // [K in keyof A]: A[K] extends string ? string : (A[K] extends number ? number : A[K])
+    [K in keyof A]: WidenType<A[K]>
 }  
 
+
+
+/**
+ * @description Converts types of the tuple to specified type
+ * @param {[Tuple<type>]} A
+ * @param {type} T
+ * @returns {[Tuple<T>]}
+ * @example ConvertTupleType<[1, 2, 3], string> => [string, string, string]
+ */
 export type ConvertTupleType<A extends ReadonlyArray<unknown>, T> = {
     [K in keyof A]: T
 }
 
-// const arr = [1, 2, 3] as const
-// // type R = WideArray<typeof arr>
-// type R = ConvertTupleType<typeof arr, string>
-// let r: R;
 
 
-// const arr = [1, 2, 3] as const
-
-// function func(a:number) {
-//     // const r = (arr as [number, number, number]).indexOf(44)
-
-//     if (~arr.indexOf(a)) {
-
-//     }
-// }
-
-// const validate = (input: string | string[] | number[]) => {
-//     if (Array.isArray(input)) {
 
 
-//         console.log(input);
-//     }
-// };
 
 
 /**
- * @description https://stackoverflow.com/a/70307091/9659573
+ * @atention not recomended for sequences over more then one hundren elements
+ * @link https://stackoverflow.com/a/70307091/9659573
+ * @param {number} N
+ * @description Generates union keys with the specified length as a sequence of numbers 
+ * @returns {0 | 1 | 2 | ...}
+ * @example Enumerate<3> => 0 | 1 | 2
  */
-type Enumerate<N extends number, Acc extends number[] = []> = Acc['length'] extends N
+export type Enumerate<N extends number, Acc extends number[] = []> = Acc['length'] extends N
     ? Acc[number]
     : Enumerate<N, [...Acc, Acc['length']]>
 
-export type Range<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>
 
-type T = Range<20, 100>
+
+export type Ranged<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>
+

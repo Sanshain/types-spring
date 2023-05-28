@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "a package that provides more accurate and powerful typescript capabilities",
   "types": "./sources/utils/index.ts",
-  "exports":{
+  "exports": {
     ".": {
       "types": "./sources/index.d.ts"
     },
@@ -12,16 +12,19 @@
     }
   },
   "scripts": {
-    "test": "tsc --noEmit ./tests/dom.ts"
+    "test": "tsc --noEmit"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run test"
   },
   "keywords": [
-    "typescript", "types"
+    "typescript",
+    "types"
   ],
   "author": "Sanshain",
   "license": "MIT",
   "devDependencies": {
-    "rollup": "^3.23.0",
-    "rollup-plugin-dts": "^5.3.0",
+    "simple-git-hooks": "^2.8.1",
     "typescript": "^5.0.4"
   }
 }

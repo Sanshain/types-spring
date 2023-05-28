@@ -1,5 +1,5 @@
 //@ts-check
-import dts from "rollup-plugin-dts";
+// import dts from "rollup-plugin-dts";
 
 export default {
     input: './sources/index.d.ts',
@@ -8,6 +8,8 @@ export default {
         format: 'es'
     },
     plugins: [
-        dts({})
+        // dts({})
     ]
 }
+
+

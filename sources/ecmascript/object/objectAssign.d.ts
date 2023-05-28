@@ -1,4 +1,8 @@
-import { Merge, MergeAll } from "../../utils";
+type Merge<T extends {}, K extends {}> = Omit<T, keyof K> & K;
+
+type MergeAll<T extends Array<object>, L extends never[] = [], Result extends {} = {}> = T['length'] extends infer N extends L['length']
+    ? Result
+    : MergeAll<T, [...L, never], Merge<Result, T[L['length']]>>
 
 
 interface ObjectConstructor {

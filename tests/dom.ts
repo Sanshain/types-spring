@@ -4,7 +4,11 @@
 /// Node.querySelector:
 
 const elem = document.querySelector('.cls'); if (elem) elem.innerHTML = ''                                              // is Element 
-const tag = document.querySelector('input'); if (tag) tag.value = '';                                                   // is HTMLInputElement 
+const tag = document.querySelector('input'); if (tag) tag.value = '';                                                   // is HTMLInputElement
+
+
+const force = document.querySelector<HTMLElement>('#id'); if (force) force.innerText = ''                               // is Element
+const forceType = document.querySelector<HTMLInputElement>('a a input'); if (forceType) forceType.value = ''            // is HTMLInputElement
 
 
 const cls = document.querySelector('input.cls'); if (cls) cls.value = ''                                                // is HTMLInputElement 
@@ -25,6 +29,9 @@ const kindred = document.querySelector('.cls+input')                            
 const tilda3 = document.querySelector('a~a~input'); if (tilda3) tilda3.innerText = ''                                   // is HTMLElement
 const _wsps1 = document.querySelector('a a input'); if (_wsps1) _wsps1.innerText = ''                                   // is HTMLElement
 
+const misspell = document.querySelector<HTMLInputElement>('a.cls');                         // is HTMLAnchorElement | null
+misspell?.value.replace('', '')
+
 
 
 
@@ -44,6 +51,7 @@ const _attr_value = document.querySelector('div.cls[attr="a a.div"]'); if (_attr
 const _wsps2 = document.querySelector('a a input'); if (_wsps2) _wsps2.value = ''                                       // is HTMLElement
 //@ts-expect-error
 const _tilda3 = document.querySelector('a~a~input'); if (_tilda3) _tilda3.value = ''                                    // is HTMLElement
+
 
 
 
@@ -74,3 +82,5 @@ function event__window(event: MouseEvent<Window>|KeyboardEvent<Window>) {
     if (event.target) var s: string | null = event.target.textContent
     if (event.currentTarget) var s: string | null = event.currentTarget.origin
 }
+
+в
