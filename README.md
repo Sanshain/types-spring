@@ -64,17 +64,20 @@ Improves detecting Element type from selector signature.
 #### before: 
 
 
-*Original `querySelector` required just to use generic to specify returned type that may differ from the runtime:*
-
-
 ```ts
 const input = document.querySelector('input');                                              // is HTMLInputElement | null
 const unknown = document.querySelector('.cls');                                             // is Element | null
 const inputWCls = document.querySelector('input.cls');                                      // is Element | null
-/// pass the wrong generic type due to a typo and get a type discrepancy with the runtime:
-const misspell = document.querySelector<HTMLInputElement>('a.cls');                         // is HTMLInputElement | null
+
 if (divCls) {
     inputWCls.value = ''                                                                    // error
+}
+```
+
+```ts
+/// Original `querySelector` required just to use generic to specify returned type that may differ from the runtime:
+const misspell = document.querySelector<HTMLInputElement>('a.cls');                         // is HTMLInputElement | null
+if (misspell){
     const replaced = misspell.value.replace('.', ',')                                       // runtime error!
 }
 ```
