@@ -1,4 +1,6 @@
 
+## Utility types:
+
 - [`<keyof object>` => `keys[]`](#keysarraykeys)
 - [`{keys: value}` => `requiredkeys[number]`](#requiredkeystype)
 - [`{k0?, k1, k2}` => `{k2, k3}`](#omitnullabletype)
@@ -7,7 +9,6 @@
 - [`<number>` => `tuple<number>`](#sequencenumber)
 - [`<A, B>` => `{...A, ...B}`](#mergetype-type)
 - [`[A, B, C]` => `{...A, ...B, ...C}`](#mergealltypes)
-
 
 ### KeysArray\<Keys\>
 
