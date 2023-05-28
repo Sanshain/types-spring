@@ -2,6 +2,12 @@
 
 A package that aims to eliminate some of the shortcomings of the built-in types in standard ts libraries and deliver additional utility types that will facilitate daily work. Inspired by [ts-reset](https://github.com/total-typescript/ts-reset). 
 
+## How to use
+<ul>
+    <li>install <b>types-spring</b> from npm: <code>npm i -D types-spring </code></li>
+    <li>add <b>types-spring</b> to <code>include</code> list inside <code>tsconfig</code></li>
+</ul>
+
 ## Built-in types features:
 
 ### Array.map
@@ -128,3 +134,4 @@ const clonedElem = elem?.cloneNode()                    // clonedElem is HTMLEle
 ## Utility types:
 
 Look up `README.md` inside corresponding [declarations](https://github.com/Sanshain/types-spring/tree/master/sources/utils).
+
