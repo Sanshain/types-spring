@@ -1,6 +1,7 @@
 // https://stackoverflow.com/questions/69676439/create-constant-array-type-from-an-object-type
 /**
  * @attention is not recommended for objects with more than 10 keys due to the severity of calculations
+ * @example KeysArray<a|b|c> = ['a', 'b', 'c']
  */
 export type KeysArray<FieldKeys extends string, Result extends string[] = []> = {
     [Key in FieldKeys]: Exclude<FieldKeys, Key> extends never ? [...Result, Key] : KeysArray<Exclude<FieldKeys, Key>, [...Result, Key]>;    
@@ -107,20 +108,22 @@ export type Indexes<T extends readonly unknown[]> = Exclude<Partial<T>["length"]
 // let r: FieldsArray<keyof typeof a>['length']; //  = ['b', 'a']
 // let r1: FieldsArray<keyof typeof a> = ['b', 'a']
 
-
+/**
+ * @param {number} L - n
+ * @description Generates a tuple of the specified length as a sequence of numbers from 0:
+ * @example Sequence<3> 
+ * @returns [0, 1, 2, ...n]
+ */
 export type Sequence<L extends number, A extends number[] = []> = A['length'] extends L ? A : Sequence<L, [...A, A['length']]>
 
-// const a = {
-//     a: 1,
-//     b: 2
-// } as const
-// let re: Sequence<3>
-// let rev: Sequence<KeysArray<keyof typeof a>['length']>[number] = 1
 
 
 
 
 
+// /**
+//  * @deprecated reminder for alternative way of the Merge<>
+//  */
 // type Merge<A, B> = {
 //     // [K in keyof A | keyof B]: K extends keyof A & keyof B ? (A[K] | B[K]) : K extends keyof B ? B[K] : K extends keyof A ? A[K] : never;
 //     [K in keyof A | keyof B]: K extends keyof A ? A[K] : (K extends keyof B ? B[K] : never)
@@ -135,36 +138,9 @@ export type Merge<T extends {}, K extends {}> = Omit<T, keyof K> & K;
 export type MergeAll<T extends Array<object>, L extends never[] = [], Result extends {} = {}> = T['length'] extends infer N extends L['length'] 
     ? Result
     : MergeAll<T, [...L, never], Merge<Result, T[L['length']]>>
+    
+    /// reminder for alternative way of the last line:
     // : MergeAll<T, [...L, never], Merge<Result, keyof T[L['length']]> & T[L['length']]>
-
-
-
-// const merge = <A extends object[]>(...a: [...A]) => {
-//     return Object.assign({}, ...a) as UnionToIntersection<A[number]>;
-// };
-
-
-// type A = {
-//     a: string,
-//     b: number
-// }
-// type B = {
-//     b: string,
-//     c: number
-// }
-
-// // type C = Merge<A, B>
-
-
-// type C = MergeAll<[A, B, { d: 7 }]>
-// let c: C;
-// c.
-
-// let a: A = {a: '', b: 7}
-// let b: B = {c: 1, b: '7'}
-
-// let cc = Object.assign(a, b, {}, {})
-// // let cc = {...a, ...b, ...{}, ...{}, ...{f: 7}}
 
 
 
@@ -184,10 +160,10 @@ export type ConvertTupleType<A extends ReadonlyArray<unknown>, T> = {
     [K in keyof A]: T
 }
 
-const arr = [1, 2, 3] as const
-// type R = WideArray<typeof arr>
-type R = ConvertTupleType<typeof arr, string>
-let r: R;
+// const arr = [1, 2, 3] as const
+// // type R = WideArray<typeof arr>
+// type R = ConvertTupleType<typeof arr, string>
+// let r: R;
 
 
 // const arr = [1, 2, 3] as const
@@ -196,17 +172,26 @@ let r: R;
 //     // const r = (arr as [number, number, number]).indexOf(44)
 
 //     if (~arr.indexOf(a)) {
-        
+
 //     }
 // }
 
 // const validate = (input: string | string[] | number[]) => {
 //     if (Array.isArray(input)) {
-        
+
 
 //         console.log(input);
 //     }
 // };
 
 
+/**
+ * @description https://stackoverflow.com/a/70307091/9659573
+ */
+type Enumerate<N extends number, Acc extends number[] = []> = Acc['length'] extends N
+    ? Acc[number]
+    : Enumerate<N, [...Acc, Acc['length']]>
 
+export type Range<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>
+
+type T = Range<20, 100>

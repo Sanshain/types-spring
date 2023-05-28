@@ -8,7 +8,7 @@ type HTMLSelector<S extends string> = S extends `${string},${string}`
     : S extends `${string}${` ` | `~`}${infer A extends string}` 
         ? S extends (`${string}~${infer H extends HTMLTagNames}` | `${string} ${infer H extends HTMLTagNames}`) 
             ? HTMLElementTagNameMap[H] 
-            : A extends `${string}${` ` | `~`}${string}`
+            : A extends `${string}${` ` | `]`}${string}`
                 ? Element
                 : A extends (`${infer H extends HTMLTagNames}${`.` | `#`}${string}`) 
                     ? HTMLElementTagNameMap[H]
@@ -26,8 +26,9 @@ interface ParentNode {
     querySelector<K extends keyof SVGElementTagNameMap>(selectors: K): SVGElementTagNameMap[K] | null;
     querySelector<K extends keyof MathMLElementTagNameMap>(selectors: K): MathMLElementTagNameMap[K] | null;
     // /** @deprecated */
-    querySelector<K extends keyof HTMLElementDeprecatedTagNameMap>(selectors: K): HTMLElementDeprecatedTagNameMap[K] | null;    
-    querySelector<S extends string>(selector: S): HTMLSelector<S> | null
+    querySelector<K extends keyof HTMLElementDeprecatedTagNameMap>(selectors: K): HTMLElementDeprecatedTagNameMap[K] | null;        
+    querySelector<S extends string>(selector: S): HTMLSelector<S> | null    
+
     /** Returns all element descendants of node that match selectors. */
     
     querySelectorAll<K extends keyof HTMLElementTagNameMap>(selectors: K): NodeListOf<HTMLElementTagNameMap[K]>;
@@ -35,8 +36,10 @@ interface ParentNode {
     querySelectorAll<K extends keyof MathMLElementTagNameMap>(selectors: K): NodeListOf<MathMLElementTagNameMap[K]>;
     /** @deprecated */
     querySelectorAll<K extends keyof HTMLElementDeprecatedTagNameMap>(selectors: K): NodeListOf<HTMLElementDeprecatedTagNameMap[K]>;
-    // querySelectorAll<E extends Element = Element>(selectors: string): NodeListOf<E>;        
     querySelectorAll<S extends string>(selector: S): NodeListOf<HTMLSelector<S>> | null;
+
+    // querySelector<E extends Element = Element>(selectors: string): E;
+    // querySelectorAll<E extends Element = Element>(selectors: string): NodeListOf<E>;            
 }
 
 
