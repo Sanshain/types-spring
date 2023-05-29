@@ -40,19 +40,23 @@ let t = Object.assign({ a: 7, b: 8 }, { b: '' })        // {a: number, b: string
 #### before:
 
 ```ts
-const obj = { a: 1, b: 1 }
+type O = { a: number, b: number }
+const obj: O = { a: 1, b: 1 }
 
 const keys = Object.keys(obj)                    // string[]
+const keys = Object.keys<O>(obj)                 // # !! not implemented
 const entries = Object.entries(obj)              // [string, number][]
 ```
 
 #### after:
 
 ```ts
-const obj = { a: 1, b: 1 }
+type O = { a: number, b: number }
+const obj: O = { a: 1, b: 1 }
 
-const keys = Object.keys(obj)                     // ("a" | "b")[]
-const entries = Object.entries(obj)               // ["a" | "b", number][]
+const keys = Object.keys(obj)                     // string[]
+const keys = Object.keys<O>(obj)                  // ("a" | "b")[]
+const entries = Object.entries<O>(obj)            // ["a" | "b", number][]
 ```
 
 ## DOM features:
