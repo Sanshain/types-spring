@@ -53,7 +53,6 @@ const entries = Object.entries(obj)              // [string, number][]
 type O = { a: number, b: number }
 const obj: O = { a: 1, b: 1 }
 
-const keys = Object.keys(obj)                     // string[]
 const keys = Object.keys<O>(obj)                  // ("a" | "b")[]
 const entries = Object.entries<O>(obj)            // ["a" | "b", number][]
 ```
