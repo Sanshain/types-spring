@@ -1,1 +1,4 @@
 node_modules/
+tests/
+tests_origin/
+.vscode/
