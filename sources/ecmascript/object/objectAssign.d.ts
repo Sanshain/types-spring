@@ -1,4 +1,4 @@
-type Merge<T extends {}, K extends {}> = Omit<T, keyof K> & K;
+type Merge<T extends object, K extends object> = Omit<T, keyof K> & K;
 
 type MergeAll<T extends Array<object>, L extends never[] = [], Result extends {} = {}> = T['length'] extends infer N extends L['length']
     ? Result

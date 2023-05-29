@@ -108,7 +108,7 @@ export type Sequence<L extends number, A extends number[] = []> = A['length'] ex
  * @returns {{...T, ...K}} - like flow type spread
  * @example Merge<{a: number, b: number}, {b: string, c: string}> => {a: number, b: string, c: string}
  */
-export type Merge<T extends {}, K extends {}> = Omit<T, keyof K> & K;
+export type Merge<T extends object, K extends object> = Omit<T, keyof K> & K;
 
 
 

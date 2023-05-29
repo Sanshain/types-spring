@@ -105,7 +105,7 @@ type B = {
 }
 let m: Merge<A, B> = { a: 1, b: 1, c: 1 }
 //@ts-expect-error
-let ms: Merge<A, B> = {a: 1, b: '', c: 1}
+let ms: Merge<A, B> = { a: 1, b: '', c: 1 }
 
 
 /// MergeAll
