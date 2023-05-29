@@ -81,11 +81,11 @@ if (divCls) {
 #### after:
 
 ```ts
-const input = document.querySelector('input');          // is HTMLInputElement | null
-const unknown = document.querySelector('.cls');         // is Element | null
-const inputWCls = document.querySelector('input.cls');  // is HTMLInputElement | null
+const input = document.querySelector('input');                      // is HTMLInputElement | null
+const unknown = document.querySelector('.cls');                     // is Element | null
+const inputWCls = document.querySelector('input.cls');              // is HTMLInputElement | null
 if (divCls) {
-    inputWCls.value = ''                                // success
+    inputWCls.value = ''                                            // success
 }
 ```
 
