@@ -69,12 +69,12 @@ Improves detecting Element type from selector signature.
 
 
 ```ts
-const input = document.querySelector('input');                                              // is HTMLInputElement | null
-const unknown = document.querySelector('.cls');                                             // is Element | null
-const inputWCls = document.querySelector('input.cls');                                      // is Element | null
+const input = document.querySelector('input');                         // is HTMLInputElement | null
+const unknown = document.querySelector('.cls');                        // is Element | null
+const inputWCls = document.querySelector('input.cls');                 // is Element | null
 
 if (divCls) {
-    inputWCls.value = ''                                                                    // error
+    inputWCls.value = ''                                               // error
 }
 ```
 
@@ -96,18 +96,18 @@ Original `querySelector` required just to use generic to specify returned type t
 #### before: 
 
 ```ts
-const misspell = document.querySelector<HTMLInputElement>('a.cls');                         // is HTMLInputElement | null
+const misspell = document.querySelector<HTMLInputElement>('a.cls');         // is HTMLInputElement | null
 if (misspell){
-    const replaced = misspell.value.replace('.', ',')                                       // runtime error!
+    const replaced = misspell.value.replace('.', ',')                       // runtime error!
 }
 ```
 
 #### after:
 
 ```ts
-const misspell = document.querySelector('a.cls');                                           // is HTMLInputElement | null
+const misspell = document.querySelector('a.cls');                           // is HTMLInputElement | null
 if (misspell){
-    const replaced = misspell.value.replace('.', ',')                                       // typescript error!
+    const replaced = misspell.value.replace('.', ',')                       // typescript error!
 }
 ```
 
