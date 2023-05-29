@@ -128,3 +128,26 @@ const clonedElem = elem?.cloneNode()                    // clonedElem is HTMLEle
 ## Utility types:
 
 Look up `README.md` inside corresponding [declarations](https://github.com/Sanshain/types-spring/tree/master/sources/utils).
+
+
+
+## How to use
+
+```ts
+npm i -D types-spring
+```
+
+#### To patch the built-in types: 
+
+add <b>types-spring</b> to <code>include</code> list inside <code>tsconfig.json</code>:
+    
+```tsconfig.json
+{
+    // ...,
+    "include": [
+        "./node_modules/**/*"
+    ]    
+}
+```
+
+
