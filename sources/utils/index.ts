@@ -1,9 +1,12 @@
 // https://stackoverflow.com/questions/69676439/create-constant-array-type-from-an-object-type
 /**
+ * @cat Array
  * @param { a | b | c | ... } FieldKeys
  * @attention is not recommended for objects with more than 10 keys due to the severity of calculations
  * @returns {[a, b, ...]}
  * @example KeysArray< a|b|c > = ['a', 'b', 'c']
+ * @cat Object
+ * @example KeysArray< keyof {a,b,c} > = ['a', 'b', 'c']
  */
 export type KeysArray<FieldKeys extends string, Result extends string[] = []> = {
     [Key in FieldKeys]: Exclude<FieldKeys, Key> extends never ? [...Result, Key] : KeysArray<Exclude<FieldKeys, Key>, [...Result, Key]>;    
@@ -11,6 +14,7 @@ export type KeysArray<FieldKeys extends string, Result extends string[] = []> = 
 
 
 /**
+ * @cat Object
  * @description Extracts required keys from object
  * @param {a, b, c?, ...} T
  * @returns {a | b | ...}
@@ -23,6 +27,7 @@ export type RequiredKeys<T extends object> = {
 
 
 /**
+ * @cat Object
  * @description Omit nullable types from object
  * @param {a, b, c?, ...} T
  * @returns {{a, b, ...}
@@ -36,6 +41,7 @@ export type OmitNullable<T> = {
 
 
 /**
+ * @cat primitives
  * @requires ^4.7.4
  * @description converts number string to number (usefull inside another types)
  * @param {`${number}`}
@@ -51,6 +57,7 @@ export type ParseInt<T> = T extends `${infer N extends number}` ? N : never;
 
 
 /**
+ * @cat Array (Tuple)
  * @param {number}
  * @description Generates fixed length array with specified type
  * @returns {[type, type, ...]}
@@ -67,6 +74,7 @@ export type ConstraitArray<N extends number, T = unknown, A extends T[] = []> = 
 
 
 /**
+ * @cat Array (Tuple)
  * @param {any[]}
  * @description Extract indexes from tuple like keyof object
  * @returns {0 | 1 | 2 | ...}
@@ -81,6 +89,7 @@ export type Indexes<T extends readonly unknown[]> = Exclude<Partial<T>["length"]
 
 
 /**
+ * @cat Array (Tuple)
  * @param {number} L 
  * @description Generates a tuple with the specified length as a sequence of numbers 
  * @returns [0, 1, 2, ...]
@@ -102,6 +111,7 @@ export type Sequence<L extends number, A extends number[] = []> = A['length'] ex
 // };
 
 /**
+ * @cat Object
  * @description like flow type spread
  * @param {object} T
  * @param {object} K
@@ -113,6 +123,7 @@ export type Merge<T extends object, K extends object> = Omit<T, keyof K> & K;
 
 
 /**
+ * @cat Object
  * @description Merges fields from unlimited amount of types like js spread or flow types spread
  * @param {[...Types]}
  * @returns {{...Types}} - like flow type spread
@@ -145,6 +156,7 @@ type WidenType<T> = T extends string
 
 
 /**
+ * @cat Array (Tuple)
  * @description Converts types of the tuple to corresponding common type
  * @param {[Tuple<type>]}
  * @returns {[Tuple<widentype>]}
@@ -158,6 +170,7 @@ export type WideArray<A extends ReadonlyArray<unknown>> = {
 
 
 /**
+ * @cat Array (Tuple)
  * @description Converts types of the tuple to specified type
  * @param {[Tuple<type>]} A
  * @param {type} T
@@ -175,6 +188,7 @@ export type ConvertTupleType<A extends ReadonlyArray<unknown>, T> = {
 
 
 /**
+ * @cat union
  * @atention not recomended for sequences over more then one hundren elements
  * @link https://stackoverflow.com/a/70307091/9659573
  * @param {number} N
@@ -189,4 +203,37 @@ export type Enumerate<N extends number, Acc extends number[] = []> = Acc['length
 
 
 export type Ranged<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>
+
+
+
+
+
+
+/**
+ * @cat Object
+ * @alternative type KeysWithValsOfType<T,V> = keyof { [ P in keyof T as T[P] extends V ? P : never ] : P };    
+ * @link https://stackoverflow.com/a/66144780/9659573
+ * @param {Record<S extends string, unknown>} T
+ * @param {unknown} V
+ * @description Extract keys with specified value type from object T
+ * @returns {key1 | key2 | ...}
+ * @example KeysMatching<{a: 1, b: ''}, string> => b
+ */
+export type KeysMatching<T, V> = { [K in keyof T]-?: T[K] extends V ? K : never }[keyof T];
+
+
+
+
+
+/**
+ * @cat Array
+ * @param {(type|type1|type2|...)[]} A
+ * @param {type} V
+ * @description Excludes from array all types except V
+ * @returns {(type)[]}
+ * @example Filter<Array<string|number>, number> => Array<number>
+ */
+export type Filter<A extends Array<unknown>, V> = Array<A[number] extends V ? never : V>
+
+
 

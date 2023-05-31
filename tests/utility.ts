@@ -1,6 +1,6 @@
 //@ts-check
 
-import type { KeysArray, OmitNullable, ParseInt, RequiredKeys, ConstraitArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence } from "../sources/utils";
+import type { KeysArray, OmitNullable, ParseInt, RequiredKeys, ConstraitArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, Filter } from "../sources/utils";
 
 
 /// KeysArray:
@@ -157,6 +157,24 @@ const n10: Ranged<5, 10> = 10;
 
 
 
+/// Filter
+
+const _a = [1, 2, ''];
+let rt: Filter<typeof _a, number> = [1, 2, 3]
+//@ts-expect-error
+let rr: Filter<typeof _a, number> = [1, 2, 3, '']
+
+
+
+
+
+
+
+
+
+
+
+
 //@ Another capabilites:
 
 
@@ -165,4 +183,5 @@ var ks: Sequence<L>[number] = 2                 // 0 | 1 | 2
 var ks: Enumerate<L> = 2                        // 0 | 1 | 2
 
 
-// a = 5
+
+

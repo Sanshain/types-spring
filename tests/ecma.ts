@@ -46,3 +46,6 @@ let ku = Object.keys<any>({ a: 1 })
 function func(arg: string) {        
     ku[0] = arg;
 }
+
+
+
