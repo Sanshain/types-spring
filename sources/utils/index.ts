@@ -231,9 +231,39 @@ export type KeysMatching<T, V> = { [K in keyof T]-?: T[K] extends V ? K : never 
  * @param {type} V
  * @description Excludes from array all types except V
  * @returns {(type)[]}
- * @example Filter<Array<string|number>, number> => Array<number>
+ * @example ArrayFilter<Array<string|number>, number> => Array<number>
  */
-export type Filter<A extends Array<unknown>, V> = Array<A[number] extends V ? never : V>
+export type ArrayFilter<A extends Array<unknown>, V> = Array<A[number] extends V ? never : V>
+
+
+
+
+
+/**
+ * @cat Object
+ * @param {{a: A, b: A}} T
+ * @param {string} F
+ * @description maps object to object
+ * @returns {{a: A[F], b: A[F]}}
+ * @example MapType<{a: {a: string}}, "a"> => {a: string}
+ */
+export type MapType<T extends Record<string, Record<F, unknown>>, F extends string> = {
+    [K in keyof T]: T[K][F]
+}
+
+
+
+/**
+ * @cat Array & Tuple
+ * @param {[A,A]} T
+ * @param {string} F
+ * @description maps object to object
+ * @returns {[A[F], A[F]]}
+ * @example MapType<[{a: string}], "a"> => [string]
+ */
+export type MapArray<T extends Record<F, unknown>[], F extends string> = {
+    [K in keyof T]: T[K][F]
+}
 
 
 

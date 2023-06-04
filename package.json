@@ -1,6 +1,6 @@
 {
   "name": "types-spring",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "a package that provides more accurate and powerful typescript capabilities",
   "types": "./sources/utils/index.ts",
   "exports": {
@@ -27,6 +27,7 @@
     "typescript": "^4.7.4 || ^5.0.4"
   },
   "devDependencies": {
+    "@types/node": "^20.2.5",
     "simple-git-hooks": "^2.8.1",
     "typescript": "^5.0.4"
   }

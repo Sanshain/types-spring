@@ -46,3 +46,72 @@ const kindredCls = document.querySelector('.cls~div.cls'); if (kindredID) kindre
 const element = document.getElementById('id')?.cloneNode();
 //@ts-expect-error
 if (element) element.innerText = ''
+
+
+
+
+/// MouseEvent:
+
+function uiEvent(event: UIEvent) {
+    //@ts-expect-error
+    if (event.target) var s: string | null = event.target.textContent
+}
+window.addEventListener('click', e => {    
+    if (e.target) {
+        //@ts-expect-error
+        let v = e.currentTarget?.origin || '';
+        //@ts-expect-error
+        e.target.textContent = v;
+    }
+})
+
+/// addEventListener:
+
+
+
+{
+    let div_a = document.querySelector<HTMLDivElement>('div.a');
+    let input = document.querySelector<HTMLInputElement>('div.a');
+    let txtar = document.querySelector<HTMLTextAreaElement>('div.a');
+
+    div_a?.addEventListener('click', e => {
+        //@ts-expect-error
+        let tv = e.target?.innerText
+        //@ts-expect-error
+        let v = e.currentTarget?.innerText
+    })
+    document.addEventListener('click', function (event) {
+        //@ts-expect-error
+        let r = event.target?.body
+        //@ts-expect-error
+        let b = event.currentTarget?.body
+    })    
+    input?.addEventListener('focus', e => {
+        //@ts-expect-error
+        let v = e.currentTarget?.value
+        //@ts-expect-error
+        let tv = e.target.value
+        //@ts-expect-error
+        let tc = e.target.textContent
+    })
+    input?.addEventListener('input', e => {
+        //@ts-expect-error
+        let v = e.currentTarget?.value
+        //@ts-expect-error
+        let tv = e.target.value
+        //@ts-expect-error
+        let tc = e.target.textContent
+        //@ts-expect-error
+        e.inputType?.indexOf('a')
+    })
+    txtar?.addEventListener('input', e => {
+        //@ts-expect-error
+        let v = e.currentTarget?.value
+        //@ts-expect-error
+        let tv = e.target.value
+        //@ts-expect-error
+        let tc = e.target.textContent
+        //@ts-expect-error
+        e.inputType.indexOf('a')
+    })
+}

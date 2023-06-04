@@ -7,7 +7,7 @@ const elem = document.querySelector('.cls'); if (elem) elem.innerHTML = ''      
 const tag = document.querySelector('input'); if (tag) tag.value = '';                                                   // is HTMLInputElement
 
 
-const force = document.querySelector<HTMLElement>('#id'); if (force) force.innerText = ''                               // is Element
+const force = document.querySelector<HTMLElement>('#id'); if (force) force.innerText = ''                               // is HTMLElement
 const forceType = document.querySelector<HTMLInputElement>('a a input'); if (forceType) forceType.value = ''            // is HTMLInputElement
 
 
@@ -74,6 +74,7 @@ function mouseEvent(event: MouseEvent) {
 }
 
 function keyEvent(event: KeyboardEvent<HTMLInputElement>) {
+    //@ts-expect-error
     if (event.target) var s: string | null = event.target.value
     if (event.currentTarget) var s: string | null = event.currentTarget.value
 }
@@ -83,5 +84,43 @@ function event__window(event: MouseEvent<Window>|KeyboardEvent<Window>) {
     if (event.currentTarget) var s: string | null = event.currentTarget.origin
 }
 
+window.addEventListener('click', event__window)
+window.addEventListener('click', e => { if (e.target) e.target.textContent = e.currentTarget?.origin || ''; })
 
+
+
+/// addEventListener:
+
+
+{
+    document.querySelector('div.a')?.addEventListener('click', e => {
+        //@ts-expect-error
+        let tv = e.target?.innerText
+        let v = e.currentTarget?.innerText
+    })
+    document.addEventListener('click', function (event) {
+        //@ts-expect-error
+        let r = event.target?.body
+        let b = event.currentTarget?.body
+    })
+    document.querySelector('input.a')?.addEventListener('focus', e => {
+        let v = e.currentTarget?.value
+        let tv = e.target.value
+        let tc = e.target.textContent
+    })    
+    document.querySelector('input.a')?.addEventListener('input', e => {        
+        let v = e.currentTarget?.value
+        let tv = e.target.value   
+        let tc = e.target.textContent             
+        e.inputType?.indexOf('a')        
+        //@ts-expect-error
+        e.inputType.indexOf('a')        
+    })
+    document.querySelector('textarea.a')?.addEventListener('input', e => {
+        let v = e.currentTarget?.value
+        let tv = e.target.value
+        let tc = e.target.textContent        
+        e.inputType.indexOf('a')        
+    })    
+}
 

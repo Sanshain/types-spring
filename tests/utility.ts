@@ -1,6 +1,6 @@
 //@ts-check
 
-import type { KeysArray, OmitNullable, ParseInt, RequiredKeys, ConstraitArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, Filter } from "../sources/utils";
+import type { KeysArray, OmitNullable, ParseInt, RequiredKeys, ConstraitArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray, MapType as MapTypeValue } from "../sources/utils";
 
 
 /// KeysArray:
@@ -160,17 +160,72 @@ const n10: Ranged<5, 10> = 10;
 /// Filter
 
 const _a = [1, 2, ''];
-let rt: Filter<typeof _a, number> = [1, 2, 3]
+let rt: ArrayFilter<typeof _a, number> = [1, 2, 3]
 //@ts-expect-error
-let rr: Filter<typeof _a, number> = [1, 2, 3, '']
+let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
 
 
 
 
+/// MapType
+{
+    type O = {
+        a: {
+            value: number,
+        },
+        b: {
+            value: string,
+        }
+    }
+
+    function func1(yyy: MapTypeValue<O, "value">) {
+        yyy.b = ''
+        //@ts-expect-error
+        yyy.b = 1
+        yyy.a = 1
+        //@ts-expect-error
+        yyy.a = ''
+    }    
+}
 
 
 
 
+/// MapArray
+
+{
+    type A = [
+        {
+            a: number
+        },
+        {
+            a: number
+        }
+    ]
+
+    type R = MapArray<A, 'a'>
+    let r: R = [1, 2];
+    //@ts-expect-error
+    let r1: R = [1, 2, 3];
+    //@ts-expect-error
+    let r2: R = [1];
+    //@ts-expect-error
+    let r3: R = ['', ''];
+    //@ts-expect-error
+    let r4: R = [{ a: number }, { a: number }];
+
+    {
+        type R = MapArray<Array<{ a: number }>, 'a'>
+        let r: R = [1, 2];
+        let r1: R = [1, 2, 3];
+        let r2: R = [1];
+        //@ts-expect-error
+        let r3: R = ['', ''];
+        //@ts-expect-error
+        let r4: R = [{ a: number }, { a: number }];          
+    }
+    
+}
 
 
 
