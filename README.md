@@ -273,8 +273,6 @@ Despite the small contribution of ts-reset, I was very tempted to use any of its
 
 This is a very [cool package](https://github.com/sindresorhus/type-fest) with a huge number of utility types. When I started working on types-string, I didn't know anything about it. However, when I got awared, to my surprise I found that most of them (with the exception of just two) practically do not overlap with `types-spring`! It turns out that these are completely different packages with different tools, since their authors think differently. 
         
-Despite the fact that a lot of types in `types-fest` are really cool and there are really a lot of them, I have not found any practical performing for the most of the lot. Nevertheless, there are very useful, for example, `Expect` type, which performs the role of a strict `Omit`. Also, some types could be very useful for narrow cases: if you need a deep merging of types or types that automatically generate multidimensional arrays, then `types-fest` could be very useful.
-        
 #### Compatibility
         
 `types-spring` and `types-fest` may well complement each other. Of course, that's so
