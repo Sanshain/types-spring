@@ -1,3 +1,4 @@
+[![npm](https://img.shields.io/npm/v/types-spring)](https://www.npmjs.com/package/types-spring)
 [![npm](https://img.shields.io/npm/dm/types-spring)](https://www.npmjs.com/package/types-spring)
 
 # types-spring 
