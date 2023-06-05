@@ -110,7 +110,6 @@ A very strong temptation was to make an `Object.keys(obj)` returned `(keys of ob
 ```ts
 type O = { a: number, b: number }
 const obj: O = { a: 1, b: 1 }
-
 const keys = Object.keys(obj)                    // string[]
 ```
 
@@ -119,7 +118,6 @@ const keys = Object.keys(obj)                    // string[]
 ```ts
 type O = { a: number, b: number }
 const obj: O = { a: 1, b: 1 }
-
 const keys = Object.keys<O>(obj)                  // ("a" | "b")[]
 ```    
     
