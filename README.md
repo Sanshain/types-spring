@@ -1,7 +1,7 @@
+# types-spring 
+
 [![npm](https://img.shields.io/npm/v/types-spring)](https://www.npmjs.com/package/types-spring)
 [![npm](https://img.shields.io/npm/dm/types-spring)](https://www.npmjs.com/package/types-spring)
-
-# types-spring 
 
 A package that aims to eliminate some of the shortcomings of the built-in types in standard ts libraries and deliver additional utility types that will facilitate daily work. Inspired by [ts-reset](https://github.com/total-typescript/ts-reset). 
 
