@@ -19,7 +19,6 @@ function getIndex(arg: number) {
 
 
 
-
 /// Array.isArray
 
 
@@ -59,14 +58,14 @@ Object.assign(o1, o2).b = 'ok'
 
 /// Object.defineProperty
 
-Object.defineProperty(1, "name", {})
-const r = Object.defineProperty({ a: 1 }, "name", {
+let ro = Object.defineProperty(1, "name", {})
+const r = Object.defineProperty({ a: 1 }, "b", {
     value: 1,
 });
 
 let n: number = r.a
 //@ts-expect-error
-let v = r.name;
+let v = r.b;
 
 
 /// Object.defineProperties

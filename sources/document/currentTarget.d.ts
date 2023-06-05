@@ -57,6 +57,11 @@ interface HTMLTextAreaElement {
 }
 
 interface HTMLInputElement {
+
+    /**
+     * @issue https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1174#issuecomment-933042088
+     */
+    
     addEventListener(
         type: 'input',
         listener: (

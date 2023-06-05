@@ -60,16 +60,15 @@ o.b = 'ok'
 
 /// Object.defineProperty
 
-
-const r = Object.defineProperty({ a: 1 }, "name", {
+const r = Object.defineProperty({ a: 1 }, "b", {
     value: 1,
 });
 
 
 let n: number = r.a
-let v: number = r.name;
+let v: number = r.b;
 //@ts-expect-error
-r.name = v
+r.b = v
 
 
 
@@ -224,18 +223,22 @@ r.name = v
 }
 
 
-/// Object.keys:
 
 
-let k = Object.keys({ a: 1 })
-function succesFunc(arg: string) {    
-    //@ts-expect-error
-    k[0] = arg;
-}
 
-let ku = Object.keys<any>({ a: 1 })
-function func(arg: string) {        
-    ku[0] = arg;
+/// Object.keys (look up readme section on Object.keys):
+
+{
+    const a = { a: 1 }
+    let k = Object.keys(a)                                  // is ReadonlyArray<keyof typeof a>
+    function succesFunc(arg: keyof typeof a) {
+        return a[arg]
+    }
+    let t = k.length > 2 ? k[1] : undefined
+    t && succesFunc(t)
+
+    let ku = Object.keys<any>(a)                            // is string[]
+    ku[0] = 'arg';
 }
 
 
