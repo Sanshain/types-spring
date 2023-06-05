@@ -259,9 +259,9 @@ add <b>types-spring</b> to <code>include</code> list inside <code>tsconfig.json<
 }
 ```
 
-## Similar packages
+## Similar packages:
         
-### ts-reset
+## ts-reset
         
 As it was said at the beginning, this package was inspired by [ts-reset](https://github.com/total-typescript/ts-reset). At first glance, it seemed that the `ts-reset` does very little: it just overrides in tslib `any` to `unknown` type wherever possible, and contains two useful improvements for `Array.indexOf` and `Array.filter`. However despite the fact that in this one there are not so much features, it is very profound and I would say that the author is very scrupulous about safing.
         
@@ -269,10 +269,16 @@ As it was said at the beginning, this package was inspired by [ts-reset](https:/
         
 Despite the small contribution of ts-reset, I was very tempted to use any of its functions in types-spring, but I deliberately did not do it in order not to repeat what other people have already done before me in the best possible way. I consider `ts-reset` as be a fundamental package, and the best thing to do today is to use these two these packages (`ts-reset` and `types-spring`) together
         
-### types-fest
+## types-fest
 
 This is a very [cool package](https://github.com/sindresorhus/type-fest) with a huge number of utility types. When I started working on types-string, I didn't know anything about it. However, when I got awared, to my surprise I found that most of them (with the exception of just two) practically do not overlap with `types-spring`! It turns out that these are completely different packages with different tools, since their authors think differently. 
         
 #### Compatibility
         
 `types-spring` and `types-fest` may well complement each other. Of course, that's so
+        
+## Licence
+        
+MIT
+        
+![GitHub](https://img.shields.io/github/license/Sanshain/types-spring)
