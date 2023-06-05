@@ -196,6 +196,31 @@ const elem = document.getElementById('id')              // elem is HTMLElement
 const clonedElem = elem?.cloneNode()                    // clonedElem is HTMLElement also
 ```
 
+   
+### currentTarget
+    
+Improved automatic type detection for the `currentTarget` in `MouseEvent`, `KeyboardEvent` and other user interface events:
+    
+#### before:
+    
+```ts
+let elem: HTMLDivElement = document.querySelector('div');
+elem?.addEventListener('click', e => {        
+    let target = e.currentTarget;                       // is EventTarget | null
+})
+```
+    
+    
+#### after:
+    
+```ts
+let elem: HTMLDivElement = document.querySelector('div');
+elem?.addEventListener('click', e => {        
+    let target = e.currentTarget;                       // is HTMLDivElement | null
+})
+```
+  
+    
 ## Utility types:
 
 Look up `README.md` inside corresponding [declarations](https://github.com/Sanshain/types-spring/tree/master/sources/utils).
