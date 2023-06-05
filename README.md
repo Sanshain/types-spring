@@ -124,6 +124,19 @@ const keys = Object.keys<O>(obj)                  // ("a" | "b")[]
 However, this approach has several constraints (see the [documentation](https://github.com/Sanshain/ts-keys-turn#constraints))
     
 Look up the section on configuring the package for use with [Object.keys](https://github.com/Sanshain/ts-keys-turn/blob/master/README.md#using-keys-for-transformataion-requires-the-following-steps)
+
+<details>
+    <summary><h4>Unsafe branch using<h4></summary>
+
+#### before:
+
+There is also an unsafe [branch](https://github.com/Sanshain/types-spring/tree/unsafe) that contains the aforementioned `Object.keys` declaration, which assumes its use without any transformations, if you are willing to take responsibility for its use as keys
+    
+```ts
+const keys = Object.keys<O>({a: 1, b: 1})        // ("a" | "b")[]
+```
+    
+</details>
     
 
 ## DOM features:
