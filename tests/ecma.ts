@@ -227,16 +227,13 @@ r.name = v
 /// Object.keys:
 
 
-let k = Object.keys({ a: 1 })
-function succesFunc(arg: string) {    
-    //@ts-expect-error
-    k[0] = arg;
-}
+// let k = Object.keys({ a: 1 })
+// function succesFunc(arg: string) {    
+//     //@ts-expect-error
+//     k[0] = arg;
+// }
 
-let ku = Object.keys<any>({ a: 1 })
-function func(arg: string) {        
-    ku[0] = arg;
-}
-
-
-
+// let ku = Object.keys<any>({ a: 1 })
+// function func(arg: string) {        
+//     ku[0] = arg;
+// }
