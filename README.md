@@ -128,8 +128,6 @@ Look up the section on configuring the package for use with [Object.keys](https:
 <details>
     <summary><h4>Unsafe branch using<h4></summary>
 
-#### 1
-
 There is also an unsafe [branch](https://github.com/Sanshain/types-spring/tree/unsafe) that contains the aforementioned `Object.keys` declaration, which assumes its use without any transformations, if you are willing to take responsibility for its use as keys
     
 ```ts
