@@ -20,19 +20,86 @@ const a = [1, 2, 3] as const;
 let arr = a.map(r => r + '')                             // [string, string, string]
 ```
 
-### Object.assign
+### Array.isArray
 
 #### before: 
 
 ```ts
-let t = Object.assign({ a: 7, b: 8 }, { b: '' })        // {a: number, b: never}
+function checkArray(a: { a: 1 } | ReadonlyArray<number>) 
+{
+    if (Array.isArray(a)) {                                 // is any[]
+        a.forEach(item => item.f())                         // => runtime error!
+    }
+    else {                  
+        a.a                                                 // type error: property `a` does not exists!
+    }
+}
 ```
 
 #### after: 
 
 ```ts
-let t = Object.assign({ a: 7, b: 8 }, { b: '' })        // {a: number, b: string}
+function checkArray(a: { a: 1 } | ReadonlyArray<number>) 
+{
+    if (Array.isArray(a)) {
+        a.forEach(item => item.f())                         // type error: f does not exist on type number
+    }
+    else {
+        a.a                                                 // no error
+    }
+}
 ```
+
+### Object.assign
+
+#### before: 
+
+```ts
+let t = Object.assign({ a: 7, b: 8 }, { b: '' })            // {a: number, b: never}
+```
+
+#### after: 
+
+```ts
+let t = Object.assign({ a: 7, b: 8 }, { b: '' })            // {a: number, b: string}
+```
+
+### Object.defineProperty
+
+#### before:
+
+```ts
+const a = { a: 1 }
+const r = Object.defineProperty(a, "b", { value: 1, });     // {a: number}
+```
+
+#### after: 
+
+```ts
+const a = { a: 1 }
+const r = Object.defineProperty(a, "b", { value: 1, });     // {a: number, readonly b: number}
+```
+
+### Object.defineProperties
+
+#### before:
+
+```ts
+const a = { a: 1 }
+const rs = Object.defineProperties({ a: 1 }, {              // {a: number}
+    b: { value: 1 }
+});
+```
+
+#### after: 
+
+```ts
+const a = { a: 1 }
+const rs = Object.defineProperties({ a: 1 }, {              // {a: number, readonly b: number}
+    b: { value: 1 }
+});
+```
+
 
 
 ### Object.keys
