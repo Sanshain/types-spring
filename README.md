@@ -27,12 +27,10 @@ let arr = a.map(r => r + '')                             // [string, string, str
 ```ts
 function checkArray(a: { a: 1 } | ReadonlyArray<number>) 
 {
-    if (Array.isArray(a)) {                                 // is any[]
+    if (Array.isArray(a)) {                              
         a.forEach(item => item.f())                         // => runtime error!
     }
-    else {                  
-        a.a                                                 // type error: property `a` does not exists!
-    }
+    else { a.a }                                            // type error: property `a` does not exists!
 }
 ```
 
@@ -44,9 +42,7 @@ function checkArray(a: { a: 1 } | ReadonlyArray<number>)
     if (Array.isArray(a)) {
         a.forEach(item => item.f())                         // type error: f does not exist on type number
     }
-    else {
-        a.a                                                 // no error
-    }
+    else { a.a }                                            // success 
 }
 ```
 
