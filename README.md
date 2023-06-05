@@ -137,8 +137,8 @@ Look up `README.md` inside corresponding [declarations](https://github.com/Sansh
 
 ## How to use
 
-```ts
-npm i -D types-spring
+```sh
+npm i -D Sanshain/types-spring#unsafe
 ```
 
 #### To patch the built-in types: 
