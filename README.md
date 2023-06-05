@@ -113,7 +113,7 @@ const obj: O = { a: 1, b: 1 }
 const keys = Object.keys(obj)                    // string[]
 ```
 
-#### with ts-keys-applier:
+#### after ts-keys-applier:
 
 ```ts
 const keys = Object.keys<O>(obj)                  // ("a" | "b")[]
