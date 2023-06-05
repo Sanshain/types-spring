@@ -133,7 +133,7 @@ Look up the section on configuring the package for use with [Object.keys](https:
 <details>
     <summary><h4>Object.keys with unsafe branch<h4></summary>
 
-There is also an unsafe [branch](https://github.com/Sanshain/types-spring/tree/unsafe) that contains the aforementioned `Object.keys` declaration, which assumes its use without any transformations, if you are willing to take responsibility for its use as keys
+There is also an [unsafe branch](https://github.com/Sanshain/types-spring/tree/unsafe) that contains the aforementioned `Object.keys` declaration, which assumes its use without any transformations, if you are willing to take responsibility for its use as keys
     
 ```ts
 const keys = Object.keys<O>({a: 1, b: 1})        // ("a" | "b")[]
