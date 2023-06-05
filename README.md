@@ -270,11 +270,11 @@ As it was said at the beginning, this package was inspired by [ts-reset](https:/
         
 #### Compatibility
         
-Despite the small contribution of ts-reset, I was very tempted to use any of its functions in types-spring, but I deliberately did not do it in order not to repeat what other people have already done before me in the best possible way. I consider `ts-reset` as be a fundamental package, and the best thing to do today is to use these two these packages (`ts-reset` and `types-spring`) together
+Despite the small contribution of ts-reset, I was very tempted to use some of its functions in types-spring, but I deliberately did not do it in order not to repeat what other people have already done in the best possible way before me. I consider `ts-reset` as be a fundamental package, and the best thing to do today is to use these two these packages (`ts-reset` and `types-spring`) together
         
 ## types-fest
 
-This is a very [cool package](https://github.com/sindresorhus/type-fest) with a huge number of utility types. When I started working on types-string, I didn't know anything about it. However, when I got awared, to my surprise I found that most of them (with the exception of just two) practically do not overlap with `types-spring`! It turns out that these are completely different packages with different tools, since their authors think differently. 
+This is a [awesome package](https://github.com/sindresorhus/type-fest) with a huge number of utility types. When I started working on types-string, I didn't know anything about it. However, when I got awared, to my surprise found that most of them (with the exception of just two) do not overlap with `types-spring`! It turns out that these are completely different packages with different tools, since their authors think differently. 
         
 #### Compatibility
         
