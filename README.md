@@ -53,7 +53,7 @@ function checkArray(a: { a: 1 } | ReadonlyArray<number>)
 
 #### before: 
 ```ts
-let o = Object.create({})                                  // any
+let o = Object.create({})                                   // any
 ```
 
 #### after: 
