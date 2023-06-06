@@ -139,6 +139,42 @@ type R = ConvertTupleType<typeof arr, string>
 let r: R;                                       // type is [number, number, number]
 ```
 
+### ArrayFilter<unknown[], Type>
+
+Excludes from array all types except Type
+
+```ts
+const _a = [1, 2, ''];                          // (string | number)[]
+let rt: ArrayFilter<typeof _a, number>          // string[]
+```
+
+### MapArray<unknown[], key>
+
+Map array item (object) to reduced object from specified key
+
+```ts
+type A = [
+    { a: number, b: string },
+    { a: string, c: boolean }
+]
+
+type R = MapArray<A, 'a'>                       // [number, string]
+```
+
+
+### MapType<object, key>
+
+Map object item (object) to reduced object from specified key
+
+```ts
+type O = {
+    a: { value: number, },
+    b: { value: string, }
+}
+
+let yyy: MapTypeValue<O, "value">               // {a: number, b: number} 
+```
+
 <br>
 <hr>
 <br>
@@ -146,11 +182,14 @@ let r: R;                                       // type is [number, number, numb
 ## table of contents:
 
 
-- [`<keyof object>` => `keys[]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#keysarraykeys)
-- [`{keys: value}` => `requiredkeys[number]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#requiredkeystype)
-- [`{k0?, k1, k2}` => `{k2, k3}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#omitnullabletype)
+- [`a|b|c` => `[a, b, c]`](#keysarraykeys)
+- [`{k0?, k1, k2}` => `k2 | k2`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#requiredkeystype)
+- [`{k0?, k1, k2}` => `{k2, k2}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#omitnullabletype)
 - [`<number, type>` => `tuple<type>`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#constraitarraynumber-type)
 - [`<tuple>` => `keyof tuple`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#indexesconst-array)
 - [`<number>` => `tuple<number>`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#sequencenumber)
 - [`<A, B>` => `{...A, ...B}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#mergetype-type)
-- [`[A, B, C]` => `{...A, ...B, ...C}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#mergealltypes)
+- [`<[A, B, C]>` => `{...A, ...B, ...C}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#mergealltypes)
+- [`<(A|B|C)[], A>` => `(B|C)[]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#arrayfilterunknown-type)
+- [`[{value: number}]` => `[number]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maparrayunknown-key)
+- [`{a: {value: number}}` => `{a: number}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maptypeobject-key)
