@@ -49,6 +49,18 @@ function checkArray(a: { a: 1 } | ReadonlyArray<number>)
 }
 ```
 
+### Object.create
+
+#### before: 
+```ts
+let o = Object.create({})                                   // any
+```
+
+#### after: 
+```ts
+let o = Object.create({})                                   // object
+```
+
 ### Object.assign
 
 #### before: 
