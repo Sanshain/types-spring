@@ -257,11 +257,11 @@ export type MapType<T extends Record<string, Record<F, unknown>>, F extends stri
  * @cat Array & Tuple
  * @param {[A,A]} T
  * @param {string} F
- * @description maps object to object
+ * @description map array item (object) to reduced object from specified key
  * @returns {[A[F], A[F]]}
  * @example MapType<[{a: string}], "a"> => [string]
  */
-export type MapArray<T extends Record<F, unknown>[], F extends string> = {
+export type MapArray<T extends Record<F, unknown>[] | ReadonlyArray<Record<F, unknown>>, F extends string> = {
     [K in keyof T]: T[K][F]
 }
 

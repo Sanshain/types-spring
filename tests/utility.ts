@@ -1,6 +1,10 @@
 //@ts-check
 
-import type { KeysArray, OmitNullable, ParseInt, RequiredKeys, ConstraitArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray, MapType as MapTypeValue } from "../sources/utils";
+import type {
+    KeysArray, OmitNullable, ParseInt, RequiredKeys, ConstraitArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
+    MapType as MapTypeValue,
+    KeysMatching
+} from "../sources/utils";
 
 
 /// KeysArray:
@@ -156,8 +160,17 @@ const n10: Ranged<5, 10> = 10;
 
 
 
+/// KeysMatching
 
-/// Filter
+{
+    let a = { a: 1, b: '', c: '' };
+    //@ts-expect-error
+    let keysa: KeysMatching<typeof a, string> = 'a'
+    let keys: KeysMatching<typeof a, string> = 'b'    
+}
+
+
+/// ArrayFilter
 
 const _a = [1, 2, ''];
 let rt: ArrayFilter<typeof _a, number> = [1, 2, 3]
@@ -196,15 +209,14 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
 {
     type A = [
         {
-            a: number
+            a: number, b: string
         },
         {
-            a: number
+            a: string
         }
-    ]
-
+    ]    
     type R = MapArray<A, 'a'>
-    let r: R = [1, 2];
+    let r: R = [1, '2'];
     //@ts-expect-error
     let r1: R = [1, 2, 3];
     //@ts-expect-error
