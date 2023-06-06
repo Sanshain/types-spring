@@ -4,8 +4,6 @@
  * The purpose of this test is to check whether the flaws in the original package have been eliminated
  */
 
-
-
 /// querySelector:
 
 const tag = document.querySelector('div'); if (tag) tag.innerText = '';                                         // success
@@ -70,6 +68,9 @@ window.addEventListener('click', e => {
 
 
 {
+    let tt = new EventTarget();
+    tt.addEventListener('click', e => e.currentTarget == e.target)
+
     let div_a = document.querySelector<HTMLDivElement>('div.a');
     let input = document.querySelector<HTMLInputElement>('div.a');
     let txtar = document.querySelector<HTMLTextAreaElement>('div.a');

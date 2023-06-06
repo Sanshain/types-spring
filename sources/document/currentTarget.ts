@@ -2,20 +2,29 @@
 /// Events:
 
 interface UIEvent<T extends EventTarget = EventTarget> {
-    readonly target: Node | null;
+    readonly target: (EventTarget extends T
+        ? EventTarget
+        : Node) | null;
+    // readonly target: (EventTarget extends T
+    //     ? EventTarget
+    //     : Node extends T
+    //         ? Node 
+    //         : Element) | null;    
     readonly currentTarget: T | null; 
     // readonly target: (T extends Window ? Node : T) | null;
 }
 
-type EventTargets = Node | Element | HTMLElement | SVGAElement | Document | Window;
+type EventTargets = EventTarget | Node | Element | HTMLElement | SVGAElement | Document | Window;
 
 
 interface MouseEvent<T extends EventTargets = Node> {
+    readonly target: (EventTarget extends T ? EventTarget : Node) | null;
     readonly currentTarget: T | null;    
 }
 
 
 interface KeyboardEvent<T extends EventTargets = Node> {
+    readonly target: (EventTarget extends T ? EventTarget : Node) | null;
     readonly currentTarget: T | null;    
 }
 
@@ -23,7 +32,8 @@ interface FocusEvent<T extends EventTargets = Node> {
     readonly currentTarget: T | null;
 }
 
-type GenericEvent<T extends EventTargets = Node> = KeyboardEvent<T> | MouseEvent<T> 
+// type GenericEvent<T extends EventTargets = Node> = (KeyboardEvent<T> | MouseEvent<T>) & UIEvent<T>
+// type GenericEvent<T extends EventTargets = Node> = (KeyboardEvent<T> | MouseEvent<T>) 
 
 
 /// addEventListener:
@@ -31,14 +41,16 @@ type GenericEvent<T extends EventTargets = Node> = KeyboardEvent<T> | MouseEvent
 
 interface Document {
     addEventListener<K extends keyof DocumentEventMap>(
-        type: K, listener: (this: Document, ev: DocumentEventMap[K] extends GenericEvent ? GenericEvent<Document> : DocumentEventMap[K]
-    ) => any, options?: boolean | AddEventListenerOptions): void;
+        type: K,
+        listener: (this: Document, ev: DocumentEventMap[K] extends KeyboardEvent | MouseEvent ? DocumentEventMap[K] & UIEvent<Document> : DocumentEventMap[K]) => any,
+        options?: boolean | AddEventListenerOptions): void;
 }
 
 interface Window{
     addEventListener<K extends keyof WindowEventMap>(
-        type: K, listener: (this: Window, ev: WindowEventMap[K] extends GenericEvent ? GenericEvent<Window> : WindowEventMap[K]
-    ) => any, options?: boolean | AddEventListenerOptions): void;    
+        type: K,
+        listener: (this: Window, ev: WindowEventMap[K] extends KeyboardEvent | MouseEvent ? (WindowEventMap[K] & UIEvent<Window>) : WindowEventMap[K]) => any,
+        options?: boolean | AddEventListenerOptions): void;    
 }
 
 

@@ -64,11 +64,11 @@ if (element) element.innerText = ''
 
 /// MouseEvent:
 
-function uiEvent(event: UIEvent) {
+function uiEvent(event: UIEvent<Node>) {
     if (event.target) var s: string | null = event.target.textContent    
 }
 
-function mouseEvent(event: MouseEvent) {
+function mouseEvent(event: MouseEvent & UIEvent<Node>) {
     if (event.target) var s: string | null = event.target.textContent
     if (event.currentTarget) var s: string | null = event.currentTarget.textContent
 }
@@ -79,7 +79,8 @@ function keyEvent(event: KeyboardEvent<HTMLInputElement>) {
     if (event.currentTarget) var s: string | null = event.currentTarget.value
 }
 
-function event__window(event: MouseEvent<Window>|KeyboardEvent<Window>) {
+function event__window(event: MouseEvent<Window>) {
+    event.pageX    
     if (event.target) var s: string | null = event.target.textContent
     if (event.currentTarget) var s: string | null = event.currentTarget.origin
 }
@@ -89,11 +90,17 @@ window.addEventListener('click', e => { if (e.target) e.target.textContent = e.c
 
 
 
+
 /// addEventListener:
 
 
 {
+
+    let tt: EventTarget & {a?: 1} = new EventTarget();
+    tt.addEventListener('click', e => e.currentTarget == e.target)
+
     document.querySelector('div.a')?.addEventListener('click', e => {
+        let tc = e.target?.textContent
         //@ts-expect-error
         let tv = e.target?.innerText
         let v = e.currentTarget?.innerText
@@ -122,5 +129,10 @@ window.addEventListener('click', e => { if (e.target) e.target.textContent = e.c
         let tc = e.target.textContent        
         e.inputType.indexOf('a')        
     })    
+
+    document.addEventListener('click', e => {
+        let v = e.currentTarget?.body
+        let tc = e.target?.textContent
+    })
 }
 
