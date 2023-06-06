@@ -248,11 +248,11 @@ add <b>types-spring</b> to <code>include</code> list inside <code>tsconfig.json<
         
 ## ts-reset
         
-As it was said at the beginning, this package was inspired by [ts-reset](https://github.com/total-typescript/ts-reset). At first glance, it seemed that the `ts-reset` does very little: it just overrides in tslib `any` to `unknown` type wherever possible, and contains two useful improvements for `Array.indexOf` and `Array.filter`. However despite the fact that in this one there are not so much features, it is very profound and I would say that the author is very scrupulous about safing.
+As it was said at the beginning, this package was inspired by [ts-reset](https://github.com/total-typescript/ts-reset). At first glance, it seemed that the `ts-reset` does very little: it just overrides in tslib `any` to `unknown` type wherever possible, and contains very limited number of improvements (like `Array.filter`). However despite the fact that in this one there are not so much features, it is very profound and I would say that the author is very scrupulous about safing.
         
 #### Compatibility
         
-Despite the small contribution of ts-reset, I was very tempted to use some of its functions in types-spring, but I deliberately did not do it in order not to repeat what other people have already done in the best possible way before me. I consider `ts-reset` as be a fundamental package, and the best thing to do today is to use these two these packages (`ts-reset` and `types-spring`) together
+Despite the modest ts-reset contribution to typescript world, I was tempted to use some of its features in `types-spring`, but I deliberately did not do that in order not to repeat what other people have already done in the best possible way before me. I consider `ts-reset` as be a fundamental package, and the best thing to do today is to use these two these packages (`ts-reset` and `types-spring`) together
         
 ## types-fest
 
