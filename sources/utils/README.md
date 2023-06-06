@@ -183,8 +183,8 @@ let yyy: MapTypeValue<O, "value">               // {a: number, b: number}
 
 
 - [`a|b|c` => `[a, b, c]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#keysarraykeys)
-- [`{keys: value}` => `requiredkeys[number]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#requiredkeystype)
-- [`{k0?, k1, k2}` => `{k2, k3}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#omitnullabletype)
+- [`{k0?, k1, k2}` => `k2 | k2`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#requiredkeystype)
+- [`{k0?, k1, k2}` => `{k2, k2}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#omitnullabletype)
 - [`<number, type>` => `tuple<type>`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#constraitarraynumber-type)
 - [`<tuple>` => `keyof tuple`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#indexesconst-array)
 - [`<number>` => `tuple<number>`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#sequencenumber)
