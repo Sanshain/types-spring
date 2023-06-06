@@ -182,7 +182,7 @@ let yyy: MapTypeValue<O, "value">               // {a: number, b: number}
 ## table of contents:
 
 
-- [`a|b|c` => `[a, b, c]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#keysarraykeys)
+- [`a|b|c` => `[a, b, c]`](#keysarraykeys)
 - [`{k0?, k1, k2}` => `k2 | k2`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#requiredkeystype)
 - [`{k0?, k1, k2}` => `{k2, k2}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#omitnullabletype)
 - [`<number, type>` => `tuple<type>`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#constraitarraynumber-type)
