@@ -267,3 +267,26 @@ export type MapArray<T extends Record<F, unknown>[] | ReadonlyArray<Record<F, un
 
 
 
+
+
+/**
+ * @cat Object
+ * @param {{a} | {b}}} U
+ * @description convert union to intersection
+ * @link https://stackoverflow.com/a/50375286
+ * @returns {{a} & {b}}
+ * @example UnionToIntersection<{a:1} | {b:1}> => {a: 1} & {b: 1}
+ */
+export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
+
+
+/**
+ * @cat Object
+ * @param {{a} | {b}}} U
+ * @description detects whether the type is union
+ * @notes {boolean is always true}
+ * @link https://stackoverflow.com/a/53955431
+ * @returns {boolean}
+ * @example IsUnion<{a:1} | {b:1}> => true
+ */
+export type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true

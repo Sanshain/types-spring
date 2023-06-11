@@ -3,7 +3,9 @@
 import type {
     KeysArray, OmitNullable, ParseInt, RequiredKeys, ConstraitArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
     MapType as MapTypeValue,
-    KeysMatching
+    KeysMatching,
+    UnionToIntersection,
+    IsUnion
 } from "../sources/utils";
 
 
@@ -240,6 +242,20 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
 }
 
 
+
+/// UnionToIntersection:
+
+{
+    let a: UnionToIntersection<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
+    let b: {a: 1} & {b: 1} = a
+}
+
+
+/// IsUnion
+{
+    let a: IsUnion<string | false> = true
+    let b: IsUnion<string> = false
+}
 
 
 //@ Another capabilites:
