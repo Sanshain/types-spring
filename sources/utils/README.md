@@ -1,7 +1,7 @@
 
 ## Utility types:
 
-### KeysArray\<Keys\>
+### [KeysArray\<Keys\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L11)
 
 Creates tuple like array type from an object type:
 
@@ -19,7 +19,7 @@ const foo: KeysArray<keyof ObjType> = [           // expected success
 ];    
 ```
 
-### RequiredKeys\<Type\>
+### [RequiredKeys\<Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L23)
 
 Extracts required keys from object: 
 
@@ -34,7 +34,7 @@ type User = {
 let a: RequiredKeys<User> = 'name'  // 'name' | 'name1'
 ```
 
-### OmitNullable\<Type\>
+### [OmitNullable\<Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L36)
 
 ```ts
 type User = {
@@ -45,7 +45,7 @@ type User = {
 type NonNullableUserPropertyKeys = OmitNullable<User>;    // {name: string}
 ```
 
-### ParseInt\<string\>
+### [ParseInt\<string\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L51)
 
 Extracts number from string
 
@@ -53,7 +53,7 @@ Extracts number from string
 type N = ParseInt<'7'>    // type N = 7
 ```
 
-### ConstraitArray\<number, type\>
+### [ConstraitArray\<number, type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L66)
 
 Generates fixed length array with specified type
 
@@ -61,7 +61,7 @@ Generates fixed length array with specified type
 export let names: ConstraitArray<2, boolean> = [false, true]    // [boolean, boolean]
 ```
 
-### Indexes\<const Array\>
+### [Indexes\<const Array\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L83)
 
 Extract indexes from tuple like keyof object
 
@@ -76,7 +76,7 @@ export const testArray = [
 type ArrayIndex = Indexes<typeof testArray>;     // 0 | 1 | 2 | 3
 ```
 
-### Sequence\<number\>
+### [Sequence\<number\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L98)
 
 generates a tuple of the specified length as a sequence of numbers from 0:
 
@@ -84,7 +84,7 @@ generates a tuple of the specified length as a sequence of numbers from 0:
 let re: Sequence<3>                             // [0, 1, 2]
 ```
 
-### Merge\<Type, Type\>
+### [Merge\<Type, Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L121)
 
 Merges fields from two types  like js spread or flow types spread
 
@@ -102,7 +102,7 @@ type C = Merge<A, B>
 let c: C;                                       // {a: string, b: string, c: number}
 ```
 
-### MergeAll\<[...Types]\>
+### [MergeAll\<[...Types]\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L132)
 
 Merges fields from unlimited amount of types like js spread or flow types spread
 
@@ -120,7 +120,7 @@ type C = MergeAll<[A, B, { d: 7 }]>
 let c: C;                                       // {a: string, b: string, c: number, d: 7}
 ```
 
-### WideArray\<Tuple\>
+### [WideArray\<Tuple\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L165)
 
 Converts types of the tuple to corresponding common type
 
@@ -129,7 +129,7 @@ const arr = [1, 2, 3] as const                  // type is [1, 2, 3]
 type R = WideArray<typeof arr>                  // type is [number, number, number]
 ```
 
-### ConvertTupleType\<Tuple\>
+### [ConvertTupleType\<Tuple\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L180)
 
 Converts types of the tuple to specified type
 
@@ -139,7 +139,7 @@ type R = ConvertTupleType<typeof arr, string>
 let r: R;                                       // type is [number, number, number]
 ```
 
-### ArrayFilter<unknown[], Type>
+### [ArrayFilter<unknown[], Type>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L236)
 
 Excludes from array all types except Type
 
@@ -148,7 +148,7 @@ const _a = [1, 2, ''];                          // (string | number)[]
 let rt: ArrayFilter<typeof _a, number>          // string[]
 ```
 
-### MapArray<unknown[], key>
+### [MapArray<unknown[], key>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L250)
 
 Map array item (object) to reduced object from specified key
 
@@ -162,7 +162,7 @@ type R = MapArray<A, 'a'>                       // [number, string]
 ```
 
 
-### MapType<object, key>
+### [MapType<object, key>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#LL264C13-L264C21)
 
 Map object item (object) to reduced object from specified key
 
@@ -173,6 +173,23 @@ type O = {
 }
 
 let yyy: MapTypeValue<O, "value">               // {a: number, b: number} 
+```
+
+### UnionToIntersection\<U\>
+
+Converts union to intersection
+
+```ts
+let a: UnionToIntersection<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
+```
+
+### IsUnion\<T\>
+
+Detects whether the type is union
+
+```ts
+let a: IsUnion<string | number> = true
+let b: IsUnion<string> = false
 ```
 
 <br>
