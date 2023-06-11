@@ -183,7 +183,7 @@ converts union to intersection
 let a: UnionToIntersection<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
 ```
 
-### IsUnion
+### IsUnion\<T\>
 
 ```ts
 let a: IsUnion<string | number> = true
