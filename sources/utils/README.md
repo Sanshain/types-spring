@@ -175,6 +175,21 @@ type O = {
 let yyy: MapTypeValue<O, "value">               // {a: number, b: number} 
 ```
 
+### UnionToIntersection\<U\>
+
+converts union to intersection
+
+```ts
+let a: UnionToIntersection<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
+```
+
+### IsUnion
+
+```ts
+let a: IsUnion<string | number> = true
+let b: IsUnion<string> = false
+```
+
 <br>
 <hr>
 <br>
