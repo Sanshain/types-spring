@@ -1,30 +1,60 @@
 
+type Spread<A, B> = {
+    [K in keyof A | keyof B]: K extends keyof A & keyof B ? (A[K] | B[K]) : K extends keyof B ? B[K] : K extends keyof A ? A[K] : never;
+    // [K in keyof A | keyof B]: K extends keyof A ? A[K] : (K extends keyof B ? B[K] : never)
+};
+
+// // test Spread:
+// {
+//     let a: Spread<{ a: 1 }, { a: '', b: 1 }>    
+// }
+
+
 /// Events:
 
-interface UIEvent<T extends EventTarget = EventTarget> {
+interface UIEvent<T extends EventTarget = EventTarget, G extends EventTargets = EventTarget> {
+    // readonly target: (EventTarget extends T
+    //     ? EventTarget
+    //     : T extends Document
+    //         ? Document | Node
+    //         : T extends Window
+    //             ? Node
+    //             : Node) | null;
+    
     readonly target: (EventTarget extends T
-        ? EventTarget
-        : Node) | null;
+            ? EventTarget
+            : T extends infer R extends Window | Document
+                ? EventTarget extends G ? (R | Node) : G
+                : Node) | null;    
+    // readonly target: (EventTarget extends T
+    //     ? EventTarget
+    //     : Node) | null;
     // readonly target: (EventTarget extends T
     //     ? EventTarget
     //     : Node extends T
     //         ? Node 
     //         : Element) | null;    
-    readonly currentTarget: T | null; 
-    // readonly target: (T extends Window ? Node : T) | null;
+    // readonly target: (T extends Window ? Node : T) | null;    
+    readonly currentTarget: T | null;     
+    
 }
+
 
 type EventTargets = EventTarget | Node | Element | HTMLElement | SVGAElement | Document | Window;
 
 
-interface MouseEvent<T extends EventTargets = Node> {
-    readonly target: (EventTarget extends T ? EventTarget : Node) | null;
+interface MouseEvent<T extends EventTargets = Node, G extends EventTargets = EventTarget> {
+    // readonly target: (EventTarget extends T ? EventTarget : Node) | null;
+    // readonly target: T extends Window ? T : UIEvent<T>['target'];
+    readonly target: (EventTarget extends G ? UIEvent<T>['target'] : G) | null;           
     readonly currentTarget: T | null;    
 }
 
 
-interface KeyboardEvent<T extends EventTargets = Node> {
-    readonly target: (EventTarget extends T ? EventTarget : Node) | null;
+interface KeyboardEvent<T extends EventTargets = Node, G extends EventTargets = EventTarget> {
+    // readonly target: (EventTarget extends T ? EventTarget : Node) | null;
+    // readonly target: UIEvent<T>['target'];
+    readonly target: (EventTarget extends G ? UIEvent<T>['target'] : G) | null; 
     readonly currentTarget: T | null;    
 }
 
@@ -35,10 +65,6 @@ interface FocusEvent<T extends EventTargets = Node> {
 // type GenericEvent<T extends EventTargets = Node> = (KeyboardEvent<T> | MouseEvent<T>) & UIEvent<T>
 // type GenericEvent<T extends EventTargets = Node> = (KeyboardEvent<T> | MouseEvent<T>) 
 
-
-/// addEventListener:
-
-
 interface Document {
     addEventListener<K extends keyof DocumentEventMap>(
         type: K,
@@ -47,10 +73,23 @@ interface Document {
 }
 
 interface Window{
-    addEventListener<K extends keyof WindowEventMap>(
+    addEventListener<K extends keyof WindowEventMap, T extends EventTargets = EventTarget>(
         type: K,
-        listener: (this: Window, ev: WindowEventMap[K] extends KeyboardEvent | MouseEvent ? (WindowEventMap[K] & UIEvent<Window>) : WindowEventMap[K]) => any,
-        options?: boolean | AddEventListenerOptions): void;    
+        listener: (
+            this: Window,            
+            ev: WindowEventMap[K] extends KeyboardEvent | MouseEvent ? Merge<WindowEventMap[K], UIEvent<Window, T>> : WindowEventMap[K]) => any,
+        
+            // ev: WindowEventMap[K] extends KeyboardEvent | MouseEvent ? WindowEventMap[K] & UIEvent<Window> : WindowEventMap[K]) => any,
+        
+            // as no safed may be ^
+                    
+            // ev: WindowEventMap[K] extends infer R extends KeyboardEvent | MouseEvent
+            //     ? R['isTrusted'] extends true
+            //         ? WindowEventMap[K] & {target: Element, currentTarget: Window}
+            //         : Merge<WindowEventMap['click'], UIEvent<Window>>
+            //     : WindowEventMap[K]) => any,
+        
+        options?: boolean | AddEventListenerOptions): void;     
 }
 
 

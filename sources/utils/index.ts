@@ -290,3 +290,28 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
  * @example IsUnion<{a:1} | {b:1}> => true
  */
 export type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true
+
+
+
+/**
+ * @cat Object
+ * @description highlights common properties
+ * @link https://stackoverflow.com/questions/47375916/typescript-how-to-create-type-with-common-properties-of-two-types
+ * @example Common<{ a: 1 }, { a: 2, b: 1 }> => {a: 1 | 2}
+ */
+export type Common<A, B> = {
+    [K in keyof A & keyof B]: A[K] | B[K]
+}
+
+
+/**
+ * @cat Object
+ * @param {T} minuend
+ * @param {D} subtrahend
+ * @description returns an object with properties of the first type that are not present in the second
+ * @return {object} - object with properties of the first type that are not present in the second
+ */
+export type Diff<T extends object, D extends object> = {
+    [K in keyof T as K extends keyof D ? never : K]: T[K]
+}
+

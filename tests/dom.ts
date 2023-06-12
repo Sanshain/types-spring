@@ -81,25 +81,45 @@ function keyEvent(event: KeyboardEvent<HTMLInputElement>) {
 
 function event__window(event: MouseEvent<Window>) {
     event.pageX    
-    if (event.target) var s: string | null = event.target.textContent
+    if (event.target) var s: string | null = 'self' in event.target ? '' : event.target.textContent
     if (event.currentTarget) var s: string | null = event.currentTarget.origin
 }
 
-window.addEventListener('click', event__window)
-window.addEventListener('click', e => { if (e.target) e.target.textContent = e.currentTarget?.origin || ''; })
+function strictWindowEvent(event: MouseEvent<Window, Element>) {
+    event.pageX
+    event.target?.innerHTML    
+}
 
+window.addEventListener('click', event__window)
+window.addEventListener('click', e => {
+    if (e.target) {
+        // if (e.isTrusted === true) { e.target }
+        if ('atob' in e.target) {
+            e.target.alert(9)
+        }
+        else {  // 'nodeName' in 
+            e.target.textContent = e.currentTarget?.origin || '';
+        }        
+    }
+})
 
 
 
 /// addEventListener:
 
 
+
 {
+    /// generic: 
+    window.addEventListener<'click', Element>('click', e => {
+        e.target?.innerHTML
+    })
+
 
     let tt: EventTarget & {a?: 1} = new EventTarget();
     tt.addEventListener('click', e => e.currentTarget == e.target)
 
-    document.querySelector('div.a')?.addEventListener('click', e => {
+    document.querySelector('div.a')?.addEventListener('click', (e: MouseEvent<HTMLDivElement>) => {
         let tc = e.target?.textContent
         //@ts-expect-error
         let tv = e.target?.innerText
