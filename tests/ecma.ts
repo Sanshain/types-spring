@@ -228,12 +228,23 @@ r.name = v
 
 
 // let k = Object.keys({ a: 1 })
-// function succesFunc(arg: string) {    
+// function succesFunc(arg: string) {
 //     //@ts-expect-error
 //     k[0] = arg;
 // }
 
 // let ku = Object.keys<any>({ a: 1 })
-// function func(arg: string) {        
+// function func(arg: string) {
 //     ku[0] = arg;
 // }
+
+
+/// setPrototypeOf:
+
+{
+    let o = Object.setPrototypeOf({ a: 1 }, { b: 1 })
+    //@ts-expect-error
+    o.a = ''
+    //@ts-expect-error
+    o.b = ''    
+}
