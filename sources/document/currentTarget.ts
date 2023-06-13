@@ -76,21 +76,16 @@ interface Document {
 
 interface Window {
     // onclick: ((this: GlobalEventHandlers, ev: Merge<MouseEvent, { currentTarget: Window }>) => any) | null;
-    addEventListener<K extends keyof WindowEventMap, T extends EventTargets = EventTarget>(
+    addEventListener<K extends keyof WindowEventMap, TT extends EventTargets = EventTarget>(
         type: K,
         listener: (
             this: Window,            
-            ev: WindowEventMap[K] extends KeyboardEvent | MouseEvent ? Merge<WindowEventMap[K], UIEvent<Window, T>> : WindowEventMap[K]) => any,
+            // ev: WindowEventMap[K] extends KeyboardEvent | MouseEvent ? Merge<WindowEventMap[K], UIEvent<Window, T>> : WindowEventMap[K]) => any,
         
-            // ev: WindowEventMap[K] extends KeyboardEvent | MouseEvent ? WindowEventMap[K] & UIEvent<Window> : WindowEventMap[K]) => any,
-        
-            // as no safed may be ^
-                    
-            // ev: WindowEventMap[K] extends infer R extends KeyboardEvent | MouseEvent
-            //     ? R['isTrusted'] extends true
-            //         ? WindowEventMap[K] & {target: Element, currentTarget: Window}
-            //         : Merge<WindowEventMap['click'], UIEvent<Window>>
-            //     : WindowEventMap[K]) => any,
+            ev: WindowEventMap[K] extends KeyboardEvent | MouseEvent
+                ? (Merge<WindowEventMap[K], UIEvent<Window, EventTargets extends TT ? Element : TT>> & { isTrusted: true })
+                    | (Merge<WindowEventMap[K], UIEvent<Window, TT>> & { isTrusted: false; })
+                : WindowEventMap[K]) => any,
         
         options?: boolean | AddEventListenerOptions): void;     
 }
