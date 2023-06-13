@@ -114,7 +114,7 @@ window.addEventListener('click', e => {
     window.addEventListener<'click', Element>('click', e => {
         e.target?.innerHTML
     })
-
+    const elem = document.querySelector('div')
 
     let tt: EventTarget & {a?: 1} = new EventTarget();
     tt.addEventListener('click', e => e.currentTarget == e.target)
@@ -127,7 +127,7 @@ window.addEventListener('click', e => {
     })
     document.addEventListener('click', function (event) {
         //@ts-expect-error
-        let r = event.target?.body
+        let r = event.target?.body                      // is Node        
         let b = event.currentTarget?.body
     })
     document.querySelector('input.a')?.addEventListener('focus', e => {

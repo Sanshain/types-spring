@@ -43,7 +43,7 @@ interface UIEvent<T extends EventTarget = EventTarget, G extends EventTargets = 
 type EventTargets = EventTarget | Node | Element | HTMLElement | SVGAElement | Document | Window;
 
 
-interface MouseEvent<T extends EventTargets = Node, G extends EventTargets = EventTarget> {
+interface MouseEvent<T extends EventTargets = EventTarget, G extends EventTargets = EventTarget> {
     // readonly target: (EventTarget extends T ? EventTarget : Node) | null;
     // readonly target: T extends Window ? T : UIEvent<T>['target'];
     readonly target: (EventTarget extends G ? UIEvent<T>['target'] : G) | null;           
@@ -51,7 +51,7 @@ interface MouseEvent<T extends EventTargets = Node, G extends EventTargets = Eve
 }
 
 
-interface KeyboardEvent<T extends EventTargets = Node, G extends EventTargets = EventTarget> {
+interface KeyboardEvent<T extends EventTargets = EventTarget, G extends EventTargets = EventTarget> {
     // readonly target: (EventTarget extends T ? EventTarget : Node) | null;
     // readonly target: UIEvent<T>['target'];
     readonly target: (EventTarget extends G ? UIEvent<T>['target'] : G) | null; 
@@ -72,7 +72,10 @@ interface Document {
         options?: boolean | AddEventListenerOptions): void;
 }
 
-interface Window{
+
+
+interface Window {
+    // onclick: ((this: GlobalEventHandlers, ev: Merge<MouseEvent, { currentTarget: Window }>) => any) | null;
     addEventListener<K extends keyof WindowEventMap, T extends EventTargets = EventTarget>(
         type: K,
         listener: (
