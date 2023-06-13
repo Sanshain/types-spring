@@ -1,6 +1,6 @@
 {
   "name": "types-spring",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "a package that provides more accurate and powerful typescript capabilities",
   "types": "./sources/utils/index.ts",
   "exports": {
@@ -21,6 +21,11 @@
     "typescript",
     "types"
   ],
+  "repository": {
+    "url": "https://github.com/Sanshain/types-spring.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/Sanshain/types-spring",
   "author": "Sanshain",
   "license": "MIT",
   "peerDependencies": {

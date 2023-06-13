@@ -93,7 +93,7 @@ function strictWindowEvent(event: MouseEvent<Window, Element>) {
 window.addEventListener('click', event__window)
 window.addEventListener('click', e => {
     if (e.target) {
-        // if (e.isTrusted === true) { e.target }
+        if (e.isTrusted === true) { e.target }
         if ('atob' in e.target) {
             e.target.alert(9)
         }
