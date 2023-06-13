@@ -227,7 +227,7 @@ const clonedElem = elem?.cloneNode()                    // clonedElem is HTMLEle
    
 ### currentTarget
     
-Improved automatic type detection for the `currentTarget` in `MouseEvent`, `KeyboardEvent` and other user interface events:
+Improved automatic type detection for the `currentTarget` in `MouseEvent`, `KeyboardEvent` and other user interface events (only inside `addEventListener` callback):
     
 #### before:
     
