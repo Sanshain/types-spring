@@ -192,6 +192,26 @@ let a: IsUnion<string | number> = true
 let b: IsUnion<string> = false
 ```
 
+### Common
+
+Highlights common properties
+
+```ts
+type A = { a: number, b: number, c: number }
+type B = { aa: number, b: number, c: string }
+let c: Common<A, B>                               // {b: number, c: number | string}
+```
+
+### Diff
+
+returns an object with properties of the first type that are not present in the second
+
+```ts
+type A = { a: number, b: number, c: number }
+type B = { b: number, c: string }
+let c: Diff<A, B>                                // {a: number}  
+```
+
 <br>
 <hr>
 <br>
