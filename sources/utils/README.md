@@ -270,8 +270,9 @@ let c: Diff<A, B>                                // {a: number}
 ||KeysMatching|||
 
 
-## Table of contents as pseudocode:
+<details>
 
+<summary><h4>Pseudocode:</h4></summary>
 
 - [KeysArray:](#keysarraykeys) `a|b|c` => `[a, b, c]`
 - [RequiredKeys:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#requiredkeystype) `{k0?, k1, k2}` => `k2 | k2`
@@ -285,3 +286,4 @@ let c: Diff<A, B>                                // {a: number}
 - [MapArray:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maparrayunknown-key) `[{value: number}]` => `[number]`
 - [MapType:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maptypeobject-key) `{a: {value: number}}` => `{a: number}`
 
+</details>
