@@ -116,3 +116,18 @@ window.addEventListener('click', e => {
         e.inputType.indexOf('a')
     })
 }
+
+window.addEventListener('click', e => {
+    if (e.target) {
+        if (e.isTrusted === true) {
+            e.target                       // is Element
+        }
+
+        if (e.target instanceof Window) {
+            e.target                       // is Window
+        }
+        else {
+            e.target                       // is Node
+        }
+    }
+})

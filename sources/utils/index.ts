@@ -9,18 +9,20 @@
  * @example KeysArray< keyof {a,b,c} > = ['a', 'b', 'c']
  */
 export type KeysArray<FieldKeys extends string, Result extends string[] = []> = {
-    [Key in FieldKeys]: Exclude<FieldKeys, Key> extends never ? [...Result, Key] : KeysArray<Exclude<FieldKeys, Key>, [...Result, Key]>;    
+    [Key in FieldKeys]: Exclude<FieldKeys, Key> extends never
+        ? [...Result, Key] 
+        : KeysArray<Exclude<FieldKeys, Key>, [...Result, Key]>;    
 }[FieldKeys];
 
 
 /**
  * @cat Object
  * @description Extracts required keys from object
- * @param {a, b, c?, ...} T
- * @returns {a | b | ...}
+ * @param {a, b: |null, c, ...} T
+ * @returns {a | c | ...}
  * @example {a?: any, b: any, c: any} => b | c
  */
-export type RequiredKeys<T extends object> = {
+export type NonNullableKeys<T extends object> = {
     [P in keyof T]: null extends T[P] ? never : P;
 }[keyof T];
 
@@ -63,7 +65,7 @@ export type ParseInt<T> = T extends `${infer N extends number}` ? N : never;
  * @returns {[type, type, ...]}
  * @example {ConstraitArray<2, boolean> => [false, true]}
  */
-export type ConstraitArray<N extends number, T = unknown, A extends T[] = []> = A['length'] extends N ? A : ConstraitArray<N, T, [...A, T]>
+export type ConstrainArray<N extends number, T = unknown, A extends T[] = []> = A['length'] extends N ? A : ConstrainArray<N, T, [...A, T]>
 
 
 

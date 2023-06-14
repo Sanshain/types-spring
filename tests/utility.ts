@@ -1,11 +1,13 @@
 //@ts-check
 
 import type {
-    KeysArray, OmitNullable, ParseInt, RequiredKeys, ConstraitArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
+    KeysArray, OmitNullable, ParseInt, NonNullableKeys, ConstrainArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
     MapType as MapTypeValue,
     KeysMatching,
     UnionToIntersection,
-    IsUnion
+    IsUnion,
+    Common,
+    Diff
 } from "../sources/utils";
 
 
@@ -27,7 +29,7 @@ const objKeys: KeysArray<keyof ObjType> = ["a", "b", "c"];
 
 
 
-/// RequiredKeys
+/// NonNullableKeys
 
 
 type User = {
@@ -37,9 +39,9 @@ type User = {
     phonenumber: string | null;
 };
 
-let a: RequiredKeys<User> = 'name'
+let a: NonNullableKeys<User> = 'name'
 //@ts-expect-error
-let b: RequiredKeys<User> = 'phonenumber' 
+let b: NonNullableKeys<User> = 'phonenumber' 
 
 
 
@@ -64,11 +66,11 @@ const num: ParseInt<'7'> = 7
 
 /// ConstraitArray
 
-let names: ConstraitArray<2, boolean> = [false, true]
+let names: ConstrainArray<2, boolean> = [false, true]
 //@ts-expect-error
-let names_3: ConstraitArray<2, boolean> = [false, true, false]
+let names_3: ConstrainArray<2, boolean> = [false, true, false]
 //@ts-expect-error
-let strings: ConstraitArray<2, boolean> = ['', '']
+let strings: ConstrainArray<2, boolean> = ['', '']
 
 
 
@@ -255,6 +257,28 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
 {
     let a: IsUnion<string | false> = true
     let b: IsUnion<string> = false
+}
+
+
+/// Common:
+{
+    type A = { a: number, b: number, c: number }
+    type B = { aa: number, b: number, c: string }
+    let c: Common<A, B> = {
+        b: 1,
+        c: ''
+    }
+    //@ts-expect-error
+    c.a
+    //@ts-expect-error
+    c.aa    
+}
+
+/// Diff:
+{
+    type A = { a: number, b: number, c: number }
+    type B = { aa: number, b: number, c: string }
+    let c: Diff<A, B> = {a: 1}    
 }
 
 
