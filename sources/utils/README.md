@@ -16,35 +16,6 @@
 
 
 
-
-#### Arrays:
-- [KeysArray](#keysarraykeys)
-- [ConstrainArray](#constrainarraynumber-type)
-- [Sequence](#sequencenumber)
-- [WideArray](#widearraytuple)
-- [ConvertTupleType](#converttupletypetuple)
-- [ArrayFilter](#arrayfilterunknown-type)
-- [MapArray](#maparrayunknown-key)
-
-#### Objects:
-
-- [RequiredKeys](#requiredkeystype)
-- [OmitNullable](#omitnullabletype)
-- [Merge](#mergetype-type)
-- [MergeAll](#mergealltypes)
-- KeysMatching
-- [MapType](#maptypeobject-key)
-- [UnionToIntersection](#uniontointersectionu)
-- [IsUnion](#isuniont)
-- [Common](#common)
-- [Diff](#diff)
-
-#### Unions: 
-
-- Enumerate
-
-
-
 ### [KeysArray\<Keys\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L11)
 
 Creates tuple like array type from an object type:
@@ -274,3 +245,31 @@ let c: Diff<A, B>                                // {a: number}
 - [`<(A|B|C)[], A>` => `(B|C)[]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#arrayfilterunknown-type)
 - [`[{value: number}]` => `[number]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maparrayunknown-key)
 - [`{a: {value: number}}` => `{a: number}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maptypeobject-key)
+
+
+
+#### Arrays:
+- [KeysArray](#keysarraykeys)
+- [ConstrainArray](#constrainarraynumber-type)
+- [Sequence](#sequencenumber)
+- [WideArray](#widearraytuple)
+- [ConvertTupleType](#converttupletypetuple)
+- [ArrayFilter](#arrayfilterunknown-type)
+- [MapArray](#maparrayunknown-key)
+
+#### Objects:
+
+- [RequiredKeys](#requiredkeystype)
+- [OmitNullable](#omitnullabletype)
+- [Merge](#mergetype-type)
+- [MergeAll](#mergealltypes)
+- KeysMatching
+- [MapType](#maptypeobject-key)
+- [UnionToIntersection](#uniontointersectionu)
+- [IsUnion](#isuniont)
+- [Common](#common)
+- [Diff](#diff)
+
+#### Unions: 
+
+- Enumerate
