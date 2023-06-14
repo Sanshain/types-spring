@@ -17,7 +17,7 @@
 
 #### Objects:
 
-- [RequiredKeys](#requiredkeystype)
+- [NonNullableKeys](#nonnullablekeystype)
 - [OmitNullable](#omitnullabletype)
 - [Merge](#mergetype-type)
 - [MergeAll](#mergealltypes)
@@ -56,7 +56,7 @@ const foo: KeysArray<keyof ObjType> = [           // expected success
 ];    
 ```
 
-### [RequiredKeys\<Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L23)
+### [NonNullableKeys\<Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L23)
 
 Extracts required keys from object: 
 
@@ -68,7 +68,7 @@ type User = {
     email1: string | null;
 };
 
-let a: RequiredKeys<User> = 'name'  // 'name' | 'name1'
+let a: NonNullableKeys<User> = 'name'  // 'name' | 'name1'
 ```
 
 ### [OmitNullable\<Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L36)
@@ -263,7 +263,7 @@ let c: Diff<A, B>                                // {a: number}
 |[Sequence](#sequencenumber)|[Diff](#diff)|||
 |[WideArray](#widearraytuple)|[Common](#common)|||
 |[ConvertTupleType](#converttupletypetuple)|[OmitNullable](#omitnullabletype)|||
-|[ArrayFilter](#arrayfilterunknown-type)|[RequiredKeys](#requiredkeystype)|||
+|[ArrayFilter](#arrayfilterunknown-type)|[NonNullableKeys](#nonnullablekeystype)|||
 |[MapArray](#maparrayunknown-key)|[MapType](#maptypeobject-key)|||
 ||[IsUnion](#isuniont)|||
 ||[UnionToIntersection](#uniontointersectionu)|||
@@ -275,7 +275,7 @@ let c: Diff<A, B>                                // {a: number}
 <summary><h4>Pseudocode:</h4></summary>
 
 - [KeysArray:](#keysarraykeys) `a|b|c` => `[a, b, c]`
-- [RequiredKeys:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#requiredkeystype) `{k0?, k1, k2}` => `k2 | k2`
+- [NonNullableKeys:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#nonnullablekeystype) `{k0?, k1, k2}` => `k2 | k2`
 - [OmitNullable:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#omitnullabletype) `{k0?, k1, k2}` => `{k2, k2}`
 - [ConvertTupleType:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#constraitarraynumber-type) `<number, type>` => `tuple<type>`
 - [Indexes:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#indexesconst-array) `<tuple>` => `keyof tuple`
