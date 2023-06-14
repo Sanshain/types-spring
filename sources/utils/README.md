@@ -1,6 +1,34 @@
 
 ## Utility types:
 
+#### Arrays:
+- [KeysArray](#keysarraykeys)
+- [ConstrainArray](#constrainarraynumber-type)
+- [Sequence](#sequencenumber)
+- [WideArray](#widearraytuple)
+- [ConvertTupleType](#converttupletypetuple)
+- [ArrayFilter](#arrayfilterunknown-type)
+- [MapArray](#maparrayunknown-key)
+
+#### Objects:
+
+- [RequiredKeys](#requiredkeystype)
+- [OmitNullable](#omitnullabletype)
+- [Merge](#mergetype-type)
+- [MergeAll](#mergealltypes)
+- KeysMatching
+- [MapType](#maptypeobject-key)
+- [UnionToIntersection](#uniontointersectionu)
+- [IsUnion](#isuniont)
+- [Common](#common)
+- [Diff](#diff)
+
+#### Unions: 
+
+- Enumerate
+
+
+
 ### [KeysArray\<Keys\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L11)
 
 Creates tuple like array type from an object type:
@@ -53,12 +81,12 @@ Extracts number from string
 type N = ParseInt<'7'>    // type N = 7
 ```
 
-### [ConstraitArray\<number, type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L66)
+### [ConstrainArray\<number, type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L66)
 
 Generates fixed length array with specified type
 
 ```ts
-export let names: ConstraitArray<2, boolean> = [false, true]    // [boolean, boolean]
+export let names: ConstrainArray<2, boolean> = [false, true]    // [boolean, boolean]
 ```
 
 ### [Indexes\<const Array\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L83)
