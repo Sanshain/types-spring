@@ -1,6 +1,11 @@
-
+<div align="center">
+    
 ## Utility types:
+    
+</div>
 
+<div align="center">
+  
 |Arrays|Objects|Unions|Primitive|
 |------|-------|------|-|
 |[KeysArray](#keysarraykeys)|[Merge](#mergetype-type)|Enumerate|ParseInt|
@@ -13,6 +18,8 @@
 ||[IsUnion](#isuniont)|||
 ||[UnionToIntersection](#uniontointersectionu)|||
 ||KeysMatching|||
+
+</div>
 
 
 
