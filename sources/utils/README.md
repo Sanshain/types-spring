@@ -1,5 +1,42 @@
-
+<div align="center"></div>
+    
 ## Utility types:
+
+<details>
+    <summary><h4>Table of content</h3></summary>
+    
+
+#### Arrays:
+- [KeysArray](#keysarraykeys)
+- [ConstrainArray](#constrainarraynumber-type)
+- [Sequence](#sequencenumber)
+- [WideArray](#widearraytuple)
+- [ConvertTupleType](#converttupletypetuple)
+- [ArrayFilter](#arrayfilterunknown-type)
+- [MapArray](#maparrayunknown-key)
+
+#### Objects:
+
+- [RequiredKeys](#requiredkeystype)
+- [OmitNullable](#omitnullabletype)
+- [Merge](#mergetype-type)
+- [MergeAll](#mergealltypes)
+- KeysMatching
+- [MapType](#maptypeobject-key)
+- [UnionToIntersection](#uniontointersectionu)
+- [IsUnion](#isuniont)
+- [Common](#common)
+- [Diff](#diff)
+
+#### Unions: 
+
+- Enumerate
+    
+</details>
+  
+
+
+
 
 ### [KeysArray\<Keys\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L11)
 
@@ -53,12 +90,12 @@ Extracts number from string
 type N = ParseInt<'7'>    // type N = 7
 ```
 
-### [ConstraitArray\<number, type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L66)
+### [ConstrainArray\<number, type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L66)
 
 Generates fixed length array with specified type
 
 ```ts
-export let names: ConstraitArray<2, boolean> = [false, true]    // [boolean, boolean]
+export let names: ConstrainArray<2, boolean> = [false, true]    // [boolean, boolean]
 ```
 
 ### [Indexes\<const Array\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L83)
@@ -192,21 +229,61 @@ let a: IsUnion<string | number> = true
 let b: IsUnion<string> = false
 ```
 
+### Common
+
+Highlights common properties
+
+```ts
+type A = { a: number, b: number, c: number }
+type B = { aa: number, b: number, c: string }
+let c: Common<A, B>                               // {b: number, c: number | string}
+```
+
+### Diff
+
+returns an object with properties of the first type that are not present in the second
+
+```ts
+type A = { a: number, b: number, c: number }
+type B = { b: number, c: string }
+let c: Diff<A, B>                                // {a: number}  
+```
+
 <br>
 <hr>
 <br>
 
-## table of contents:
+
+## Table of contents as table:
+
+|Arrays|Objects|Unions|
+|------|-------|------|
+|[KeysArray](#keysarraykeys)|[Merge](#mergetype-type)|Enumerate|ParseInt|
+|[ConstrainArray](#constrainarraynumber-type)|[MergeAll](#mergealltypes)|Ranged||
+|[Sequence](#sequencenumber)|[Diff](#diff)|||
+|[WideArray](#widearraytuple)|[Common](#common)|||
+|[ConvertTupleType](#converttupletypetuple)|[OmitNullable](#omitnullabletype)|||
+|[ArrayFilter](#arrayfilterunknown-type)|[RequiredKeys](#requiredkeystype)|||
+|[MapArray](#maparrayunknown-key)|[MapType](#maptypeobject-key)|||
+||[IsUnion](#isuniont)|||
+||[UnionToIntersection](#uniontointersectionu)|||
+||KeysMatching|||
 
 
-- [`a|b|c` => `[a, b, c]`](#keysarraykeys)
-- [`{k0?, k1, k2}` => `k2 | k2`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#requiredkeystype)
-- [`{k0?, k1, k2}` => `{k2, k2}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#omitnullabletype)
-- [`<number, type>` => `tuple<type>`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#constraitarraynumber-type)
-- [`<tuple>` => `keyof tuple`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#indexesconst-array)
-- [`<number>` => `tuple<number>`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#sequencenumber)
-- [`<A, B>` => `{...A, ...B}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#mergetype-type)
-- [`<[A, B, C]>` => `{...A, ...B, ...C}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#mergealltypes)
-- [`<(A|B|C)[], A>` => `(B|C)[]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#arrayfilterunknown-type)
-- [`[{value: number}]` => `[number]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maparrayunknown-key)
-- [`{a: {value: number}}` => `{a: number}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maptypeobject-key)
+<details>
+
+<summary><h4>Pseudocode:</h4></summary>
+
+- [KeysArray:](#keysarraykeys) `a|b|c` => `[a, b, c]`
+- [RequiredKeys:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#requiredkeystype) `{k0?, k1, k2}` => `k2 | k2`
+- [OmitNullable:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#omitnullabletype) `{k0?, k1, k2}` => `{k2, k2}`
+- [ConvertTupleType:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#constraitarraynumber-type) `<number, type>` => `tuple<type>`
+- [Indexes:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#indexesconst-array) `<tuple>` => `keyof tuple`
+- [Sequence](https://github.com/Sanshain/types-spring/tree/master/sources/utils#sequencenumber) `<number>` => `tuple<number>`
+- [Merge:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#mergetype-type) `<A, B>` => `{...A, ...B}`
+- [MergeAll:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#mergealltypes) `<[A, B, C]>` => `{...A, ...B, ...C}`
+- [ArrayFilter](https://github.com/Sanshain/types-spring/tree/master/sources/utils#arrayfilterunknown-type) `<(A|B|C)[], A>` => `(B|C)[]`
+- [MapArray:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maparrayunknown-key) `[{value: number}]` => `[number]`
+- [MapType:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maptypeobject-key) `{a: {value: number}}` => `{a: number}`
+
+</details>
