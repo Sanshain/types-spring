@@ -1,25 +1,40 @@
-<div align="center">
+<div align="center"></div>
     
 ## Utility types:
+
+<details>
+    <summary><h4>Table of content</h3></summary>
     
-</div>
 
-<div align="center">
+#### Arrays:
+- [KeysArray](#keysarraykeys)
+- [ConstrainArray](#constrainarraynumber-type)
+- [Sequence](#sequencenumber)
+- [WideArray](#widearraytuple)
+- [ConvertTupleType](#converttupletypetuple)
+- [ArrayFilter](#arrayfilterunknown-type)
+- [MapArray](#maparrayunknown-key)
+
+#### Objects:
+
+- [RequiredKeys](#requiredkeystype)
+- [OmitNullable](#omitnullabletype)
+- [Merge](#mergetype-type)
+- [MergeAll](#mergealltypes)
+- KeysMatching
+- [MapType](#maptypeobject-key)
+- [UnionToIntersection](#uniontointersectionu)
+- [IsUnion](#isuniont)
+- [Common](#common)
+- [Diff](#diff)
+
+#### Unions: 
+
+- Enumerate
+    
+</details>
   
-|Arrays|Objects|Unions|Primitive|
-|------|-------|------|-|
-|[KeysArray](#keysarraykeys)|[Merge](#mergetype-type)|Enumerate|ParseInt|
-|[ConstrainArray](#constrainarraynumber-type)|[MergeAll](#mergealltypes)|Ranged||
-|[Sequence](#sequencenumber)|[Diff](#diff)|||
-|[WideArray](#widearraytuple)|[Common](#common)|||
-|[ConvertTupleType](#converttupletypetuple)|[OmitNullable](#omitnullabletype)|||
-|[ArrayFilter](#arrayfilterunknown-type)|[RequiredKeys](#requiredkeystype)|||
-|[MapArray](#maparrayunknown-key)|[MapType](#maptypeobject-key)|||
-||[IsUnion](#isuniont)|||
-||[UnionToIntersection](#uniontointersectionu)|||
-||KeysMatching|||
 
-</div>
 
 
 
@@ -238,7 +253,24 @@ let c: Diff<A, B>                                // {a: number}
 <hr>
 <br>
 
-## table of contents:
+
+## Table of contents as table:
+
+|Arrays|Objects|Unions|
+|------|-------|------|
+|[KeysArray](#keysarraykeys)|[Merge](#mergetype-type)|Enumerate|ParseInt|
+|[ConstrainArray](#constrainarraynumber-type)|[MergeAll](#mergealltypes)|Ranged||
+|[Sequence](#sequencenumber)|[Diff](#diff)|||
+|[WideArray](#widearraytuple)|[Common](#common)|||
+|[ConvertTupleType](#converttupletypetuple)|[OmitNullable](#omitnullabletype)|||
+|[ArrayFilter](#arrayfilterunknown-type)|[RequiredKeys](#requiredkeystype)|||
+|[MapArray](#maparrayunknown-key)|[MapType](#maptypeobject-key)|||
+||[IsUnion](#isuniont)|||
+||[UnionToIntersection](#uniontointersectionu)|||
+||KeysMatching|||
+
+
+## Table of contents as pseudocode:
 
 
 - [`a|b|c` => `[a, b, c]`](#keysarraykeys)
@@ -253,30 +285,3 @@ let c: Diff<A, B>                                // {a: number}
 - [`[{value: number}]` => `[number]`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maparrayunknown-key)
 - [`{a: {value: number}}` => `{a: number}`](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maptypeobject-key)
 
-
-
-#### Arrays:
-- [KeysArray](#keysarraykeys)
-- [ConstrainArray](#constrainarraynumber-type)
-- [Sequence](#sequencenumber)
-- [WideArray](#widearraytuple)
-- [ConvertTupleType](#converttupletypetuple)
-- [ArrayFilter](#arrayfilterunknown-type)
-- [MapArray](#maparrayunknown-key)
-
-#### Objects:
-
-- [RequiredKeys](#requiredkeystype)
-- [OmitNullable](#omitnullabletype)
-- [Merge](#mergetype-type)
-- [MergeAll](#mergealltypes)
-- KeysMatching
-- [MapType](#maptypeobject-key)
-- [UnionToIntersection](#uniontointersectionu)
-- [IsUnion](#isuniont)
-- [Common](#common)
-- [Diff](#diff)
-
-#### Unions: 
-
-- Enumerate
