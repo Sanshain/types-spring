@@ -1,6 +1,22 @@
 
 ## Utility types:
 
+|Arrays|Objects|Unions|
+|------|-------|------|
+|[KeysArray](#keysarraykeys)|[Merge](#mergetype-type)|Enumerate|
+|[ConstrainArray](#constrainarraynumber-type)|[MergeAll](#mergealltypes)||
+|[Sequence](#sequencenumber)|[Diff](#diff)||
+|[WideArray](#widearraytuple)|[Common](#common)||
+|[ConvertTupleType](#converttupletypetuple)|[OmitNullable](#omitnullabletype)||
+|[ArrayFilter](#arrayfilterunknown-type)|[RequiredKeys](#requiredkeystype)||
+|[MapArray](#maparrayunknown-key)|[MapType](#maptypeobject-key)||
+||[IsUnion](#isuniont)||
+||[UnionToIntersection](#uniontointersectionu)||
+||KeysMatching||
+
+
+
+
 #### Arrays:
 - [KeysArray](#keysarraykeys)
 - [ConstrainArray](#constrainarraynumber-type)
