@@ -1,18 +1,18 @@
 
 ## Utility types:
 
-|Arrays|Objects|Unions|
-|------|-------|------|
-|[KeysArray](#keysarraykeys)|[Merge](#mergetype-type)|Enumerate|
-|[ConstrainArray](#constrainarraynumber-type)|[MergeAll](#mergealltypes)||
-|[Sequence](#sequencenumber)|[Diff](#diff)||
-|[WideArray](#widearraytuple)|[Common](#common)||
-|[ConvertTupleType](#converttupletypetuple)|[OmitNullable](#omitnullabletype)||
-|[ArrayFilter](#arrayfilterunknown-type)|[RequiredKeys](#requiredkeystype)||
-|[MapArray](#maparrayunknown-key)|[MapType](#maptypeobject-key)||
-||[IsUnion](#isuniont)||
-||[UnionToIntersection](#uniontointersectionu)||
-||KeysMatching||
+|Arrays|Objects|Unions|Primitive|
+|------|-------|------|-|
+|[KeysArray](#keysarraykeys)|[Merge](#mergetype-type)|Enumerate|ParseInt|
+|[ConstrainArray](#constrainarraynumber-type)|[MergeAll](#mergealltypes)|Ranged||
+|[Sequence](#sequencenumber)|[Diff](#diff)|||
+|[WideArray](#widearraytuple)|[Common](#common)|||
+|[ConvertTupleType](#converttupletypetuple)|[OmitNullable](#omitnullabletype)|||
+|[ArrayFilter](#arrayfilterunknown-type)|[RequiredKeys](#requiredkeystype)|||
+|[MapArray](#maparrayunknown-key)|[MapType](#maptypeobject-key)|||
+||[IsUnion](#isuniont)|||
+||[UnionToIntersection](#uniontointersectionu)|||
+||KeysMatching|||
 
 
 
