@@ -99,9 +99,10 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "./node_modules/utility-types",
+    // "./node_modules/utility-types",
+    "./node_modules/type-fest",
     // "./node_modules/ts-toolbelt",
-    // "./node_modules/types-spring",
+    "./node_modules/types-spring",
     "./sources"
   ]
 }
