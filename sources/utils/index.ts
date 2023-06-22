@@ -317,3 +317,24 @@ export type Diff<T extends object, D extends object> = {
     [K in keyof T as K extends keyof D ? never : K]: T[K]
 }
 
+
+
+
+
+type _OptionalExceptOne<T extends object, Rest = never, Result = never> = {
+	[K in keyof T]: Exclude<Rest, K> extends never 
+		 ? _OptionalExceptOne<Omit<T, K>, Rest | K, Result | Partial<Omit<T, K>> & {[k in K]: T[K]}>
+		 : Result
+}[keyof T]
+
+/**
+ * @cat Object
+ * @param {T} object
+ * @description makes all fields are optional excepts one of them
+ */
+export type OptionalExceptOne<T extends object> = _OptionalExceptOne<T>
+
+
+
+declare const __brand: unique symbol
+type Branded<T, B=never> = T & { [__brand]?: B }
