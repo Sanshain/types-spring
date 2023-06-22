@@ -229,7 +229,7 @@ let a: IsUnion<string | number> = true
 let b: IsUnion<string> = false
 ```
 
-### Common
+### Common\<Type, Type\>
 
 Highlights common properties
 
@@ -239,7 +239,7 @@ type B = { aa: number, b: number, c: string }
 let c: Common<A, B>                               // {b: number, c: number | string}
 ```
 
-### Diff
+### Diff\<Type, Type\>
 
 returns an object with properties of the first type that are not present in the second
 
@@ -248,6 +248,17 @@ type A = { a: number, b: number, c: number }
 type B = { b: number, c: string }
 let c: Diff<A, B>                                // {a: number}  
 ```
+
+### [OptionalExceptOne\<object\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L330)
+
+Makes all fields optional, except for any one of them
+
+```ts
+type O = OptionalExceptOne<{a: 1, b: 1, c: 1}>
+let o: O = {}                                     // type error!
+let oa: O = {a: 1}                                // success
+```
+
 
 <br>
 <hr>
