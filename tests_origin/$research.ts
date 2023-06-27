@@ -46,3 +46,15 @@ const foo = (a: IBar) => {
 }
 
 foo(bar)
+
+// # `union Objects`: 
+
+let a: {a?: string, b: undefined} | {a: string, b?: string} | {a: string, b: string, c?: string} = {
+	a: '',
+	c: ''
+}
+
+if (typeof a.b == 'string'){
+	a.b.toString()                                        // runtime error!
+}
+
