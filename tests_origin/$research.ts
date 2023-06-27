@@ -2,7 +2,7 @@
 // (unresolved by me too)
 
 
-// #1 `leaky type guarding`
+// #1 `covariance & leaky type guarding`
 
 {
     interface A { a(): string };
@@ -47,7 +47,7 @@ const foo = (a: IBar) => {
 
 foo(bar)
 
-// # `union Objects`: 
+// # `wrong type detection for union of objects with optional keys`: 
 
 let a: {a?: string, b: undefined} | {a: string, b?: string} | {a: string, b: string, c?: string} = {
 	a: '',
