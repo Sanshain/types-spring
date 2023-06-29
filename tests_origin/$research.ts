@@ -2,7 +2,7 @@
 // (unresolved by me too)
 
 
-// #1 `covariance & leaky type guarding`
+// #1 `leaky type guarding on objects union`
 
 {
     interface A { a(): string };
@@ -18,6 +18,8 @@
 
     const x = { a: 10, b() { return "hello"; } };
     const y: B = x;
+    // or:
+    // const y = { a: 10, b() { return "hello"; } }
     f(y);
     
 }
