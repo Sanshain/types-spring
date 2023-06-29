@@ -43,11 +43,6 @@ Object.defineProperty(1, '', {})                            // runtime error!
 Object.defineProperties(100, {})                            // runtime error!
 
 
-// #2.1 (+ alse could break any type)
-
-let a: Record<string, string> = {a: ''}
-Object.defineProperty(a, 'a', {value: 1})
-
 
 
 // # 3 `covariance`
