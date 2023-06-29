@@ -18,11 +18,24 @@
 
     const x = { a: 10, b() { return "hello"; } };
     const y: B = x;
-    // or:
-    // const y = { a: 10, b() { return "hello"; } }
-    f(y);
-    
+    f(y);    
 }
+
+// or: 
+
+function func(arg: {a: string, b?: string} | {a: string, b: string, c?: string}){
+    
+    if ('c' in arg){
+        arg.b.toString()                                     // runtime error!
+    }
+}
+
+let a = {a: '', c: ''}
+
+func(a)
+
+
+
 
 // #2 `bad signature`
 
