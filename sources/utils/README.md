@@ -229,7 +229,7 @@ let a: IsUnion<string | number> = true
 let b: IsUnion<string> = false
 ```
 
-### Common\<Type, Type\>
+### [Common\<Type, Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L304)
 
 Highlights common properties
 
