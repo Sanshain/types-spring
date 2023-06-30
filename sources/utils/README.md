@@ -25,8 +25,8 @@
 - [MapType](#maptypeobject-key)
 - [UnionToIntersection](#uniontointersectionu)
 - [IsUnion](#isuniont)
-- [Common](#common)
-- [Diff](#diff)
+- [Common](#commontype-type)
+- [Diff](#difftype-type)
 
 #### Unions: 
 
