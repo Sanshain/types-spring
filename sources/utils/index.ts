@@ -2,7 +2,7 @@
 /**
  * @cat Array
  * @param { a | b | c | ... } FieldKeys
- * @attention is not recommended for objects with more than 10 keys due to the severity of calculations
+ * @attention is not recommended for objects with more than 7 keys due to the severity of calculations
  * @returns {[a, b, ...]}
  * @example KeysArray< a|b|c > = ['a', 'b', 'c']
  * @cat Object
