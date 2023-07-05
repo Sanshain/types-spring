@@ -1,7 +1,9 @@
 //@ts-check
 
 import type {
-    KeysArray, OmitNullable, ParseInt, NonNullableKeys, ConstrainArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
+    // KeysArray,
+    KeysAsTuple,
+    OmitNullable, ParseInt, NonNullableKeys, ConstrainArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
     MapType as MapTypeValue,
     KeysMatching,
     UnionToIntersection,
@@ -11,7 +13,7 @@ import type {
 } from "../sources/utils";
 
 
-/// KeysArray:
+/// KeysAsTuple:
 
 
 type ObjType = {
@@ -21,11 +23,14 @@ type ObjType = {
 };
 
 //@ts-expect-error =>                                                   type "d" is not assignable to type "a" | "b" | "c".
-const bar: KeysArray<keyof ObjType> = ["d"];               
+const bar: KeysAsTuple<ObjType> = ["d"];
 //@ts-expect-error =>                                                   type '["a", "b", "c", "d"]' is not assignable to type ["a", "b", "c"]
-const foo: KeysArray<keyof ObjType> = ["a", "b", "c", "d"];             
+const foo: KeysAsTuple<ObjType> = ["a", "b", "c", "d"];
 //
-const objKeys: KeysArray<keyof ObjType> = ["a", "b", "c"];              
+const objKeys: KeysAsTuple<ObjType> = ["a", "b", "c"];
+
+//@ts-expect-error
+const _objKeys: KeysAsTuple<ObjType> = ["c", "b", "a"];
 
 
 
@@ -41,7 +46,7 @@ type User = {
 
 let a: NonNullableKeys<User> = 'name'
 //@ts-expect-error
-let b: NonNullableKeys<User> = 'phonenumber' 
+let b: NonNullableKeys<User> = 'phonenumber'
 
 
 
@@ -119,7 +124,7 @@ let ms: Merge<A, B> = { a: 1, b: '', c: 1 }
 /// MergeAll
 
 
-let c: MergeAll<[A, B, { d: 7 }]> = { a: 1, b: 1, c: 1, d: 7 }  
+let c: MergeAll<[A, B, { d: 7 }]> = { a: 1, b: 1, c: 1, d: 7 }
 
 
 
@@ -147,7 +152,7 @@ let nr: ConvertTupleType<typeof arr, string> = [1, 2, 3]
 /// Enumerate
 
 
-const en: Enumerate<5> = 0
+const en: Enumerate<99> = 0
 //@ts-expect-error
 const en5: Enumerate<5> = 5
 
@@ -170,7 +175,7 @@ const n10: Ranged<5, 10> = 10;
     let a = { a: 1, b: '', c: '' };
     //@ts-expect-error
     let keysa: KeysMatching<typeof a, string> = 'a'
-    let keys: KeysMatching<typeof a, string> = 'b'    
+    let keys: KeysMatching<typeof a, string> = 'b'
 }
 
 
@@ -202,7 +207,7 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
         yyy.a = 1
         //@ts-expect-error
         yyy.a = ''
-    }    
+    }
 }
 
 
@@ -218,7 +223,7 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
         {
             a: string
         }
-    ]    
+    ]
     type R = MapArray<A, 'a'>
     let r: R = [1, '2'];
     //@ts-expect-error
@@ -238,9 +243,9 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
         //@ts-expect-error
         let r3: R = ['', ''];
         //@ts-expect-error
-        let r4: R = [{ a: number }, { a: number }];          
+        let r4: R = [{ a: number }, { a: number }];
     }
-    
+
 }
 
 
@@ -249,7 +254,7 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
 
 {
     let a: UnionToIntersection<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
-    let b: {a: 1} & {b: 1} = a
+    let b: { a: 1 } & { b: 1 } = a
 }
 
 
@@ -271,21 +276,21 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
     //@ts-expect-error
     c.a
     //@ts-expect-error
-    c.aa    
+    c.aa
 }
 
 /// Diff:
 {
     type A = { a: number, b: number, c: number }
     type B = { aa: number, b: number, c: string }
-    let c: Diff<A, B> = {a: 1}    
+    let c: Diff<A, B> = { a: 1 }
 }
 
 
 //@ Another capabilites:
 
 
-type L = KeysArray<keyof ObjType>['length'];    // 3
+type L = KeysAsTuple<ObjType>['length'];        // 3
 var ks: Sequence<L>[number] = 2                 // 0 | 1 | 2
 var ks: Enumerate<L> = 2                        // 0 | 1 | 2
 
