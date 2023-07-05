@@ -349,3 +349,9 @@ export type Diff<T extends object, D extends object> = {
     [K in keyof T as K extends keyof D ? never : K]: T[K]
 }
 
+
+
+
+
+//@see also:
+// https://stackoverflow.com/questions/62084836/what-does-it-mean-for-a-type-to-distribute-over-unions
