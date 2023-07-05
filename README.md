@@ -251,7 +251,7 @@ elem?.addEventListener('click', e => {
     
 ## Utility types:
 
-Look up `README.md` inside corresponding [declarations](https://github.com/Sanshain/types-spring/tree/master/sources/utils).
+Look up `README.md` inside corresponding [declaration](https://github.com/Sanshain/types-spring/tree/master/sources/utils) directory.
 
 
 

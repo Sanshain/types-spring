@@ -9,7 +9,8 @@ import type {
     UnionToIntersection,
     IsUnion,
     Common,
-    Diff
+    Diff,
+	 OptionalExceptOne
 } from "../sources/utils";
 
 
@@ -286,6 +287,27 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
     let c: Diff<A, B> = { a: 1 }
 }
 
+
+/// OptionalExceptOne
+{
+	type O = OptionalExceptOne<{a: 1, b: 1, c: 1}>
+	//@ts-expect-error
+	let o: O = {}
+	let oa: O = {a: 1}
+	let ob: O = {b: 1}
+	let oc: O = {c: 1}
+	let ooo: O = {a: 1, b: 1, c: 1}
+	//@ts-expect-error
+	let od: O = {d: 1}
+}
+
+
+/// Branded
+// {
+// 	const s: Branded<string> = '1'
+// 	const arf = ['1']
+// 	arf.indexOf(s)
+// }
 
 //@ Another capabilites:
 

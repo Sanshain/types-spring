@@ -2,7 +2,7 @@
 // (unresolved by me too)
 
 
-// #1 `leaky type guarding`
+// #1 `leaky type guarding on objects union`
 
 {
     interface A { a(): string };
@@ -18,13 +18,31 @@
 
     const x = { a: 10, b() { return "hello"; } };
     const y: B = x;
-    f(y);
-    
+    f(y);    
 }
 
-// #2 `bad signature`
+// or: 
+
+function func(arg: {a: string, b?: string} | {a: string, b: string, c?: string}){
+    
+    if ('c' in arg){
+        arg.b.toString()                                     // runtime error!
+    }
+}
+
+let a = {a: '', c: ''}
+
+func(a)
+
+
+
+
+// #2 `bad signature` 
 
 Object.defineProperty(1, '', {})                            // runtime error!
+Object.defineProperties(100, {})                            // runtime error!
+
+
 
 
 // # 3 `covariance`
@@ -46,3 +64,4 @@ const foo = (a: IBar) => {
 }
 
 foo(bar)
+

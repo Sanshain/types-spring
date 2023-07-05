@@ -353,5 +353,24 @@ export type Diff<T extends object, D extends object> = {
 
 
 
+type _OptionalExceptOne<T extends object, Rest = never, Result = never> = {
+    [K in keyof T]: Exclude<Rest, K> extends never
+    ? _OptionalExceptOne<Omit<T, K>, Rest | K, Result | Partial<Omit<T, K>> & { [k in K]: T[K] }>
+    : Result
+}[keyof T]
+
+/**
+ * @cat Object
+ * @param {T} object
+ * @description makes all fields are optional excepts one of them
+ */
+export type OptionalExceptOne<T extends object> = _OptionalExceptOne<T>
+
+
+
+declare const __brand: unique symbol
+export type ScreenType<T, B = never> = T & { [__brand]?: B }
+
+
 //@see also:
 // https://stackoverflow.com/questions/62084836/what-does-it-mean-for-a-type-to-distribute-over-unions
