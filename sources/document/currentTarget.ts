@@ -62,10 +62,8 @@ interface FocusEvent<T extends EventTargets = Node> {
     readonly currentTarget: T | null;
 }
 
-
 // type GenericEvent<T extends EventTargets = Node> = (KeyboardEvent<T> | MouseEvent<T>) & UIEvent<T>
 // type GenericEvent<T extends EventTargets = Node> = (KeyboardEvent<T> | MouseEvent<T>) 
-
 
 interface Document {
     addEventListener<K extends keyof DocumentEventMap>(

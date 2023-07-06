@@ -1,38 +1,18 @@
-// // https://stackoverflow.com/questions/69676439/create-constant-array-type-from-an-object-type
-// /**
-//  * @cat Array
-//  * @param { a | b | c | ... } FieldKeys
-//  * @attention is not recommended for objects with more than 10 keys due to the severity of calculations
-//  * @returns {[a, b, ...]}
-//  * @example KeysArray< a|b|c > = ['a', 'b', 'c']
-//  * @cat Object
-//  * @example KeysArray< keyof {a,b,c} > = ['a', 'b', 'c']
-//  * @legacy
-//  */
-// export type KeysArray<FieldKeys extends PropertyKey, Result extends PropertyKey[] = []> = {
-//     [Key in FieldKeys]: Exclude<FieldKeys, Key> extends never
-//         ? [...Result, Key]
-//         : KeysArray<Exclude<FieldKeys, Key>, [...Result, Key]>;
-// }[FieldKeys];
-
-// #2
-// type ArrayOfKeys<Dict extends object, Result extends PropertyKey[] = []> = {
-//     [Key in keyof Dict]: Exclude<keyof Dict, Key> extends never ? [...Result, Key] : KeysAsTuple<Omit<Dict, Key>, [...Result, Key]>;
-// }[keyof Dict];
-
-
+// https://stackoverflow.com/questions/69676439/create-constant-array-type-from-an-object-type
 /**
- * @see https://t.me/ts_cool/304757
  * @cat Array
- * @cat Object
- * @description generate tuple of keys from object
- * @param { {a, b, ...} } Obj
+ * @param { a | b | c | ... } FieldKeys
+ * @attention is not recommended for objects with more than 10 keys due to the severity of calculations
  * @returns {[a, b, ...]}
- * @example KeysArray< {a, b, c} > = ['a', 'b', 'c']
+ * @example KeysArray< a|b|c > = ['a', 'b', 'c']
+ * @cat Object
+ * @example KeysArray< keyof {a,b,c} > = ['a', 'b', 'c']
  */
-export type KeysAsTuple<Obj extends object, Res extends PropertyKey[] = [], L extends PropertyKey = LastOf<keyof Obj>> = [L] extends [never]
-    ? Res
-    : KeysAsTuple<Omit<Obj, L>, [L, ...Res]>;
+export type KeysArray<FieldKeys extends string, Result extends string[] = []> = {
+    [Key in FieldKeys]: Exclude<FieldKeys, Key> extends never
+        ? [...Result, Key] 
+        : KeysArray<Exclude<FieldKeys, Key>, [...Result, Key]>;    
+}[FieldKeys];
 
 
 /**
@@ -227,18 +207,6 @@ export type Enumerate<N extends number, Acc extends number[] = []> = Acc['length
 export type Ranged<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>
 
 
-/**
- * @private
- * @cat union
- * @link https://t.me/ts_cool/304757
- * @param {PropertyKey1|PropertyKey2|...|PropertyKeyN} U
- * @description extract last union entry (recommended for internal use)
- * @returns {PropertyKeyN}
- * @example LastOf<1|2|3> => 3
- */
-export type LastOf<U extends PropertyKey> = (U extends any ? (x: () => U) => void : never) extends (x: infer P) => void
-    ? P extends () => infer Return ? Return : never
-    : never;
 
 
 
