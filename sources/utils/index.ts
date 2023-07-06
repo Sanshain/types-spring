@@ -1,10 +1,10 @@
 // https://stackoverflow.com/questions/69676439/create-constant-array-type-from-an-object-type
-/**
+/** 
  * @cat Array
  * @param { a | b | c | ... } FieldKeys
  * @attention is not recommended for objects with more than 6 keys due to the severity of calculations
  * @returns {[a, b, ...]}
- * @example KeysArray< a|b|c > = ['a', 'b', 'c']
+ * @alt_name ArrayOfKeys|KeysAsTuple
  * @cat Object
  * @example KeysArray< keyof {a,b,c} > = ['a', 'b', 'c']
  */
@@ -13,16 +13,6 @@ export type KeysArray<FieldKeys extends string, Result extends string[] = []> = 
         ? [...Result, Key] 
         : KeysArray<Exclude<FieldKeys, Key>, [...Result, Key]>;    
 }[FieldKeys];
-
-type ROP = Enumerate<7>
-type PPP = {
-    a: string,
-    a1: string,
-    a2: string,
-    a3: string,
-}
-type KeysAsTuple<O extends object, L extends ObjectLength<O> = ObjectLength<O>> = L
-type OPp = KeysAsTuple<PPP>
 
 
 /**
