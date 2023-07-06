@@ -56,9 +56,11 @@ const foo: KeysArray<ObjType> = [                 // expected success
 ];    
 ```
 
-**Constraits**: 
+<details>
+<summary><b>Constraits</b></summary>
 
 - *This is a rather complex recursive type and is designed directly for objects containing a little number of fields in order to maintain high performance of typescript server (no more than six are recommended)*
+</details>
 
 ### [OmitNullable\<Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L39)
 
