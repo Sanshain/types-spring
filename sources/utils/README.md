@@ -27,6 +27,8 @@
 - [IsUnion](#isuniont)
 - [Common](#commontype-type)
 - [Diff](#difftype-type)
+- [OptionalExceptOne](#optionalexceptoneobject)
+- [ObjectLength](#objectlengthtype)
 
 #### Unions: 
 
@@ -265,6 +267,18 @@ let o: O = {}                                     // type error!
 let oa: O = {a: 1}                                // success
 ```
 
+### [ObjectLength\<Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#367)
+
+Counts the number of keys in an object
+
+```ts
+type Obj = {
+    id: number;
+    id_user: string;
+    is_active: boolean;
+};
+let objectLengt: ObjectLength<Obj>                 // 3
+```
 
 <br>
 <hr>
@@ -285,6 +299,8 @@ let oa: O = {a: 1}                                // success
 ||[IsUnion](#isuniont)|||
 ||[UnionToIntersection](#uniontointersectionu)|||
 ||KeysMatching|||
+||[OptionalExceptOne](#optionalexceptoneobject)|||
+||[ObjectLength](#objectlengthtype)|||
 
 
 <details>
