@@ -1,14 +1,16 @@
 //@ts-check
 
 import type {
-    KeysArray, OmitNullable, ParseInt, NonNullableKeys, ConstrainArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
+    KeysArray, OmitNullable, ParseInt_, NonNullableKeys, ConstrainArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
     MapType as MapTypeValue,
     KeysMatching,
     UnionToIntersection,
     IsUnion,
     Common,
     Diff,
-	 OptionalExceptOne
+	 OptionalExceptOne,
+     ScreenType,
+     ObjectLength
 } from "../sources/utils";
 
 
@@ -61,7 +63,7 @@ let u: OmitNullable<UserType> = { name: '', email: '' }
 
 /// ParseInt
 
-const num: ParseInt<'7'> = 7
+const num: ParseInt_<'7'> = 7
 
 
 
@@ -297,12 +299,32 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
 }
 
 
-/// Branded
+/// ScreenType
 // {
-// 	const s: Branded<string> = '1'
+//     type MyLikeName = ScreenType<string>
+//     const s: MyLikeName = '1'
 // 	const arf = ['1']
 // 	arf.indexOf(s)
 // }
+
+
+
+/// ObjectLength
+{
+    type Table = {
+        id: number;
+        id_user: string;
+        is_active: boolean;
+        1: '';
+    };
+    let r4: ObjectLength<Table> = 4;
+    //@ts-expect-error
+    let r1: ObjectLength<Table> = 1;
+    //@ts-expect-error
+    let r5: ObjectLength<Table> = 5;
+}
+
+
 
 //@ Another capabilites:
 

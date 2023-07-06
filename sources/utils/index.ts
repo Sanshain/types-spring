@@ -2,7 +2,7 @@
 /**
  * @cat Array
  * @param { a | b | c | ... } FieldKeys
- * @attention is not recommended for objects with more than 10 keys due to the severity of calculations
+ * @attention is not recommended for objects with more than 6 keys due to the severity of calculations
  * @returns {[a, b, ...]}
  * @example KeysArray< a|b|c > = ['a', 'b', 'c']
  * @cat Object
@@ -13,6 +13,16 @@ export type KeysArray<FieldKeys extends string, Result extends string[] = []> = 
         ? [...Result, Key] 
         : KeysArray<Exclude<FieldKeys, Key>, [...Result, Key]>;    
 }[FieldKeys];
+
+type ROP = Enumerate<7>
+type PPP = {
+    a: string,
+    a1: string,
+    a2: string,
+    a3: string,
+}
+type KeysAsTuple<O extends object, L extends ObjectLength<O> = ObjectLength<O>> = L
+type OPp = KeysAsTuple<PPP>
 
 
 /**
@@ -50,7 +60,7 @@ export type OmitNullable<T> = {
  * @returns {number}
  * @example type N = ParseInt<'7'>
  */
-export type ParseInt<T> = T extends `${infer N extends number}` ? N : never;
+export type ParseInt_<T> = T extends `${infer N extends number}` ? N : never;
 
 
 
@@ -138,9 +148,7 @@ export type MergeAll<T extends Array<object>, L extends never[] = [], Result ext
 
 
 
-
-
-type WidenType<T> = T extends string
+type WidenType_<T> = T extends string
     ? string
     : T extends number
         ? number
@@ -149,7 +157,7 @@ type WidenType<T> = T extends string
             : T extends null
                 ? object
                 : T extends undefined
-                    ? any
+                    ? unknown
                     : T
                     
 // export type WideArray<A extends ReadonlyArray<unknown>, R extends unknown[] = []> = A['length'] extends R['length']
@@ -166,7 +174,7 @@ type WidenType<T> = T extends string
  */
 export type WideArray<A extends ReadonlyArray<unknown>> = {
     // [K in keyof A]: A[K] extends string ? string : (A[K] extends number ? number : A[K])
-    [K in keyof A]: WidenType<A[K]>
+    [K in keyof A]: WidenType_<A[K]>
 }  
 
 
@@ -337,7 +345,37 @@ export type OptionalExceptOne<T extends object> = _OptionalExceptOne<T>
 
 
 declare const __brand: unique symbol
+/**
+ * @protected - popular type
+ * @description branded type
+ */
 export type ScreenType<T, B = never> = T & { [__brand]?: B }
+
+
+
+/**
+ * @requires ^4.2.3
+ * @cat union
+ * @description Extract last or first type from union type
+ * 
+ */
+type FirstOrLast_<U extends PropertyKey> = (U extends any ? (x: () => U) => void : never) extends (x: infer P) => void
+    ? P extends () => infer Return ? Return : never
+    : never;
+
+
+
+/**
+ * @cat Object
+ * @requires ^4.2.3
+ * @param {O} object 
+ * @description counts the number of keys in an object
+ * @return {number}
+ * @example {a,b,c} => 3
+ */
+export type ObjectLength<O extends object, Res extends PropertyKey[] = [], L extends PropertyKey = FirstOrLast_<keyof O>> = [L] extends [never]
+    ? Res['length']
+    : ObjectLength<Omit<O, L>, [L, ...Res]>;
 
 
 //@see also:
