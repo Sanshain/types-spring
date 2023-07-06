@@ -1,4 +1,9 @@
 // https://stackoverflow.com/questions/69676439/create-constant-array-type-from-an-object-type
+type _KeysArray<Dict extends object, Result extends PropertyKey[] = []> = {
+    [Key in keyof Dict]: Exclude<keyof Dict, Key> extends never ? [...Result, Key] : _KeysArray<Omit<Dict, Key>, [...Result, Key]>;
+}[keyof Dict];
+    
+type KeysArray__Error = 'Object with too much (more than six) fields passed to KeysArray type'
 /** 
  * @cat Array
  * @param { a | b | c | ... } FieldKeys
@@ -6,13 +11,9 @@
  * @returns {[a, b, ...]}
  * @alt_name ArrayOfKeys|KeysAsTuple
  * @cat Object
- * @example KeysArray< keyof {a,b,c} > = ['a', 'b', 'c']
+ * @example KeysArray< {a,b,c} > = ['a', 'b', 'c']
  */
-export type KeysArray<FieldKeys extends string, Result extends string[] = []> = {
-    [Key in FieldKeys]: Exclude<FieldKeys, Key> extends never
-        ? [...Result, Key] 
-        : KeysArray<Exclude<FieldKeys, Key>, [...Result, Key]>;    
-}[FieldKeys];
+export type KeysArray<Dict extends object> = ObjectLength<Dict> extends Enumerate<7> ? _KeysArray<Dict> : KeysArray__Error 
 
 
 /**

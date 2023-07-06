@@ -1,16 +1,17 @@
 //@ts-check
 
 import type {
-    KeysArray, OmitNullable, ParseInt_, NonNullableKeys, ConstrainArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
+    OmitNullable, ParseInt_, NonNullableKeys, ConstrainArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
     MapType as MapTypeValue,
     KeysMatching,
     UnionToIntersection,
     IsUnion,
     Common,
     Diff,
-	 OptionalExceptOne,
-     ScreenType,
-     ObjectLength
+    OptionalExceptOne,
+    ScreenType,
+    ObjectLength,
+    KeysArray
 } from "../sources/utils";
 
 
@@ -23,12 +24,16 @@ type ObjType = {
     c: string;
 };
 
-//@ts-expect-error =>                                                   type "d" is not assignable to type "a" | "b" | "c".
-const bar: KeysArray<keyof ObjType> = ["d"];               
-//@ts-expect-error =>                                                   type '["a", "b", "c", "d"]' is not assignable to type ["a", "b", "c"]
-const foo: KeysArray<keyof ObjType> = ["a", "b", "c", "d"];             
-//
-const objKeys: KeysArray<keyof ObjType> = ["a", "b", "c"];              
+{
+    //@ts-expect-error =>                                                   type "d" is not assignable to type "a" | "b" | "c".
+    const bar: KeysArray<ObjType> = ["d"];
+    //@ts-expect-error =>                                                   type '["a", "b", "c", "d"]' is not assignable to type ["a", "b", "c"]
+    const foo: KeysArray<ObjType> = ["a", "b", "c", "d"];
+    
+    const objKeys: KeysArray<ObjType> = ["a", "b", "c"];
+    
+    const objKeys$: KeysArray<ObjType> = ["a", "c", "b"];
+}           
 
 
 
@@ -329,7 +334,7 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
 //@ Another capabilites:
 
 
-type L = KeysArray<keyof ObjType>['length'];    // 3
+type L = ObjectLength<ObjType>;                 // 3
 var ks: Sequence<L>[number] = 2                 // 0 | 1 | 2
 var ks: Enumerate<L> = 2                        // 0 | 1 | 2
 
