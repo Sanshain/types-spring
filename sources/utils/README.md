@@ -23,7 +23,7 @@
 - [MergeAll](#mergealltypes)
 - KeysMatching
 - [MapType](#maptypeobject-key)
-- [UnionToIntersection](#uniontointersectionu)
+- [IntersectUnions](#intersectunions)
 - [IsUnion](#isuniont)
 - [Common](#commontype-type)
 - [Diff](#difftype-type)
@@ -221,12 +221,12 @@ type O = {
 let yyy: MapTypeValue<O, "value">               // {a: number, b: number} 
 ```
 
-### UnionToIntersection\<U\>
+### IntersectUnions\<U\>
 
 Converts union to intersection
 
 ```ts
-let a: UnionToIntersection<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
+let a: IntersectUnions<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
 ```
 
 ### IsUnion\<T\>
@@ -281,7 +281,7 @@ type Obj = {
 let objectLengt: ObjectLength<Obj>                 // 3
 ```
 
-### [Join\<TupleOfObjects\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#386)
+### [Join\<TupleOfObjects\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L386)
 
 Counts the number of keys in an object
 
@@ -308,7 +308,7 @@ const o: O = { a: 1, c: 3, d: ''}
 |[ArrayFilter](#arrayfilterunknown-type)|[NonNullableKeys](#nonnullablekeystype)|||
 |[MapArray](#maparrayunknown-key)|[MapType](#maptypeobject-key)|||
 ||[IsUnion](#isuniont)|||
-||[UnionToIntersection](#uniontointersectionu)|||
+||[IntersectUnions](#IntersectUnions)|||
 ||KeysMatching|||
 ||[OptionalExceptOne](#optionalexceptoneobject)|||
 ||[ObjectLength](#objectlengthtype)|||
