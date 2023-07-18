@@ -276,9 +276,9 @@ export type MapArray<T extends Record<F, unknown>[] | ReadonlyArray<Record<F, un
  * @description convert union to intersection
  * @link https://stackoverflow.com/a/50375286
  * @returns {{a} & {b}}
- * @example UnionToIntersection<{a:1} | {b:1}> => {a: 1} & {b: 1}
+ * @example IntersectUnions<{a:1} | {b:1}> => {a: 1} & {b: 1}
  */
-export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
+export type IntersectUnions<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
 
 
 /**
@@ -290,7 +290,7 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
  * @returns {boolean}
  * @example IsUnion<{a:1} | {b:1}> => true
  */
-export type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true
+export type IsUnion<T> = [T] extends [IntersectUnions<T>] ? false : true
 
 
 
@@ -367,6 +367,28 @@ type FirstOrLast_<U extends PropertyKey> = (U extends any ? (x: () => U) => void
 export type ObjectLength<O extends object, Res extends PropertyKey[] = [], L extends PropertyKey = FirstOrLast_<keyof O>> = [L] extends [never]
     ? Res['length']
     : ObjectLength<Omit<O, L>, [L, ...Res]>;
+
+
+
+
+type RemoveFirstFromTuple_<T extends ReadonlyArray<any> | any[]> = 
+    T['length'] extends 0 ? [] :
+	(((...b: T) => void) extends (a: any, ...b: infer I) => void ? I : [])
+
+
+/**
+ * @cat Object
+ * @param {AO} Tuple 
+ * @description convert tuple of objects to overall object
+ * @return {object}
+ * @example [{a}, {b}, {c}] => {a, b, c}
+ */
+export type Join<T extends readonly object[]> = T extends [infer F, ...infer R] 
+    ? F & Join<R extends object[] ? R : []> 
+    : {}
+// export type Join<AO extends ReadonlyArray<object>, R extends object = {}> = AO['length'] extends 0
+// 	? R
+// 	: Join<RemoveFirstFromTuple_<AO>, R & AO[0]>
 
 
 //@see also:

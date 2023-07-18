@@ -4,14 +4,15 @@ import type {
     OmitNullable, ParseInt_, NonNullableKeys, ConstrainArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
     MapType as MapTypeValue,
     KeysMatching,
-    UnionToIntersection,
+    IntersectUnions,
     IsUnion,
     Common,
     Diff,
     OptionalExceptOne,
     ScreenType,
     ObjectLength,
-    KeysArray
+    KeysArray,
+    Join
 } from "../sources/utils";
 
 
@@ -256,7 +257,7 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
 /// UnionToIntersection:
 
 {
-    let a: UnionToIntersection<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
+    let a: IntersectUnions<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
     let b: {a: 1} & {b: 1} = a
 }
 
@@ -329,6 +330,17 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
     let r5: ObjectLength<Table> = 5;
 }
 
+
+/// Join
+{
+    type A = [{a: number}, {c: number}, {d: string}]
+    type O = Join<A>
+    let o: O = {
+        a: 1,
+        c: 3,
+        d: ''
+    }
+}
 
 
 //@ Another capabilites:
