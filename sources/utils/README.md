@@ -29,6 +29,7 @@
 - [Diff](#difftype-type)
 - [OptionalExceptOne](#optionalexceptoneobject)
 - [ObjectLength](#objectlengthtype)
+- [Join](#jointupleofobjects)
 
 #### Unions: 
 
@@ -278,6 +279,16 @@ type Obj = {
     is_active: boolean;
 };
 let objectLengt: ObjectLength<Obj>                 // 3
+```
+
+### [Join\<TupleOfObjects\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#386)
+
+Counts the number of keys in an object
+
+```ts
+type A = [{a: number}, {c: number}, {d: string}]
+type O = Join<A>
+const o: O = { a: 1, c: 3, d: ''}
 ```
 
 <br>
