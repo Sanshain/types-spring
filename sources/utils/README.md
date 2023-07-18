@@ -23,7 +23,7 @@
 - [MergeAll](#mergealltypes)
 - KeysMatching
 - [MapType](#maptypeobject-key)
-- [IntersectUnions](#intersectunions)
+- [IntersectUnions](#intersectunionsu)
 - [IsUnion](#isuniont)
 - [Common](#commontype-type)
 - [Diff](#difftype-type)
@@ -308,7 +308,7 @@ const o: O = { a: 1, c: 3, d: ''}
 |[ArrayFilter](#arrayfilterunknown-type)|[NonNullableKeys](#nonnullablekeystype)|||
 |[MapArray](#maparrayunknown-key)|[MapType](#maptypeobject-key)|||
 ||[IsUnion](#isuniont)|||
-||[IntersectUnions](#IntersectUnions)|||
+||[IntersectUnions](#intersectunionsu)|||
 ||KeysMatching|||
 ||[OptionalExceptOne](#optionalexceptoneobject)|||
 ||[ObjectLength](#objectlengthtype)|||
