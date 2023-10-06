@@ -321,9 +321,9 @@ export type Diff<T extends object, D extends object> = {
 
 
 type _OptionalExceptOne<T extends object, Rest = never, Result = never> = {
-    [K in keyof T]: Exclude<Rest, K> extends never
-    ? _OptionalExceptOne<Omit<T, K>, Rest | K, Result | Partial<Omit<T, K>> & { [k in K]: T[K] }>
-    : Result
+    [K in keyof T]: Exclude<Rest, K> extends never  // [K] extends [keyof Rest]
+        ? _OptionalExceptOne<Omit<T, K>, Rest | K, Result | Partial<Omit<T, K>> & { [k in K]: T[K] }>
+        : Result
 }[keyof T]
 
 /**
@@ -391,5 +391,22 @@ export type Join<T extends readonly object[]> = T extends [infer F, ...infer R]
 // 	: Join<RemoveFirstFromTuple_<AO>, R & AO[0]>
 
 
+
+
+/**
+ * @cat Object
+ * @param {T} object 
+ * @description makes just one of the fields [is] available
+ * @return {Union<object>}
+ * @example {a, b} => {a, b: never} | {a: never, b} 
+ */
+ export type OneOf<T extends object> = {
+    [K in keyof T]:  {[k in K]: T[K]} & {[k in keyof Omit<T, K>]?: never}    
+  } [keyof T]
+
+
+
 //@see also:
 // https://stackoverflow.com/questions/62084836/what-does-it-mean-for-a-type-to-distribute-over-unions
+
+

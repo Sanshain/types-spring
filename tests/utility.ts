@@ -12,7 +12,8 @@ import type {
     ScreenType,
     ObjectLength,
     KeysArray,
-    Join
+    Join,
+    OneOf
 } from "../sources/utils";
 
 
@@ -30,11 +31,11 @@ type ObjType = {
     const bar: KeysArray<ObjType> = ["d"];
     //@ts-expect-error =>                                                   type '["a", "b", "c", "d"]' is not assignable to type ["a", "b", "c"]
     const foo: KeysArray<ObjType> = ["a", "b", "c", "d"];
-    
+
     const objKeys: KeysArray<ObjType> = ["a", "b", "c"];
-    
+
     const objKeys$: KeysArray<ObjType> = ["a", "c", "b"];
-}           
+}
 
 
 
@@ -50,7 +51,7 @@ type User = {
 
 let a: NonNullableKeys<User> = 'name'
 //@ts-expect-error
-let b: NonNullableKeys<User> = 'phonenumber' 
+let b: NonNullableKeys<User> = 'phonenumber'
 
 
 
@@ -128,7 +129,7 @@ let ms: Merge<A, B> = { a: 1, b: '', c: 1 }
 /// MergeAll
 
 
-let c: MergeAll<[A, B, { d: 7 }]> = { a: 1, b: 1, c: 1, d: 7 }  
+let c: MergeAll<[A, B, { d: 7 }]> = { a: 1, b: 1, c: 1, d: 7 }
 
 
 
@@ -179,7 +180,7 @@ const n10: Ranged<5, 10> = 10;
     let a = { a: 1, b: '', c: '' };
     //@ts-expect-error
     let keysa: KeysMatching<typeof a, string> = 'a'
-    let keys: KeysMatching<typeof a, string> = 'b'    
+    let keys: KeysMatching<typeof a, string> = 'b'
 }
 
 
@@ -211,7 +212,7 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
         yyy.a = 1
         //@ts-expect-error
         yyy.a = ''
-    }    
+    }
 }
 
 
@@ -227,7 +228,7 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
         {
             a: string
         }
-    ]    
+    ]
     type R = MapArray<A, 'a'>
     let r: R = [1, '2'];
     //@ts-expect-error
@@ -247,9 +248,9 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
         //@ts-expect-error
         let r3: R = ['', ''];
         //@ts-expect-error
-        let r4: R = [{ a: number }, { a: number }];          
+        let r4: R = [{ a: number }, { a: number }];
     }
-    
+
 }
 
 
@@ -258,7 +259,7 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
 
 {
     let a: IntersectUnions<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
-    let b: {a: 1} & {b: 1} = a
+    let b: { a: 1 } & { b: 1 } = a
 }
 
 
@@ -280,28 +281,28 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
     //@ts-expect-error
     c.a
     //@ts-expect-error
-    c.aa    
+    c.aa
 }
 
 /// Diff:
 {
     type A = { a: number, b: number, c: number }
     type B = { aa: number, b: number, c: string }
-    let c: Diff<A, B> = {a: 1}    
+    let c: Diff<A, B> = { a: 1 }
 }
 
 
 /// OptionalExceptOne
 {
-	type O = OptionalExceptOne<{a: 1, b: 1, c: 1}>
-	//@ts-expect-error
-	let o: O = {}
-	let oa: O = {a: 1}
-	let ob: O = {b: 1}
-	let oc: O = {c: 1}
-	let ooo: O = {a: 1, b: 1, c: 1}
-	//@ts-expect-error
-	let od: O = {d: 1}
+    type O = OptionalExceptOne<{ a: 1, b: 1, c: 1 }>
+    //@ts-expect-error
+    let o: O = {}
+    let oa: O = { a: 1 }
+    let ob: O = { b: 1 }
+    let oc: O = { c: 1 }
+    let ooo: O = { a: 1, b: 1, c: 1 }
+    //@ts-expect-error
+    let od: O = { d: 1 }
 }
 
 
@@ -333,13 +334,30 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
 
 /// Join
 {
-    type A = [{a: number}, {c: number}, {d: string}]
+    type A = [{ a: number }, { c: number }, { d: string }]
     type O = Join<A>
     let o: O = {
         a: 1,
         c: 3,
         d: ''
     }
+}
+
+
+/// OneOf
+{
+    type Params = {
+        a: 1,
+        b: 1,
+        c: 1
+    }
+
+    let a: OneOf<Params> = {a: 1}
+    let b: OneOf<Params> = {b: 1}
+    //@ts-expect-error
+    let ab: OneOf<Params> = {a: 1, b: 1}
+    //@ts-expect-error
+    let abc: OneOf<Params> = {a: 1, b: 1, c: 1}
 }
 
 
