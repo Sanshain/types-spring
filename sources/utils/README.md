@@ -23,10 +23,13 @@
 - [MergeAll](#mergealltypes)
 - KeysMatching
 - [MapType](#maptypeobject-key)
-- [UnionToIntersection](#uniontointersectionu)
+- [IntersectUnions](#intersectunionsu)
 - [IsUnion](#isuniont)
 - [Common](#commontype-type)
 - [Diff](#difftype-type)
+- [OptionalExceptOne](#optionalexceptoneobject)
+- [ObjectLength](#objectlengthtype)
+- [Join](#jointupleofobjects)
 
 #### Unions: 
 
@@ -38,7 +41,7 @@
 
 
 
-### [KeysArray\<Keys\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L11)
+### [KeysArray\<Keys\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L14)
 
 Creates tuple like array type from an object type:
 
@@ -49,14 +52,20 @@ type ObjType = {
     c: string;
 };
 
-const bar: KeysArray<keyof ObjType> = ["d"];      // expected error => Type "d" is not assignable to type "a" | "b" | "c"
+const bar: KeysArray<ObjType> = ["d"];            // expected error => Type "d" is not assignable to type "a" | "b" | "c"
 
-const foo: KeysArray<keyof ObjType> = [           // expected success
+const foo: KeysArray<ObjType> = [                 // expected success
     "a", "b", "c"
 ];    
 ```
 
-### [OmitNullable\<Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L36)
+<details>
+<summary><b>Constraits</b></summary>
+
+- *This is a rather complex recursive type and is designed directly for objects containing a little number of fields in order to maintain high performance of typescript server (no more than six are recommended)*
+</details>
+
+### [OmitNullable\<Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L39)
 
 ```ts
 type User = {
@@ -82,7 +91,7 @@ type User = {
 let a: NonNullableKeys<User> = 'name'  // 'name' | 'name1'
 ```
 
-### [ParseInt\<string\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L51)
+### [ParseInt\<string\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L54)
 
 Extracts number from string
 
@@ -90,7 +99,7 @@ Extracts number from string
 type N = ParseInt<'7'>    // type N = 7
 ```
 
-### [ConstrainArray\<number, type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L66)
+### [ConstrainArray\<number, type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L69)
 
 Generates fixed length array with specified type
 
@@ -98,7 +107,7 @@ Generates fixed length array with specified type
 export let names: ConstrainArray<2, boolean> = [false, true]    // [boolean, boolean]
 ```
 
-### [Indexes\<const Array\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L83)
+### [Indexes\<const Array\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L86)
 
 Extract indexes from tuple like keyof object
 
@@ -113,7 +122,7 @@ export const testArray = [
 type ArrayIndex = Indexes<typeof testArray>;     // 0 | 1 | 2 | 3
 ```
 
-### [Sequence\<number\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L98)
+### [Sequence\<number\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L101)
 
 generates a tuple of the specified length as a sequence of numbers from 0:
 
@@ -121,7 +130,7 @@ generates a tuple of the specified length as a sequence of numbers from 0:
 let re: Sequence<3>                             // [0, 1, 2]
 ```
 
-### [Merge\<Type, Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L121)
+### [Merge\<Type, Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L124)
 
 Merges fields from two types  like js spread or flow types spread
 
@@ -139,7 +148,7 @@ type C = Merge<A, B>
 let c: C;                                       // {a: string, b: string, c: number}
 ```
 
-### [MergeAll\<[...Types]\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L132)
+### [MergeAll\<[...Types]\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L135)
 
 Merges fields from unlimited amount of types like js spread or flow types spread
 
@@ -157,7 +166,7 @@ type C = MergeAll<[A, B, { d: 7 }]>
 let c: C;                                       // {a: string, b: string, c: number, d: 7}
 ```
 
-### [WideArray\<Tuple\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L165)
+### [WideArray\<Tuple\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L168)
 
 Converts types of the tuple to corresponding common type
 
@@ -166,7 +175,7 @@ const arr = [1, 2, 3] as const                  // type is [1, 2, 3]
 type R = WideArray<typeof arr>                  // type is [number, number, number]
 ```
 
-### [ConvertTupleType\<Tuple\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L180)
+### [ConvertTupleType\<Tuple\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L183)
 
 Converts types of the tuple to specified type
 
@@ -176,7 +185,7 @@ type R = ConvertTupleType<typeof arr, string>
 let r: R;                                       // type is [number, number, number]
 ```
 
-### [ArrayFilter<unknown[], Type>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L236)
+### [ArrayFilter<unknown[], Type>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L239)
 
 Excludes from array all types except Type
 
@@ -185,7 +194,7 @@ const _a = [1, 2, ''];                          // (string | number)[]
 let rt: ArrayFilter<typeof _a, number>          // string[]
 ```
 
-### [MapArray<unknown[], key>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L250)
+### [MapArray<unknown[], key>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L253)
 
 Map array item (object) to reduced object from specified key
 
@@ -199,7 +208,7 @@ type R = MapArray<A, 'a'>                       // [number, string]
 ```
 
 
-### [MapType<object, key>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#LL264C13-L264C21)
+### [MapType<object, key>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#LL267C13-L267C21)
 
 Map object item (object) to reduced object from specified key
 
@@ -212,12 +221,12 @@ type O = {
 let yyy: MapTypeValue<O, "value">               // {a: number, b: number} 
 ```
 
-### UnionToIntersection\<U\>
+### IntersectUnions\<U\>
 
 Converts union to intersection
 
 ```ts
-let a: UnionToIntersection<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
+let a: IntersectUnions<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
 ```
 
 ### IsUnion\<T\>
@@ -229,7 +238,7 @@ let a: IsUnion<string | number> = true
 let b: IsUnion<string> = false
 ```
 
-### [Common\<Type, Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L304)
+### [Common\<Type, Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L307)
 
 Highlights common properties
 
@@ -249,7 +258,7 @@ type B = { b: number, c: string }
 let c: Diff<A, B>                                // {a: number}  
 ```
 
-### [OptionalExceptOne\<object\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L330)
+### [OptionalExceptOne\<object\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L333)
 
 Makes all fields optional, except for any one of them
 
@@ -259,6 +268,28 @@ let o: O = {}                                     // type error!
 let oa: O = {a: 1}                                // success
 ```
 
+### [ObjectLength\<Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#367)
+
+Counts the number of keys in an object
+
+```ts
+type Obj = {
+    id: number;
+    id_user: string;
+    is_active: boolean;
+};
+let objectLengt: ObjectLength<Obj>                 // 3
+```
+
+### [Join\<TupleOfObjects\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L386)
+
+Counts the number of keys in an object
+
+```ts
+type A = [{a: number}, {c: number}, {d: string}]
+type O = Join<A>
+const o: O = { a: 1, c: 3, d: ''}
+```
 
 <br>
 <hr>
@@ -277,8 +308,10 @@ let oa: O = {a: 1}                                // success
 |[ArrayFilter](#arrayfilterunknown-type)|[NonNullableKeys](#nonnullablekeystype)|||
 |[MapArray](#maparrayunknown-key)|[MapType](#maptypeobject-key)|||
 ||[IsUnion](#isuniont)|||
-||[UnionToIntersection](#uniontointersectionu)|||
+||[IntersectUnions](#intersectunionsu)|||
 ||KeysMatching|||
+||[OptionalExceptOne](#optionalexceptoneobject)|||
+||[ObjectLength](#objectlengthtype)|||
 
 
 <details>
