@@ -13,7 +13,8 @@
   },
   "scripts": {
     "test": "tsc --noEmit",
-    "log": "node ./dev-tools/changelog.js",
+    "$log": "node ./dev-tools/changelog.js",
+    "changelog": "changelog --titled",
     "hooks": "simple-git-hooks"
   },
   "simple-git-hooks": {
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.2.5",
+    "npm-changelog": "^1.0.21",
     "simple-git-hooks": "^2.8.1",
     "typescript": "^5.0.4"
   }

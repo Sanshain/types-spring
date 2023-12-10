@@ -3,7 +3,7 @@ type _KeysArray<Dict extends object, Result extends PropertyKey[] = []> = {
     [Key in keyof Dict]: Exclude<keyof Dict, Key> extends never ? [...Result, Key] : _KeysArray<Omit<Dict, Key>, [...Result, Key]>;
 }[keyof Dict];
     
-type KeysArray__Error = 'Object with too much (more than six) fields passed to KeysArray type'
+type KeysArray__Error<L extends number, N extends number> = `Object with too much (${N}) fields amount (expected less than ${L}) passed to KeysArray type`
 /** 
  * @cat Array
  * @param { a | b | c | ... } FieldKeys
@@ -13,7 +13,7 @@ type KeysArray__Error = 'Object with too much (more than six) fields passed to K
  * @cat Object
  * @example KeysArray< {a,b,c} > = ['a', 'b', 'c']
  */
-export type KeysArray<Dict extends object> = ObjectLength<Dict> extends Enumerate<7> ? _KeysArray<Dict> : KeysArray__Error 
+export type KeysArray<Dict extends object, L extends Enumerate<8> = 7> = ObjectLength<Dict> extends Enumerate<L> ? _KeysArray<Dict> : KeysArray__Error<L, ObjectLength<Dict>>
 
 
 /**
@@ -276,9 +276,9 @@ export type MapArray<T extends Record<F, unknown>[] | ReadonlyArray<Record<F, un
  * @description convert union to intersection
  * @link https://stackoverflow.com/a/50375286
  * @returns {{a} & {b}}
- * @example UnionToIntersection<{a:1} | {b:1}> => {a: 1} & {b: 1}
+ * @example IntersectUnion<{a:1} | {b:1}> => {a: 1} & {b: 1}
  */
-export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
+export type IntersectUnion<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
 
 
 /**
@@ -290,7 +290,7 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
  * @returns {boolean}
  * @example IsUnion<{a:1} | {b:1}> => true
  */
-export type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true
+export type IsUnion<T> = [T] extends [IntersectUnion<T>] ? false : true
 
 
 
@@ -340,7 +340,7 @@ declare const __brand: unique symbol
  * @protected - popular type
  * @description branded type
  */
-export type ScreenType<T, B = never> = T & { [__brand]?: B }
+export type ScreenType<T, B = never> = T & { readonly [__brand]?: B }
 
 
 
@@ -348,7 +348,7 @@ export type ScreenType<T, B = never> = T & { [__brand]?: B }
  * @requires ^4.2.3
  * @cat union
  * @description Extract last or first type from union type
- * 
+ * @TODO rename to {PopFrom}
  */
 type FirstOrLast_<U extends PropertyKey> = (U extends any ? (x: () => U) => void : never) extends (x: infer P) => void
     ? P extends () => infer Return ? Return : never
@@ -367,6 +367,24 @@ type FirstOrLast_<U extends PropertyKey> = (U extends any ? (x: () => U) => void
 export type ObjectLength<O extends object, Res extends PropertyKey[] = [], L extends PropertyKey = FirstOrLast_<keyof O>> = [L] extends [never]
     ? Res['length']
     : ObjectLength<Omit<O, L>, [L, ...Res]>;
+
+
+    
+/**
+ * @cat Object | Array
+ * @param {O} object 
+ * @param {*} S replaced type
+ * @param {*} R new type
+ * @description deep replace all fields with specified type S to type R in object O
+ * @return {object}
+ * @example ['', '', 5], string, 0 => [0, 0, 5]
+ */
+export type ReplaceTypes<O extends object, S, R> = {
+    [K in keyof O]: O[K] extends object
+        ? ReplaceTypes<O[K], S, R>
+        : O[K] extends S ? Exclude<O[K], S> | R : O[K]
+}
+
 
 
 //@see also:

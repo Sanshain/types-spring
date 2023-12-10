@@ -65,3 +65,5 @@ const foo = (a: IBar) => {
 
 foo(bar)
 
+
+

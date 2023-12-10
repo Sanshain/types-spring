@@ -4,14 +4,15 @@ import type {
     OmitNullable, ParseInt_, NonNullableKeys, ConstrainArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
     MapType as MapTypeValue,
     KeysMatching,
-    UnionToIntersection,
+    IntersectUnion,
     IsUnion,
     Common,
     Diff,
     OptionalExceptOne,
     ScreenType,
     ObjectLength,
-    KeysArray
+    KeysArray,
+    ReplaceTypes
 } from "../sources/utils";
 
 
@@ -29,11 +30,14 @@ type ObjType = {
     const bar: KeysArray<ObjType> = ["d"];
     //@ts-expect-error =>                                                   type '["a", "b", "c", "d"]' is not assignable to type ["a", "b", "c"]
     const foo: KeysArray<ObjType> = ["a", "b", "c", "d"];
-    
+
     const objKeys: KeysArray<ObjType> = ["a", "b", "c"];
-    
+
     const objKeys$: KeysArray<ObjType> = ["a", "c", "b"];
-}           
+
+    //@ts-expect-error => string[] is not ussignible to `Object with too much (6) fields amount (expected less than 6) passed to KeysArray type`    
+    let objKeys8: KeysArray<ObjType & Omit<User, 'name'>, 6> = ["a", "b", "c", 'lastname', 'email', 'phonenumber']
+}
 
 
 
@@ -49,7 +53,7 @@ type User = {
 
 let a: NonNullableKeys<User> = 'name'
 //@ts-expect-error
-let b: NonNullableKeys<User> = 'phonenumber' 
+let b: NonNullableKeys<User> = 'phonenumber'
 
 
 
@@ -127,7 +131,7 @@ let ms: Merge<A, B> = { a: 1, b: '', c: 1 }
 /// MergeAll
 
 
-let c: MergeAll<[A, B, { d: 7 }]> = { a: 1, b: 1, c: 1, d: 7 }  
+let c: MergeAll<[A, B, { d: 7 }]> = { a: 1, b: 1, c: 1, d: 7 }
 
 
 
@@ -178,7 +182,7 @@ const n10: Ranged<5, 10> = 10;
     let a = { a: 1, b: '', c: '' };
     //@ts-expect-error
     let keysa: KeysMatching<typeof a, string> = 'a'
-    let keys: KeysMatching<typeof a, string> = 'b'    
+    let keys: KeysMatching<typeof a, string> = 'b'
 }
 
 
@@ -210,7 +214,7 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
         yyy.a = 1
         //@ts-expect-error
         yyy.a = ''
-    }    
+    }
 }
 
 
@@ -226,7 +230,7 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
         {
             a: string
         }
-    ]    
+    ]
     type R = MapArray<A, 'a'>
     let r: R = [1, '2'];
     //@ts-expect-error
@@ -246,18 +250,21 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
         //@ts-expect-error
         let r3: R = ['', ''];
         //@ts-expect-error
-        let r4: R = [{ a: number }, { a: number }];          
+        let r4: R = [{ a: number }, { a: number }];
     }
-    
+
 }
 
 
 
-/// UnionToIntersection:
+/// IntersectUnion:
 
 {
-    let a: UnionToIntersection<{ a: 1 } | { b: 1 }> = { a: 1, b: 1 }
-    let b: {a: 1} & {b: 1} = a
+    type A = { a: 1 }
+    type B = { b: 1 }
+    type AB = A | B
+    let a: IntersectUnion<AB> = { a: 1, b: 1 }    
+    let b: { a: 1 } & { b: 1 } = a
 }
 
 
@@ -279,28 +286,28 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
     //@ts-expect-error
     c.a
     //@ts-expect-error
-    c.aa    
+    c.aa
 }
 
 /// Diff:
 {
     type A = { a: number, b: number, c: number }
     type B = { aa: number, b: number, c: string }
-    let c: Diff<A, B> = {a: 1}    
+    let c: Diff<A, B> = { a: 1 }
 }
 
 
 /// OptionalExceptOne
 {
-	type O = OptionalExceptOne<{a: 1, b: 1, c: 1}>
-	//@ts-expect-error
-	let o: O = {}
-	let oa: O = {a: 1}
-	let ob: O = {b: 1}
-	let oc: O = {c: 1}
-	let ooo: O = {a: 1, b: 1, c: 1}
-	//@ts-expect-error
-	let od: O = {d: 1}
+    type O = OptionalExceptOne<{ a: 1, b: 1, c: 1 }>
+    //@ts-expect-error
+    let o: O = {}
+    let oa: O = { a: 1 }
+    let ob: O = { b: 1 }
+    let oc: O = { c: 1 }
+    let ooo: O = { a: 1, b: 1, c: 1 }
+    //@ts-expect-error
+    let od: O = { d: 1 }
 }
 
 
@@ -328,6 +335,28 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
     //@ts-expect-error
     let r5: ObjectLength<Table> = 5;
 }
+
+
+
+
+/// ReplaceTypes
+{
+    type Profile = {
+        s: string, b: number,
+        c: { f: string }
+    }
+
+    let rrr: ReplaceTypes<Profile, string, number> = {
+        s: 1,
+        b: 1,
+        c: {f: 1}
+    }
+
+    let tt: ReplaceTypes<['', '', 5], string, 0> = [0, 0, 5];
+    //@ts-expect-error
+    let t1: ReplaceTypes<['', '', 5], string, 0> = [0, 1, 5];
+}
+
 
 
 
