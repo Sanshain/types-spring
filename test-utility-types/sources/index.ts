@@ -3,7 +3,9 @@ import { TaggedUnion } from "type-fest"
 import { Merge } from "type-fest"
 import { ListOf } from "ts-toolbelt/out/Object/ListOf"
 import { Either } from "ts-toolbelt/out/Object/_api"
+// import { Filter } from "ts-toolbelt/out/Object/Filter";     
 import { Filter } from "ts-toolbelt/out/List/Filter";       // !! ts-toolbelt have very perplexing types for understanding, insufficiently documented web-site and modest readme
+import { Compulsory } from "ts-toolbelt/out/Object/Compulsory";       
 
 import type { InvariantOf, Opaque } from 'type-fest';
 
@@ -20,7 +22,9 @@ import type { InvariantOf, Opaque } from 'type-fest';
 
 
 
-
+type OO = Either<{ a: 1, b: 1, c: { aa: 1 } }, 'aa'>
+type F1l = Compulsory<{ a?: 1, b: 1, '2': 2, '1': 3 }>
+// type FF = Filter<[1,2,3,'5'], string>
 
 
 // ts-toolbelt   - >200 types         // but most of them are very similar to each other    - 5.9k
@@ -63,6 +67,7 @@ import type { InvariantOf, Opaque } from 'type-fest';
 // -            === OptionalExceptOne
 // -            === ArrayKeys*
 // Diff         === Diff
+
 
 
 

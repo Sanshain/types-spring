@@ -62,3 +62,26 @@
      * But this is such a rare case that I doubt it will be much in demand from the community. Therefore, I do not see it useful to add it to the package (at least for now)
      */
 }
+
+
+
+{
+    type ABC = 'A' | 'B' | 'C'
+    type Num = '1' | '2' | '3'
+
+    /**
+     * @description like OptionalExceptOne, but for unions
+     * @thoughts like OptionalExceptOne, but for unions
+     */
+    type OptionalExceptOneOf<TT extends PropertyKey, EE = string, Result = never> = {
+        [K in TT]: Exclude<TT, K> extends never
+        ? Result  // | { [k in K]: string } & { [k in TT & keyof Result]?: string }
+        : OptionalExceptOneOf<Exclude<TT, K>, EE, Result | { [k in K]: string } & { [k in TT & keyof Result]?: string }>
+    }[TT]
+
+    type II = OptionalExceptOneOf<ABC> & OptionalExceptOneOf<Num>
+    let t: II = {
+        A: '',
+        1: ''
+    }
+}

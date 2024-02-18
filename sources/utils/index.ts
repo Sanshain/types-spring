@@ -23,8 +23,8 @@ export type KeysArray<Dict extends object, L extends Enumerate<8> = 7> = ObjectL
  * @returns {a | c | ...}
  * @example {a?: any, b: any, c: any} => b | c
  */
-export type NonNullableKeys<T extends object> = {
-    [P in keyof T]: null extends T[P] ? never : P;
+export type NonNullableKey<T extends object> = {
+    [P in keyof T]: null extends T[P] ? never : undefined extends T[P] ? never : P
 }[keyof T];
 
 
@@ -51,7 +51,7 @@ export type OmitNullable<T> = {
  * @returns {number}
  * @example type N = ParseInt<'7'>
  */
-export type ParseInt_<T> = T extends `${infer N extends number}` ? N : never;
+export type _ParseInt<T> = T extends `${infer N extends number}` ? N : never;
 
 
 
@@ -139,7 +139,7 @@ export type MergeAll<T extends Array<object>, L extends never[] = [], Result ext
 
 
 
-type WidenType_<T> = T extends string
+type _WidenType<T> = T extends string
     ? string
     : T extends number
         ? number
@@ -165,7 +165,7 @@ type WidenType_<T> = T extends string
  */
 export type WideArray<A extends ReadonlyArray<unknown>> = {
     // [K in keyof A]: A[K] extends string ? string : (A[K] extends number ? number : A[K])
-    [K in keyof A]: WidenType_<A[K]>
+    [K in keyof A]: _WidenType<A[K]>
 }  
 
 
@@ -218,7 +218,7 @@ export type Ranged<F extends number, T extends number> = Exclude<Enumerate<T>, E
  * @param {unknown} V
  * @description Extract keys with specified value type from object T
  * @returns {key1 | key2 | ...}
- * @example KeysMatching<{a: 1, b: ''}, string> => b
+ * @example KeysMatching<{a: 1, b: '', c: string}, string> => b | c
  */
 export type KeysMatching<T, V> = { [K in keyof T]-?: T[K] extends V ? K : never }[keyof T];
 
@@ -328,6 +328,7 @@ type _OptionalExceptOne<T extends object, Rest = never, Result = never> = {
 
 /**
  * @cat Object
+ * @attention tested on more then 20 fields (on purpose to check level of deep to calculatioan)
  * @param {T} object
  * @description makes all fields are optional excepts one of them
  */

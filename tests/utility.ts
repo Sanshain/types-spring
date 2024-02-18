@@ -1,7 +1,16 @@
 //@ts-check
 
 import type {
-    OmitNullable, ParseInt_, NonNullableKeys, ConstrainArray, WideArray, ConvertTupleType, Enumerate, Ranged, Sequence, ArrayFilter, MapArray,
+    OmitNullable,
+    _ParseInt,
+    NonNullableKey,
+    ConstrainArray,
+    WideArray,
+    ConvertTupleType,
+    Enumerate,
+    Ranged, Sequence,
+    ArrayFilter,
+    MapArray,
     MapType as MapTypeValue,
     KeysMatching,
     IntersectUnion,
@@ -46,16 +55,20 @@ type ObjType = {
 /// NonNullableKeys
 
 
-type User = {
-    name: string;
-    lastname: string;
-    email: string | null;
-    phonenumber: string | null;
-};
+{
+    type User = {
+        name: string;
+        lastname: string;
+        email?: string;
+        phonenumber: string | null;
+    };
 
-let a: NonNullableKeys<User> = 'name'
-//@ts-expect-error
-let b: NonNullableKeys<User> = 'phonenumber'
+    let a: NonNullableKey<User> = 'name'
+    //@ts-expect-error
+    let b: NonNullableKey<User> = 'email'
+    //@ts-expect-error
+    let c: NonNullableKey<User> = 'phonenumber'    
+}
 
 
 
@@ -74,7 +87,7 @@ let u: OmitNullable<UserType> = { name: '', email: '' }
 
 /// ParseInt
 
-const num: ParseInt_<'7'> = 7
+const num: _ParseInt<'7'> = 7
 
 
 
@@ -302,7 +315,7 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
 
 /// OptionalExceptOne
 {
-    type O = OptionalExceptOne<{ a: 1, b: 1, c: 1 }>
+    type O = OptionalExceptOne<{ a: 1, b: 1, c: 1 }> 
     //@ts-expect-error
     let o: O = {}
     let oa: O = { a: 1 }

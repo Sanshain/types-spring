@@ -17,7 +17,7 @@
 
 #### Objects:
 
-- [NonNullableKeys](#nonnullablekeystype)
+- [NonNullableKey](#nonnullablekeytype)
 - [OmitNullable](#omitnullabletype)
 - [Merge](#mergetype-type)
 - [MergeAll](#mergealltypes)
@@ -76,19 +76,19 @@ type User = {
 type NonNullableUserPropertyKeys = OmitNullable<User>;    // {name: string}
 ```
 
-### [NonNullableKeys\<Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L23)
+### [NonNullableKey\<Type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L23)
 
 Extracts required keys from object: 
 
 ```ts
 type User = {
     name: string;
-    name1: string;
+    name2: string;
     email: string | null;
-    email1: string | null;
+    email2?: string;
 };
 
-let a: NonNullableKeys<User> = 'name'  // 'name' | 'name1'
+let a: NonNullableKey<User> = 'name'  // 'name' | 'name2'
 ```
 
 ### [ParseInt\<string\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L54)
@@ -305,7 +305,7 @@ const o: O = { a: 1, c: 3, d: ''}
 |[Sequence](#sequencenumber)|[Diff](#diff)|||
 |[WideArray](#widearraytuple)|[Common](#common)|||
 |[ConvertTupleType](#converttupletypetuple)|[OmitNullable](#omitnullabletype)|||
-|[ArrayFilter](#arrayfilterunknown-type)|[NonNullableKeys](#nonnullablekeystype)|||
+|[ArrayFilter](#arrayfilterunknown-type)|[NonNullableKey](#nonnullablekeytype)|||
 |[MapArray](#maparrayunknown-key)|[MapType](#maptypeobject-key)|||
 ||[IsUnion](#isuniont)|||
 ||[IntersectUnions](#intersectunionsu)|||
@@ -319,7 +319,7 @@ const o: O = { a: 1, c: 3, d: ''}
 <summary><h4>Pseudocode:</h4></summary>
 
 - [KeysArray:](#keysarraykeys) `a|b|c` => `[a, b, c]`
-- [NonNullableKeys:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#nonnullablekeystype) `{k0?, k1, k2}` => `k2 | k2`
+- [NonNullableKey:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#nonnullablekeytype) `{k0?, k1, k2}` => `k2 | k2`
 - [OmitNullable:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#omitnullabletype) `{k0?, k1, k2}` => `{k2, k2}`
 - [ConvertTupleType:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#constraitarraynumber-type) `<number, type>` => `tuple<type>`
 - [Indexes:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#indexesconst-array) `<tuple>` => `keyof tuple`

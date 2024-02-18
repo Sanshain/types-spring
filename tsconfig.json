@@ -107,7 +107,8 @@
   ],
   "include": [
     "./sources/**/*",
-    "./tests/*.ts"    
-, "sources/document/_index.d.ts", "sources/document/_$research.ts"    // "rollup.config.js"
+    "./tests/*.ts", 
+    "sources/document/_index.d.ts", 
+    "sources/document/_$research.ts"    // "rollup.config.js"
   ]
 }
