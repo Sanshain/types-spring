@@ -30,6 +30,8 @@
 - [OptionalExceptOne](#optionalexceptoneobject)
 - [ObjectLength](#objectlengthtype)
 - [Join](#jointupleofobjects)
+- [OneOf](#oneofo)
+- [ReplaceTypes](#replacetypes)
 
 #### Unions: 
 
@@ -289,6 +291,45 @@ Counts the number of keys in an object
 type A = [{a: number}, {c: number}, {d: string}]
 type O = Join<A>
 const o: O = { a: 1, c: 3, d: ''}
+```
+
+### [ReplaceTypes](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L394)
+
+Replaces type S of object type fields to type R (recursivly!):
+
+```ts
+type Profile = {
+    s: string,
+    b: boolean,
+    c: { f: string }
+}
+
+// for example replacing of `string` to `number`:
+
+let rrr: ReplaceTypes<Profile, string, number> = {
+    s: 1,                                                    // type string => number
+    b: false,                                                // type boolean remained the same
+    c: {f: 3}                                                // type string => number
+}
+```
+
+### [OneOf\<O\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L394)
+
+Makes all fields as optional expect either one: 
+
+```ts
+type Params = {
+    a: 1,
+    b: 1,
+    c: 1
+}
+
+let a: OneOf<Params> = {a: 1}
+let b: OneOf<Params> = {b: 1}
+//@ts-expect-error
+let ab: OneOf<Params> = {a: 1, b: 1}
+//@ts-expect-error
+let abc: OneOf<Params> = {a: 1, b: 1, c: 1}
 ```
 
 <br>
