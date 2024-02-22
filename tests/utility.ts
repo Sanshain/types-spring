@@ -4,7 +4,7 @@ import type {
     OmitNullable,
     _ParseInt,
     NonNullableKey,
-    ConstrainArray,
+    ConstrainedArray,
     WideArray,
     ConvertTupleType,
     Enumerate,
@@ -42,7 +42,7 @@ type ObjType = {
     //@ts-expect-error =>                                                   type '["a", "b", "c", "d"]' is not assignable to type ["a", "b", "c"]
     const foo: KeysArray<ObjType> = ["a", "b", "c", "d"];
 
-    const objKeys: KeysArray<ObjType> = ["a", "b", "c"];
+    const objKeys: KeysArray<ObjType> & {} = ["a", "b", "c"];
 
     const objKeys$: KeysArray<ObjType> = ["a", "c", "b"];
 
@@ -55,15 +55,16 @@ type ObjType = {
 /// NonNullableKeys
 
 
-{
-    type User = {
-        name: string;
-        lastname: string;
-        email?: string;
-        phonenumber: string | null;
-    };
+type User = {
+    name: string;
+    lastname: string;
+    email?: string;
+    phonenumber: string | null;
+};
 
-    let a: NonNullableKey<User> = 'name'
+{
+
+    let a: NonNullableKey<User> & {} = 'name'
     //@ts-expect-error
     let b: NonNullableKey<User> = 'email'
     //@ts-expect-error
@@ -93,11 +94,11 @@ const num: _ParseInt<'7'> = 7
 
 /// ConstraitArray
 
-let names: ConstrainArray<2, boolean> = [false, true]
+let names: ConstrainedArray<2, boolean> = [false, true]
 //@ts-expect-error
-let names_3: ConstrainArray<2, boolean> = [false, true, false]
+let names_3: ConstrainedArray<2, boolean> = [false, true, false]
 //@ts-expect-error
-let strings: ConstrainArray<2, boolean> = ['', '']
+let strings: ConstrainedArray<2, boolean> = ['', '']
 
 
 
@@ -182,7 +183,7 @@ const en5: Enumerate<5> = 5
 
 /// Range
 
-const n: Ranged<5, 10> = 5;
+const n: Ranged<5, 10> & {} = 5;
 //@ts-expect-error
 const n0: Ranged<5, 10> = 0;
 //@ts-expect-error
@@ -197,7 +198,7 @@ const n10: Ranged<5, 10> = 10;
     let a = { a: 1, b: '', c: '' };
     //@ts-expect-error
     let keysa: KeysMatching<typeof a, string> = 'a'
-    let keys: KeysMatching<typeof a, string> = 'b'
+    let keys: KeysMatching<typeof a, string> & {} = 'b'
 }
 
 

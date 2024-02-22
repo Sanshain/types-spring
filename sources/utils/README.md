@@ -8,7 +8,7 @@
 
 #### Arrays:
 - [KeysArray](#keysarraykeys)
-- [ConstrainArray](#constrainarraynumber-type)
+- [ConstrainedArray](#constrainedarraynumber-type)
 - [Sequence](#sequencenumber)
 - [WideArray](#widearraytuple)
 - [ConvertTupleType](#converttupletypetuple)
@@ -99,12 +99,12 @@ Extracts number from string
 type N = ParseInt<'7'>    // type N = 7
 ```
 
-### [ConstrainArray\<number, type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L69)
+### [ConstrainedArray\<number, type\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L69)
 
 Generates fixed length array with specified type
 
 ```ts
-export let names: ConstrainArray<2, boolean> = [false, true]    // [boolean, boolean]
+export let names: ConstrainedArray<2, boolean> = [false, true]    // [boolean, boolean]
 ```
 
 ### [Indexes\<const Array\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L86)
@@ -301,7 +301,7 @@ const o: O = { a: 1, c: 3, d: ''}
 |Arrays|Objects|Unions|
 |------|-------|------|
 |[KeysArray](#keysarraykeys)|[Merge](#mergetype-type)|Enumerate|ParseInt|
-|[ConstrainArray](#constrainarraynumber-type)|[MergeAll](#mergealltypes)|Ranged||
+|[ConstrainedArray](#constrainedarraynumber-type)|[MergeAll](#mergealltypes)|Ranged||
 |[Sequence](#sequencenumber)|[Diff](#diff)|||
 |[WideArray](#widearraytuple)|[Common](#common)|||
 |[ConvertTupleType](#converttupletypetuple)|[OmitNullable](#omitnullabletype)|||

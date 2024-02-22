@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "ts-toolbelt": "^9.6.0",
-    "type-fest": "^3.12.0",
+    "type-fest": "^4.10.2",
     "types-spring": "1.1.4",
     "utility-types": "^3.10.0"
   }

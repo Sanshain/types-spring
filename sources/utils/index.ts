@@ -13,7 +13,7 @@ type KeysArray__Error<L extends number, N extends number> = `Object with too muc
  * @cat Object
  * @example KeysArray< {a,b,c} > = ['a', 'b', 'c']
  */
-export type KeysArray<Dict extends object, L extends Enumerate<8> = 7> = ObjectLength<Dict> extends Enumerate<L> ? _KeysArray<Dict> : KeysArray__Error<L, ObjectLength<Dict>>
+export type KeysArray<Dict extends object, L extends Enumerate<8> = 7> = ObjectLength<Dict> extends Enumerate<L> ? _KeysArray<Dict> : KeysArray__Error<L, ObjectLength<Dict>> 
 
 
 /**
@@ -66,7 +66,7 @@ export type _ParseInt<T> = T extends `${infer N extends number}` ? N : never;
  * @returns {[type, type, ...]}
  * @example {ConstraitArray<2, boolean> => [false, true]}
  */
-export type ConstrainArray<N extends number, T = unknown, A extends T[] = []> = A['length'] extends N ? A : ConstrainArray<N, T, [...A, T]>
+export type ConstrainedArray<N extends number, T = unknown, A extends T[] = []> = A['length'] extends N ? A : ConstrainedArray<N, T, [...A, T]>
 
 
 
@@ -203,7 +203,7 @@ export type Enumerate<N extends number, Acc extends number[] = []> = Acc['length
 
 
 
-export type Ranged<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>
+export type Ranged<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>> 
 
 
 
