@@ -33,6 +33,7 @@ import { O } from 'ts-toolbelt'
 // type Pet2 = 'dog' | 'cat' | string & {}
 
 
+
 // In covariance (default)
 
 

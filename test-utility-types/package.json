@@ -14,5 +14,8 @@
     "type-fest": "^4.10.2",
     "types-spring": "1.1.4",
     "utility-types": "^3.10.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
   }
 }

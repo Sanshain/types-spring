@@ -17,13 +17,17 @@ import type {
     IsUnion,
     Common,
     Diff,
+    Merge, Spread,
     OptionalExceptOne,
     ScreenType,
     ObjectLength,
     KeysArray,
     ReplaceTypes,
     Join,
-    OneOf
+    OneOf,
+    // Combine_,
+    Overlap as Overlap,
+    ReduceBy
 } from "../sources/utils";
 
 
@@ -136,10 +140,11 @@ type A = {
     b: string
 }
 type B = {
-    b: number,
+    b: boolean,
     c: number
 }
-let m: Merge<A, B> = { a: 1, b: 1, c: 1 }
+
+let m: Merge<A, B> = { a: 1, b: true, c: 1 }
 //@ts-expect-error
 let ms: Merge<A, B> = { a: 1, b: '', c: 1 }
 
@@ -147,7 +152,11 @@ let ms: Merge<A, B> = { a: 1, b: '', c: 1 }
 /// MergeAll
 
 
-let c: MergeAll<[A, B, { d: 7 }]> = { a: 1, b: 1, c: 1, d: 7 }
+{
+    let c: MergeAll<[A, B, { d: 7 }]> = { a: 1, b: true, c: 1, d: 7 }
+    //@ts-expect-error
+    let cs: MergeAll<[A, B, { d: 7 }]> = { a: 1, b: '', c: 1, d: 7 }
+}
 
 
 
@@ -402,6 +411,38 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
     let t1: ReplaceTypes<['', '', 5], string, 0> = [0, 1, 5];
 }
 
+
+/// Combine
+{
+    // type C = Combine_<{ a: number, b: number }, { b: string, c: string }>;
+    // let c: C = { a: 1, b: 1, c: 'string' }
+    // let cs: C = { a: 1, b: '', c: 'string' }
+    // //@ts-expect-error
+    // let cb: C = { a: 1, b: false, c: 'string' }
+    // //@ts-expect-error
+    // let cn: C = { a: 1, b: '', c: 1}
+}
+
+
+
+/// Overlay
+
+{
+    type AA = { a: number, b: number } | { b: string, c: string }
+    type O = Overlap<AA> // => { a: number, b: number | string, c: string }
+    let o: O = { a: 1, b: 1, c: '' }
+    let os: O = { a: 1, b: '', c: '' }
+    //@ts-expect-error
+    let osn: O = { a: 1, b: '', c: 0 }
+}
+
+
+/// ReduceBy
+
+{
+    type R = ReduceBy<[{ a: 'a1', b: '1' }, { a: 'a2', b: '2' }], 'a'>
+    let r: R = { a1: { b: '1' }, a2: { b: '2' } };
+}
 
 
 

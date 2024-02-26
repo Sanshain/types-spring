@@ -1,5 +1,9 @@
 # changelog
 
+## 2.0.2 
+
+ - rename NonNullableKeys to NonNullableKey
+
 ## 2.0.1 
 
  - add object types to _index reference
@@ -26,4 +30,3 @@
  - check hook
  - dom tests attached
  - utility types renaming
-

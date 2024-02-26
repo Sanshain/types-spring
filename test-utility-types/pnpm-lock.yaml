@@ -4,13 +4,17 @@ specifiers:
   ts-toolbelt: ^9.6.0
   type-fest: ^4.10.2
   types-spring: 1.1.4
+  typescript: ^5.3.3
   utility-types: ^3.10.0
 
 dependencies:
   ts-toolbelt: 9.6.0
   type-fest: 4.10.2
-  types-spring: 1.1.4
+  types-spring: 1.1.4_typescript@5.3.3
   utility-types: 3.10.0
+
+devDependencies:
+  typescript: 5.3.3
 
 packages:
 
@@ -23,11 +27,18 @@ packages:
     engines: {node: '>=16'}
     dev: false
 
-  /types-spring/1.1.4:
+  /types-spring/1.1.4_typescript@5.3.3:
     resolution: {integrity: sha512-J0TE3T5kLVMbBNfaiHK52p4G1KeStIz9bguRKgIxFAsihD8YFxa6iq2cLgMZcAdoy0Zwsqc2WBLR7sNoy3O5yQ==}
     peerDependencies:
       typescript: ^4.7.4 || ^5.0.4
+    dependencies:
+      typescript: 5.3.3
     dev: false
+
+  /typescript/5.3.3:
+    resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
 
   /utility-types/3.10.0:
     resolution: {integrity: sha512-O11mqxmi7wMKCo6HKFt5AhO4BwY3VV68YU07tgxfz8zJTIxr4BpsezN49Ffwy9j3ZpwwJp4fkRwjRzq3uWE6Rg==}

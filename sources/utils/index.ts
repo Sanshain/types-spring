@@ -9,7 +9,7 @@ type KeysArray__Error<L extends number, N extends number> = `Object with too muc
  * @param { a | b | c | ... } FieldKeys
  * @attention is not recommended for objects with more than 6 keys due to the severity of calculations
  * @returns {[a, b, ...]}
- * @alt_name ArrayOfKeys|KeysAsTuple
+ * @alt_names ArrayOfKeys|KeysAsTuple
  * @cat Object
  * @example KeysArray< {a,b,c} > = ['a', 'b', 'c']
  */
@@ -117,20 +117,20 @@ export type Sequence<L extends number, A extends number[] = []> = A['length'] ex
  * @cat Object
  * @description like flow type spread
  * @param {object} T
- * @param {object} K
- * @returns {{...T, ...K}} - like flow type spread
+ * @param {object} O
+ * @returns {{...T, ...O}} - like flow type spread
  * @example Merge<{a: number, b: number}, {b: string, c: string}> => {a: number, b: string, c: string}
  */
-export type Merge<T extends object, K extends object> = Omit<T, keyof K> & K;
-
-
+export type Merge<T extends object, O extends object, _O extends 'override' | 'union' = 'override'> = _O extends 'override'
+    ? {[K in keyof T | keyof O]: K extends keyof O ? O[K] : K extends keyof T ? T[K] : never }              // Omit<T, keyof K> & K
+    : Combine_$<T, O>
 
 /**
  * @cat Object
  * @description Merges fields from unlimited amount of types like js spread or flow types spread
  * @param {[...Types]}
  * @returns {{...Types}} - like flow type spread
- * @example MergeAll<[{a: any}, {b: any}, { b: 7 }]> => {a: any, b: 7}
+ * @example MergeAll<[{a: number}, {b: string}, { b: 7 }]> => {a: number, b: 7}
  */
 export type MergeAll<T extends Array<object>, L extends never[] = [], Result extends {} = {}> = T['length'] extends infer N extends L['length'] 
     ? Result
@@ -351,7 +351,7 @@ export type ScreenType<T, B = never> = T & { readonly [__brand]?: B }
  * @description Extract last or first type from union type
  * @TODO rename to {PopFrom}
  */
-type FirstOrLast_<U extends PropertyKey> = (U extends any ? (x: () => U) => void : never) extends (x: infer P) => void
+type FirstOrLast_<U extends unknown> = (U extends any ? (x: () => U) => void : never) extends (x: infer P) => void  // PropertyKey|object
     ? P extends () => infer Return ? Return : never
     : never;
 
@@ -420,6 +420,63 @@ export type Join<T extends readonly object[]> = T extends [infer F, ...infer R]
     [K in keyof T]:  {[k in K]: T[K]} & {[k in keyof Omit<T, K>]?: never}    
   } [keyof T]
 
+
+
+/**
+* @cat Object
+* @param {A} object 
+* @param {B} object 
+* @description combines two objects into one with types union (like merge, but with fields union)
+* @returns {{...A | ...B}} 
+* @example Combine<{a: number, b: number}, {b: string, c: string}> => {a: number, b: number | string, c: string}
+* @alternativeRealization
+    type Combine<A, B> = Diff<B, A> & Diff<A, B> & Common<A, B>
+*
+*/
+type Combine_$<A extends object, B extends object> = {
+    [K in keyof A | keyof B]: K extends keyof A & keyof B ? (A[K] | B[K]) : K extends keyof B ? B[K] : K extends keyof A ? A[K] : never;
+    // [K in keyof A | keyof B]: K extends keyof A ? A[K] : (K extends keyof B ? B[K] : never)
+}
+
+
+/**
+* @cat Object
+* @param {A|B|...} objects
+* @description combines objects union into one with types union. Works like Combine, but just for union
+* @returns {{a: A | B, b: A | BarProp, ...}} 
+* @example Overlay<{a: number, b: number}|{b: string, c: string}> => {a: number, b: number | string, c: string}
+*/
+export type Overlap<O extends object, R extends object = {}, U extends O = FirstOrLast_<O>> = Exclude<O, U> extends never
+    ? Combine_$<R, U>
+    : Overlap<Exclude<O, U>, Combine_$<R, U>>
+
+
+/**
+ * @description merge intersection of objects to solid single object
+ */
+type _Simplify_<T extends object> = {[K in keyof T]: T[K]}
+
+/**
+* @cat Object
+* @param {object[]} objects
+* @param {key} keyof $arg[number]
+* @description reduce objects array by specidied key to object
+* @returns {{a: A | B, b: A | BarProp, ...}} 
+* @example ReduceBy<[{a: 'a1', b: '1'}, {a: 'a2', b: '2'}], 'a'> => {a1: {b: '1'}, a2: {b: '2'}}
+*/
+export type ReduceBy<T extends object[], Key extends keyof T[number], R extends {} = {},
+    O extends object = T[0], Kyes = keyof O> = T['length'] extends 0
+    ? _Simplify_<R>
+    : ReduceBy<RemoveFirstFromTuple_<T>, Key, R & {
+        [_K in O[Key] as O[Key] extends PropertyKey ? O[Key] : never]: {
+            [K in keyof O as K extends Key ? never : K]: O[K]
+        }
+    }>
+
+
+/// TYPES ALIASES:
+
+export type Spread<A extends object, B extends object> = Merge<A, B>;
 
 
 //@see also:
