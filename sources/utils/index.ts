@@ -123,7 +123,7 @@ export type Sequence<L extends number, A extends number[] = []> = A['length'] ex
  */
 export type Merge<T extends object, O extends object, _O extends 'override' | 'union' = 'override'> = _O extends 'override'
     ? {[K in keyof T | keyof O]: K extends keyof O ? O[K] : K extends keyof T ? T[K] : never }              // Omit<T, keyof K> & K
-    : Combine_$<T, O>
+    : _Combine_<T, O>
 
 /**
  * @cat Object
@@ -370,7 +370,6 @@ export type ObjectLength<O extends object, Res extends PropertyKey[] = [], L ext
     : ObjectLength<Omit<O, L>, [L, ...Res]>;
 
 
-    
 /**
  * @cat Object | Array
  * @param {O} object 
@@ -387,9 +386,10 @@ export type ReplaceTypes<O extends object, S, R> = {
 }
 
 
+/** @alt `T extends [infer F, ...infer R] ? R : never` - @Altdeclined - for some reason returns `unknown` instead of pure `T` type */
 type RemoveFirstFromTuple_<T extends ReadonlyArray<any> | any[]> = 
     T['length'] extends 0 ? [] :
-	(((...b: T) => void) extends (a: any, ...b: infer I) => void ? I : [])
+    (((...b: T) => void) extends (a: any, ...b: infer I) => void ? I : [])  
 
 
 /**
@@ -421,34 +421,34 @@ export type Join<T extends readonly object[]> = T extends [infer F, ...infer R]
   } [keyof T]
 
 
-
 /**
 * @cat Object
 * @param {A} object 
 * @param {B} object 
+* @param {M} [__CombineMethod] - approach to apply the utility (via 'intersect' or 'union': sometimes for service work it's important)
 * @description combines two objects into one with types union (like merge, but with fields union)
 * @returns {{...A | ...B}} 
-* @example Combine<{a: number, b: number}, {b: string, c: string}> => {a: number, b: number | string, c: string}
-* @alternativeRealization
-    type Combine<A, B> = Diff<B, A> & Diff<A, B> & Common<A, B>
-*
+* @example Combine<{a: number, b: number}, {b: string, c: string}> => {a: number, b: number | string, c: string}* 
+* @alternativeRealization type Combine<A extends object, B extends object> = Diff<B, A> & Diff<A, B> & Common<A, B>
+* @internalCause - useless on the back of Overlap and Merge (: don't bother expirience with unnecessary types)
 */
-type Combine_$<A extends object, B extends object> = {
+type _Combine_<A extends object, B extends object, M extends __CombineMethod = 'union'> = M extends 'union' ? {
     [K in keyof A | keyof B]: K extends keyof A & keyof B ? (A[K] | B[K]) : K extends keyof B ? B[K] : K extends keyof A ? A[K] : never;
     // [K in keyof A | keyof B]: K extends keyof A ? A[K] : (K extends keyof B ? B[K] : never)
-}
+} : Diff<B, A> & Diff<A, B> & Common<A, B>
 
 
 /**
 * @cat Object
 * @param {A|B|...} objects
+* @param {M} [__CombineMethod] - approach to apply the utility (via 'intersect' or 'union': sometimes for service work it's important)
 * @description combines objects union into one with types union. Works like Combine, but just for union
 * @returns {{a: A | B, b: A | BarProp, ...}} 
 * @example Overlay<{a: number, b: number}|{b: string, c: string}> => {a: number, b: number | string, c: string}
 */
-export type Overlap<O extends object, R extends object = {}, U extends O = FirstOrLast_<O>> = Exclude<O, U> extends never
-    ? Combine_$<R, U>
-    : Overlap<Exclude<O, U>, Combine_$<R, U>>
+export type Overlap<O extends object, __M extends __CombineMethod = 'union', R extends object = {}, U extends O = FirstOrLast_<O>> = Exclude<O, U> extends never
+    ? _Combine_<R, U, __M>
+    : Overlap<Exclude<O, U>, __M, _Combine_<R, U, __M>>
 
 
 /**
@@ -478,10 +478,30 @@ export type ReduceBy<T extends object[] | ReadonlyArray<object>, Key extends key
 
 
 
+// /**
+// * @cat Object
+// * @param {Union<objects>} UNION
+// * @param {key} keyof $arg[number]
+// * @description exclude from union all objects without specified discriminant key
+// * @returns {{A | B | C | ...}} 
+// * @example PickByKey<{ a: 1 } | { a: 2, bb: 2 } | { bb: 11, d: 7 }, 'a'> => { a: 1 } | { a: 2, bb: 2 }}
+// */
+// export type PickByKey<O extends object, key extends keyof Overlap<O, 'intersect'>, R extends object = never, U extends O = FirstOrLast_<O>>
+//     = Exclude<O, U> extends never
+//         ? key extends keyof U ? R | U : R        
+//         : PickByKey<Exclude<O, U>, key, key extends keyof U ? R | U : R>
+
+
+
 
 /// TYPES ALIASES:
 
 export type Spread<A extends object, B extends object> = Merge<A, B>;
+
+
+/// INTERNAL ADDITIONAL TYPES:
+
+type __CombineMethod = 'intersect' | 'union';
 
 
 //@see also:

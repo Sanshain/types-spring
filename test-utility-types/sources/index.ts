@@ -23,11 +23,14 @@ import { BuiltIn } from "ts-toolbelt/out/Misc/_api"
 import { ReadonlyDeep } from "type-fest"
 import { Assign, DeepReadonly, Intersection } from "utility-types"
 import { O } from 'ts-toolbelt'
+import { PickDeep } from "type-fest"
 
 
 // import type { SharedUnionFieldsDeep } from 'type-fest';
 
 type OO2 = Common<{ a: 1, b: 2 }, { b: 4, c: 2 }>;
+type OO3 = PickDeep<{ a: 1 } | { a: 2, bb: 2 } | { bb: 11, d: 7 }, 'a'>
+
 
 // type Pet2 = 'dog' | 'cat' | string // LiteralUnion<'dog' | 'cat', string>;
 // type Pet2 = 'dog' | 'cat' | string & {}
@@ -199,6 +202,8 @@ let r: O.Merge<{ a: 1, c: string }, { b: 2, c: 2 }> & {} = {
 //                              Diff                                == Diff                 == Diff
 //                              Omit<T, Diff<T>>                    == Subtract             == Extract (the same name as original different type)
 // SetFieldType                 ReplaceType                         == -                    == Replace
+//                              Overlap
+//                              Reduce
 
 
 // ... draft...
