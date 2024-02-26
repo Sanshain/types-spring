@@ -462,14 +462,15 @@ type _Simplify_<T extends object> = {[K in keyof T]: T[K]}
 * @param {key} keyof $arg[number]
 * @description reduce objects array by specidied key to object
 * @returns {{a: A | B, b: A | BarProp, ...}} 
-* @example ReduceBy<[{a: 'a1', b: '1'}, {a: 'a2', b: '2'}], 'a'> => {a1: {b: '1'}, a2: {b: '2'}}
+* @example ReduceBy<[{a: 'a1', b: '1'}, {a: 'a2', b: '2'}], 'a'> => {a1: {b: '1', ...}, a2: {b: '2', ...}}
 */
-export type ReduceBy<T extends object[], Key extends keyof T[number], R extends {} = {},
-    O extends object = T[0], Kyes = keyof O> = T['length'] extends 0
-    ? _Simplify_<R>
-    : ReduceBy<RemoveFirstFromTuple_<T>, Key, R & {
+export type ReduceBy<T extends object[] | ReadonlyArray<object>, Key extends keyof T[number], R extends {} = {},
+    O extends object = T[0]> = T['length'] extends 0
+    ? R  // _Simplify_<R>
+    : ReduceBy<RemoveFirstFromTuple_<T>, Key, R & {        
         [_K in O[Key] as O[Key] extends PropertyKey ? O[Key] : never]: {
-            [K in keyof O as K extends Key ? never : K]: O[K]
+            // [K in keyof O as K extends Key ? never : K]: O[K]
+            [K in keyof O]: O[K]
         }
     }>
 

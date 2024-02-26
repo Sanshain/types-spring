@@ -14,6 +14,7 @@
 - [ConvertTupleType](#converttupletypetuple)
 - [ArrayFilter](#arrayfilterunknown-type)
 - [MapArray](#maparrayunknown-key)
+- [ReduceBy](#ReduceByO)
 
 #### Objects:
 
@@ -36,6 +37,7 @@
 #### Unions: 
 
 - Enumerate
+- [Overlap](#OverlapO)
     
 </details>
   
@@ -332,6 +334,44 @@ let ab: OneOf<Params> = {a: 1, b: 1}
 let abc: OneOf<Params> = {a: 1, b: 1, c: 1}
 ```
 
+
+### [Overlap\<O\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L449)
+
+Combines objects union into one. It works like Merge type, but gets objects not from different arguments, but from a single union of objects passed as an single argument.
+The essential difference is that fields of the result object are not overwritten, but they are union of appropriate field types
+
+```ts
+
+    type AA = { a: number, b: number } | { b: string, c: string }
+    type O = Overlap<AA> // => { a: number, b: number | string, c: string }
+    let o: O = { a: 1, b: 1, c: '' }
+    let os: O = { a: 1, b: '', c: '' }
+
+```
+
+### [ReduceBy\<O\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#467)
+
+Reduce objects array by specidied key to object. For example we have an constant array and wants to reduce it by `a` field:
+
+#### Before:
+
+```ts
+const ar = [{ a: 'a1', b: 2 }, { a: 'a2', b: 4 }] as const
+const r = ar.reduce((acc, a) => ({ [a.a]: a, ...acc }), {})
+// by default typescript extracts the type as 
+// `{}` 
+```
+
+#### After:
+
+```ts
+const ar = [{ a: 'a1', b: 2 }, { a: 'a2', b: 4 }] as const
+const o = ar.reduce((acc, a) => ({ [a.a]: a, ...acc }), {}) as ReduceBy<typeof ar, 'a'>
+// now o has type: 
+// `{a1: { a: 'a1', b: 2 }, a2: { a: 'a2', b: 4 }}`
+```
+
+
 <br>
 <hr>
 <br>
@@ -343,17 +383,16 @@ let abc: OneOf<Params> = {a: 1, b: 1, c: 1}
 |------|-------|------|
 |[KeysArray](#keysarraykeys)|[Merge](#mergetype-type)|Enumerate|ParseInt|
 |[ConstrainedArray](#constrainedarraynumber-type)|[MergeAll](#mergealltypes)|Ranged||
-|[Sequence](#sequencenumber)|[Diff](#diff)|||
+|[Sequence](#sequencenumber)|[Diff](#diff)|[Overlap](#OverlapO)||
 |[WideArray](#widearraytuple)|[Common](#common)|||
 |[ConvertTupleType](#converttupletypetuple)|[OmitNullable](#omitnullabletype)|||
 |[ArrayFilter](#arrayfilterunknown-type)|[NonNullableKey](#nonnullablekeytype)|||
 |[MapArray](#maparrayunknown-key)|[MapType](#maptypeobject-key)|||
-||[IsUnion](#isuniont)|||
+|[ReduceBy](#ReduceByO)|[IsUnion](#isuniont)|||
 ||[IntersectUnions](#intersectunionsu)|||
 ||KeysMatching|||
 ||[OptionalExceptOne](#optionalexceptoneobject)|||
 ||[ObjectLength](#objectlengthtype)|||
-
 
 <details>
 
@@ -370,5 +409,6 @@ let abc: OneOf<Params> = {a: 1, b: 1, c: 1}
 - [ArrayFilter](https://github.com/Sanshain/types-spring/tree/master/sources/utils#arrayfilterunknown-type) `<(A|B|C)[], A>` => `(B|C)[]`
 - [MapArray:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maparrayunknown-key) `[{value: number}]` => `[number]`
 - [MapType:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#maptypeobject-key) `{a: {value: number}}` => `{a: number}`
+- [Overlap:](https://github.com/Sanshain/types-spring/tree/master/sources/utils#overlapo) `{a: 1} | {a: 2, b: 2}` => `{a: 1 | 2, b: 2}`
 
 </details>

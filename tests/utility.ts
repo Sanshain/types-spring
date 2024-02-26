@@ -441,7 +441,10 @@ let rr: ArrayFilter<typeof _a, number> = [1, 2, 3, '']
 
 {
     type R = ReduceBy<[{ a: 'a1', b: '1' }, { a: 'a2', b: '2' }], 'a'>
-    let r: R = { a1: { b: '1' }, a2: { b: '2' } };
+    let r: R = { a1: { b: '1', a: 'a1' }, a2: { b: '2', a: 'a2' } };
+
+    const ar = [{ a: 'a1', b: '1' }, { a: 'a2', b: '2' }] as const
+    const o = ar.reduce((acc, a) => ({ [a.a]: a, ...acc }), {}) as ReduceBy<typeof ar, 'a'>     
 }
 
 
