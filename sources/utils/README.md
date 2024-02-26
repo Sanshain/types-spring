@@ -14,7 +14,7 @@
 - [ConvertTupleType](#converttupletypetuple)
 - [ArrayFilter](#arrayfilterunknown-type)
 - [MapArray](#maparrayunknown-key)
-- [ReduceBy](#ReduceByO)
+- [ReduceBy](#ReduceByO-K)
 
 #### Objects:
 
@@ -349,7 +349,7 @@ The essential difference is that fields of the result object are not overwritten
 
 ```
 
-### [ReduceBy\<O\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#467)
+### [ReduceBy\<O, K\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#467)
 
 Reduce objects array by specidied key to object. For example we have an constant array and wants to reduce it by `a` field:
 
