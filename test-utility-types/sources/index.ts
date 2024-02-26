@@ -21,17 +21,16 @@ import { RequireExactlyOne } from "type-fest"
 import { MergeDeep } from "type-fest"
 import { BuiltIn } from "ts-toolbelt/out/Misc/_api"
 import { ReadonlyDeep } from "type-fest"
-import { Assign, DeepReadonly } from "utility-types"
+import { Assign, DeepReadonly, Intersection } from "utility-types"
 import { O } from 'ts-toolbelt'
 
 
 // import type { SharedUnionFieldsDeep } from 'type-fest';
 
-
+type OO2 = Common<{ a: 1, b: 2 }, { b: 4, c: 2 }>;
 
 // type Pet2 = 'dog' | 'cat' | string // LiteralUnion<'dog' | 'cat', string>;
 // type Pet2 = 'dog' | 'cat' | string & {}
-
 
 
 // In covariance (default)
@@ -183,7 +182,7 @@ let r: O.Merge<{ a: 1, c: string }, { b: 2, c: 2 }> & {} = {
 // OptionalKeysOf ~             ~!NonNullableKey                    == OptionalKeys         == OptionalKeys
 // RequiredKeysOf               ~NonNullableKey                     == ~RequiredKeys         == ~CompulsoryKeys | RequiredKeys
 // Spread ==                    Merge                               == --                   == --
-// Merge ==                     ~Merge                              == Assign               == Assign
+// Merge ==                     Combine                             == Assign               == Assign
 // IsEqual ==                   ?/__use__/?                         == --                   == Equals
 // MultidimensionalArray ==     -                                   == --                   == --
 // MultidimensionalReadonlyArray == -                               == --                   == --
@@ -196,7 +195,7 @@ let r: O.Merge<{ a: 1, c: string }, { b: 2, c: 2 }> & {} = {
 // OverrideProperties  ==       Spread                              == Overwrite            == ~Merge
 // RequireAtLeastOne            OptionalExceptOne                   == -                    == -
 // RequireExactlyOne ==         OneOf                               == -                    == -
-//                              ?/only service usage/?              == Intersection                         // exists in alt branch of types-spring (get dublicate fields)
+//                              ~Common                             == Intersection                         // exists in alt branch of types-spring (get dublicate fields)
 //                              Diff                                == Diff                 == Diff
 //                              Omit<T, Diff<T>>                    == Subtract             == Extract (the same name as original different type)
 // SetFieldType                 ReplaceType                         == -                    == Replace
