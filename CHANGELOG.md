@@ -1,5 +1,11 @@
 # changelog
 
+## 2.2.0 
+
+ - PickByKey declined
+ - DiscrimeBy is added to $research
+ - Overlap and ReduceBy utility types are added
+
 ## 2.0.2 
 
  - rename NonNullableKeys to NonNullableKey

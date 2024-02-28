@@ -356,19 +356,16 @@ Reduce objects array by specidied key to object. For example we have an constant
 #### Before:
 
 ```ts
-const ar = [{ a: 'a1', b: 2 }, { a: 'a2', b: 4 }] as const
+const ar = [{ a: 'a1', b: number }, { a: 'a2', c: string }] as const
 const r = ar.reduce((acc, a) => ({ [a.a]: a, ...acc }), {})
-// by default typescript extracts the type as 
-// `{}` 
+// `o` has type `{}` 
 ```
 
 #### After:
 
 ```ts
-const ar = [{ a: 'a1', b: 2 }, { a: 'a2', b: 4 }] as const
-const o = ar.reduce((acc, a) => ({ [a.a]: a, ...acc }), {}) as ReduceBy<typeof ar, 'a'>
-// now o has type: 
-// `{a1: { a: 'a1', b: 2 }, a2: { a: 'a2', b: 4 }}`
+const r = ar.reduce((acc, a) => ({ [a.a]: a, ...acc }), {}) as ReduceBy<typeof ar, 'a'>
+// now the `o` has type `{a1: { a: 'a1', b: number }, a2: { a: 'a2', c: string }}`
 ```
 
 

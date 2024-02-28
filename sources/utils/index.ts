@@ -454,7 +454,7 @@ export type Overlap<O extends object, __M extends __CombineMethod = 'union', R e
 /**
  * @description merge intersection of objects to solid single object
  */
-type _Simplify_<T extends object> = {[K in keyof T]: T[K]}
+type _Simplify_<T extends object> = {[K in keyof T]: T[K]} & {}
 
 /**
 * @cat Object
@@ -466,7 +466,7 @@ type _Simplify_<T extends object> = {[K in keyof T]: T[K]}
 */
 export type ReduceBy<T extends object[] | ReadonlyArray<object>, Key extends keyof T[number], R extends {} = {},
     O extends object = T[0]> = T['length'] extends 0
-    ? R  // _Simplify_<R>
+    ? _Simplify_<R>
     : ReduceBy<RemoveFirstFromTuple_<T>, Key, R & {        
         [_K in O[Key] as O[Key] extends PropertyKey ? O[Key] : never]: {
             // [K in keyof O as K extends Key ? never : K]: O[K]

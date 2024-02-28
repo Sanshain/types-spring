@@ -1,9 +1,9 @@
 import { FixedLengthArray } from "type-fest"
 import { TaggedUnion } from "type-fest"
-import { Merge } from "type-fest"
+// import { Merge } from "type-fest"
 import { ListOf } from "ts-toolbelt/out/Object/ListOf"
-import { Either, ExcludeKeys, IntersectKeys, Replace } from "ts-toolbelt/out/Object/_api"
-// import { Merge } from "ts-toolbelt/out/Object/_api"
+import { Either, ExcludeKeys, Intersect, IntersectKeys, Replace } from "ts-toolbelt/out/Object/_api"
+import { Merge } from "ts-toolbelt/out/Object/_api"
 // import { Filter } from "ts-toolbelt/out/Object/Filter";     
 import { Group } from "ts-toolbelt/out/List/Group";
 import { Zip } from "ts-toolbelt/out/List/Zip";
@@ -28,7 +28,7 @@ import { PickDeep } from "type-fest"
 
 // import type { SharedUnionFieldsDeep } from 'type-fest';
 
-type OO2 = Common<{ a: 1, b: 2 }, { b: 4, c: 2 }>;
+type OO2 = Intersect<{ a: 1, b: 2 }, { b: 4, c: 2 }>;
 type OO3 = PickDeep<{ a: 1 } | { a: 2, bb: 2 } | { bb: 11, d: 7 }, 'a'>
 
 
@@ -184,8 +184,8 @@ let r: O.Merge<{ a: 1, c: string }, { b: 2, c: 2 }> & {} = {
 // ReadonlyDeep ==              -                                   == DeepReadonly         == Readonly<'deep'>
 // OptionalKeysOf ~             ~!NonNullableKey                    == OptionalKeys         == OptionalKeys
 // RequiredKeysOf               ~NonNullableKey                     == ~RequiredKeys         == ~CompulsoryKeys | RequiredKeys
-// Spread ==                    Merge                               == --                   == --
-// Merge ==                     Combine                             == Assign               == Assign
+// Spread ==                    Merge                               == Assign                   == Merge
+// Merge ==                     Combine                             == --               == --
 // IsEqual ==                   ?/__use__/?                         == --                   == Equals
 // MultidimensionalArray ==     -                                   == --                   == --
 // MultidimensionalReadonlyArray == -                               == --                   == --
@@ -202,8 +202,9 @@ let r: O.Merge<{ a: 1, c: string }, { b: 2, c: 2 }> & {} = {
 //                              Diff                                == Diff                 == Diff
 //                              Omit<T, Diff<T>>                    == Subtract             == Extract (the same name as original different type)
 // SetFieldType                 ReplaceType                         == -                    == Replace
-//                              Overlap
-//                              Reduce
+// -                            Overlap                             == -                    == -
+// -                            ReduceBy                            == -                    == -
+//                                                                                          == Tail
 
 
 // ... draft...
