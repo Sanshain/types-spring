@@ -84,7 +84,7 @@ type MM = Replace<PP, string, number>
 //     email?: string    
 // }>
 // let o: OO = {name: ''}
-// type OO = Either<{ a: 1, b: 1, aa: 1 }, 'a' | 'aa'>
+type OO5 = Either<{ a?: 1, b: 1, aa: 1, c: 1 }, 'a' | 'aa' | 'c'>
 // type F1l = Compulsory<{ a?: 1, b: 1 | null, '2': 2, '1': 3 }>
 // type UserInfo = NonNullable<{
 //     name: string, lastname?: string, email?: string, address: {
