@@ -264,7 +264,7 @@ let c: Diff<A, B>                                // {a: number}
 
 ### [OptionalExceptOne\<object\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L333)
 
-Makes all fields optional, except for any one of them
+Makes all fields optional, except for any one of them. So at least one of them should be declared:
 
 ```ts
 type O = OptionalExceptOne<{a: 1, b: 1, c: 1}>
@@ -317,7 +317,7 @@ let rrr: ReplaceTypes<Profile, string, number> = {
 
 ### [OneOf\<O\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L419)
 
-Makes all fields as optional expect either one. So at least one of fields should be declared: 
+Makes all fields as optional expect either one. 
 
 ```ts
 type Params = {
