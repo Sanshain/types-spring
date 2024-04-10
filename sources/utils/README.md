@@ -317,7 +317,7 @@ let rrr: ReplaceTypes<Profile, string, number> = {
 
 ### [OneOf\<O\>](https://github.com/Sanshain/types-spring/blob/master/sources/utils/index.ts#L419)
 
-Makes all fields as optional expect either one: 
+Makes all fields as optional expect either one. So at least one of fields should be declared: 
 
 ```ts
 type Params = {
