@@ -478,6 +478,20 @@ export type ReduceBy<T extends object[] | ReadonlyArray<object>, Key extends key
 
 
 
+/**
+* @category {Object}
+* @param {PropertyKey} Keys
+* @param {object} O
+* @description set optinal props of O passed as first arg
+* @returns {object} conditionally partial object
+* @example Optional<'a'|'b', {a: 1, b:1, c: 1}> => {a: 1 | undefined, b:1 | undefined, c: 1}
+*/
+export type Optional<Keys extends PropertyKey, O extends object> = {
+    [K in keyof O & {}]: K extends Keys ? O[K] | undefined : O[K]
+}
+
+
+
 // /**
 // * @cat Object
 // * @param {Union<objects>} UNION
