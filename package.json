@@ -1,6 +1,6 @@
 {
   "name": "types-spring",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "a package that provides more accurate and powerful typescript capabilities",
   "types": "./sources/utils/index.ts",
   "exports": {

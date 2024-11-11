@@ -499,9 +499,9 @@ export type Optional<Keys extends PropertyKey, O extends object> = {
 * @returns {object} conditionally partial object
 * @example Optional<'a'|'b', {a: 1, b:1, c: 1}> => {a: 1, b:1, c: 1  | undefined}
 */
-export type OptionalExcept<Keys extends PropertyKey, O extends object> = {
-    [K in keyof O & {}]: K extends Keys ? O[K] : O[K] | undefined
-}
+export type OptionalExcept<Keys extends PropertyKey, O extends object> = _Simplify_<{
+    [K in keyof O]-?: K extends Keys ? O[K] : O[K] | undefined
+}>
 
 
 

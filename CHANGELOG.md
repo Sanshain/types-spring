@@ -1,5 +1,9 @@
 # changelog
 
+## 2.2.3 
+
+ - utils added: OptionalExcept
+
 ## 2.2.2 
 
  - utils added: Optional
