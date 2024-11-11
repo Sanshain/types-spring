@@ -491,6 +491,19 @@ export type Optional<Keys extends PropertyKey, O extends object> = {
 }
 
 
+/**
+* @category {Object}
+* @param {PropertyKey} Keys
+* @param {object} O
+* @description set optional props of O except passed as first arg
+* @returns {object} conditionally partial object
+* @example Optional<'a'|'b', {a: 1, b:1, c: 1}> => {a: 1, b:1, c: 1  | undefined}
+*/
+export type OptionalExcept<Keys extends PropertyKey, O extends object> = {
+    [K in keyof O & {}]: K extends Keys ? O[K] : O[K] | undefined
+}
+
+
 
 // /**
 // * @cat Object

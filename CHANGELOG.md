@@ -1,5 +1,11 @@
 # changelog
 
+## 2.2.2 
+
+ - utils added: Optional
+ - add files section to package.json
+ - ReduceBy example correction
+
 ## 2.2.0 
 
  - PickByKey declined
