@@ -1,5 +1,10 @@
 # changelog
 
+## 2.2.6 
+
+ - utils: fixed `-?` for Optional types (as bad idea)
+ - utils fixed: OptionalExcept fixed for older ts versions
+
 ## 2.2.3 
 
  - utils added: OptionalExcept

@@ -486,9 +486,10 @@ export type ReduceBy<T extends object[] | ReadonlyArray<object>, Key extends key
 * @returns {object} conditionally partial object
 * @example Optional<'a'|'b', {a: 1, b:1, c: 1}> => {a: 1 | undefined, b:1 | undefined, c: 1}
 */
-export type Optional<Keys extends PropertyKey, O extends object> = {
-    [K in keyof O]: K extends Keys ? O[K] | undefined : O[K]
-}
+export type Optional<Keys extends PropertyKey, O extends object> = _Simplify_<{
+    [K in keyof O as K extends Keys ? K : never]?: O[K] } & {
+        [K in keyof O as K extends Keys ? never : K]: O[K]
+    }>
 
 
 /**
@@ -500,8 +501,9 @@ export type Optional<Keys extends PropertyKey, O extends object> = {
 * @example Optional<'a'|'b', {a: 1, b:1, c: 1}> => {a: 1, b:1, c: 1  | undefined}
 */
 export type OptionalExcept<Keys extends PropertyKey, O extends object> = _Simplify_<{
-    [K in keyof O]: K extends Keys ? O[K] : O[K] | undefined
-}>
+    [K in keyof O as K extends Keys ? K : never]: O[K] } & {
+        [K in keyof O as K extends Keys ? never : K]?: O[K]
+    }>
 
 
 
